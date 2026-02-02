@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://du5xi617rbs8o"]
+
+[ext_resource type="Script" uid="uid://rtcpo4mqd8ep" path="res://scripts/core/phase_dive.gd" id="1_kdymv"]
+
+[node name="PhaseDive" type="Control" unique_id=1390649418]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_kdymv")
+
+[node name="Label" type="Label" parent="." unique_id=1510692009]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Button" type="Button" parent="." unique_id=1605032597]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 61.0
+offset_right = 152.0
+offset_bottom = 92.0

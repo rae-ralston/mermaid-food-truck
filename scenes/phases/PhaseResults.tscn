@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bc07v7ura00ec"]
+
+[ext_resource type="Script" uid="uid://6n6sl4il5jyy" path="res://scripts/core/phase_results.gd" id="1_xhsce"]
+
+[node name="PhaseResults" type="Control" unique_id=104879031]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_xhsce")
+
+[node name="Label" type="Label" parent="." unique_id=44329220]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Button" type="Button" parent="." unique_id=1674863493]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 15.0
+offset_right = 16.0
+offset_bottom = 23.0

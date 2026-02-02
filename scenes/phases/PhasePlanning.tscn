@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://d4g7ty34u4fep"]
+
+[ext_resource type="Script" uid="uid://d00e1vrbdqrok" path="res://scripts/core/phase_planning.gd" id="1_0jicb"]
+
+[node name="PlanningPhase" type="Control" unique_id=41730657]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_0jicb")
+
+[node name="Label" type="Label" parent="." unique_id=513244784]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Button" type="Button" parent="." unique_id=1941658173]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 15.0
+offset_right = 18.0
+offset_bottom = 23.0

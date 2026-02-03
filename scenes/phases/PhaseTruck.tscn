@@ -15,6 +15,13 @@ offset_bottom = 23.0
 [node name="Button" type="Button" parent="." unique_id=2064542899]
 layout_mode = 0
 offset_left = 2.0
-offset_top = 22.0
+offset_top = 32.0
 offset_right = 10.0
-offset_bottom = 30.0
+offset_bottom = 40.0
+
+[node name="InventoryLabel" type="Label" parent="." unique_id=844575355]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 53.0
+offset_right = 44.0
+offset_bottom = 76.0

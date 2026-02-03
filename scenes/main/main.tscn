@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c75rg0ae8dnw1"]
 
-[ext_resource type="Script" uid="uid://bey5peoidf2u2" path="res://scenes/main/phase_manager.gd" id="1_hyk8p"]
+[ext_resource type="Script" uid="uid://bey5peoidf2u2" path="res://scripts/core/phase_manager.gd" id="1_hyk8p"]
 
 [node name="Main" type="Node" unique_id=637429763]
 

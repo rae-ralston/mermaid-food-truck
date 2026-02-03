@@ -9,4 +9,13 @@ func enter(_payload: Dictionary) -> void:
 	GameState.start_new_day()
 
 func _on_next() -> void:
-	emit_signal("phase_finished", PhaseIds.PhaseId.TRUCK, {})
+	var gathered := {
+		Ids.ING_KELP: 3,
+		Ids.ING_CLAM: 1
+	}
+	
+	emit_signal(
+		"phase_finished", 
+		PhaseIds.PhaseId.TRUCK, 
+		{ "gathered": gathered }
+	)

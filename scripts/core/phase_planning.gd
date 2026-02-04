@@ -6,7 +6,7 @@ func _ready() -> void:
 	$Button.pressed.connect(_on_next)
 
 func enter(_payload: Dictionary) -> void:
-	pass
+	GameState.start_new_day()
 
 func _on_next() -> void:
 	emit_signal("phase_finished", PhaseIds.PhaseId.DIVE, {})

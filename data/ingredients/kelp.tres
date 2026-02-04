@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://bkbxxqax43ccc"]
+
+[ext_resource type="Script" uid="uid://n1yc0ylmvws4" path="res://resources/ingredient_data.gd" id="1_nqlgm"]
+[ext_resource type="Texture2D" uid="uid://bg4bfnfdqbh7c" path="res://assets/ingredients/kelp.png" id="2_ef5l6"]
+
+[resource]
+script = ExtResource("1_nqlgm")
+id = &"kelp"
+display_name = "kelp"
+sprite = ExtResource("2_ef5l6")
+metadata/_custom_type_script = "uid://n1yc0ylmvws4"

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cgorwwg8pq6yc"]
+
+[ext_resource type="Texture2D" uid="uid://bpx1h8bbgcaud" path="res://assets/characters/demo_mermaid_sm.png" id="1_pqlss"]
+[ext_resource type="Script" uid="uid://cgo6agrf5evda" path="res://scripts/controller_diver.gd" id="1_xgvnv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pqlss"]
+radius = 18.0
+height = 124.01367
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pqlss"]
+
+[node name="Diver" type="CharacterBody2D" unique_id=882753087]
+script = ExtResource("1_xgvnv")
+
+[node name="Mermaid" type="Sprite2D" parent="." unique_id=906892092]
+position = Vector2(-22.624939, 1.9931641)
+scale = Vector2(0.23801601, 0.23801596)
+texture = ExtResource("1_pqlss")
+
+[node name="MermaidCollision" type="CollisionShape2D" parent="." unique_id=289509064]
+position = Vector2(0, -12)
+shape = SubResource("CapsuleShape2D_pqlss")
+
+[node name="InteractionZone" type="Area2D" parent="." unique_id=33921067]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone" unique_id=2113280918]
+shape = SubResource("CircleShape2D_pqlss")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://llrh0xapr6w8"]
+
+[ext_resource type="Script" uid="uid://n1yc0ylmvws4" path="res://resources/ingredient_data.gd" id="1_dx604"]
+[ext_resource type="Texture2D" uid="uid://dt80pg3aghgy6" path="res://assets/ingredients/clam.png" id="2_bmsla"]
+
+[resource]
+script = ExtResource("1_dx604")
+id = &"clam"
+display_name = "clam"
+sprite = ExtResource("2_bmsla")
+metadata/_custom_type_script = "uid://n1yc0ylmvws4"

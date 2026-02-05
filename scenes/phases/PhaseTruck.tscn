@@ -1,27 +1,133 @@
 [gd_scene format=3 uid="uid://be3d6caq6leb0"]
 
 [ext_resource type="Script" uid="uid://c3waxgc47thjy" path="res://scripts/core/phase_truck.gd" id="1_572ig"]
+[ext_resource type="PackedScene" uid="uid://cgorwwg8pq6yc" path="res://scenes/Diver.tscn" id="2_44s6t"]
+[ext_resource type="Texture2D" uid="uid://c6dm05c7m0e1g" path="res://assets/prep-station.png" id="3_hjevm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gsc83"]
+size = Vector2(117, 82)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gl1o"]
+size = Vector2(134, 85)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qf7jy"]
+size = Vector2(135, 95)
 
 [node name="PhaseTruck" type="Control" unique_id=1378708853]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_572ig")
 
-[node name="Label" type="Label" parent="." unique_id=659970000]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="World" type="Node2D" parent="." unique_id=1102149595]
 
-[node name="Button" type="Button" parent="." unique_id=2064542899]
-layout_mode = 0
-offset_left = 2.0
-offset_top = 32.0
-offset_right = 10.0
+[node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_44s6t")]
+position = Vector2(493, 396)
+
+[node name="Stations" type="Node2D" parent="World" unique_id=976916769]
+
+[node name="PrepStation" type="Area2D" parent="World/Stations" unique_id=1764157725]
+position = Vector2(323, 156)
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Stations/PrepStation" unique_id=1459081911]
+modulate = Color(1, 1, 0.23137255, 1)
+position = Vector2(-1, 1)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_hjevm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stations/PrepStation" unique_id=1731846116]
+position = Vector2(-1.5, -9)
+shape = SubResource("RectangleShape2D_gsc83")
+
+[node name="Label" type="Label" parent="World/Stations/PrepStation" unique_id=457751351]
+offset_left = 1.0
+offset_top = -125.0
+offset_right = 41.0
+offset_bottom = -102.0
+text = "prep"
+
+[node name="CookStation" type="Area2D" parent="World/Stations" unique_id=2002776863]
+position = Vector2(580, 159)
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Stations/CookStation" unique_id=1361753601]
+modulate = Color(1, 0.17254902, 1, 1)
+position = Vector2(1, 2)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_hjevm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stations/CookStation" unique_id=103672487]
+position = Vector2(0, -10.5)
+shape = SubResource("RectangleShape2D_4gl1o")
+
+[node name="Label" type="Label" parent="World/Stations/CookStation" unique_id=2052079541]
+offset_left = -1.0
+offset_top = -115.0
+offset_right = 39.0
+offset_bottom = -92.0
+text = "cook"
+
+[node name="PlateStation" type="Area2D" parent="World/Stations" unique_id=513262726]
+position = Vector2(844, 158)
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Stations/PlateStation" unique_id=1900639584]
+modulate = Color(0.15686275, 0.7058824, 0.54509807, 1)
+position = Vector2(-1, 4)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_hjevm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stations/PlateStation" unique_id=1202308884]
+position = Vector2(0.5, -9.5)
+shape = SubResource("RectangleShape2D_qf7jy")
+
+[node name="Label" type="Label" parent="World/Stations/PlateStation" unique_id=1006302574]
+offset_left = 1.0
+offset_top = -116.0
+offset_right = 41.0
+offset_bottom = -93.0
+text = "plate"
+
+[node name="HUD" type="Control" parent="." unique_id=914636482]
+anchors_preset = 0
+offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="InventoryLabel" type="Label" parent="." unique_id=844575355]
+[node name="OrdersPanel" type="VBoxContainer" parent="HUD" unique_id=8881693]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 53.0
-offset_right = 44.0
-offset_bottom = 76.0
+offset_left = 58.0
+offset_top = 413.0
+offset_right = 98.0
+offset_bottom = 453.0
+
+[node name="CurrentDishLabel" type="Label" parent="HUD" unique_id=850805251]
+layout_mode = 0
+offset_left = 934.0
+offset_top = 442.0
+offset_right = 974.0
+offset_bottom = 465.0
+
+[node name="StationProgressBar" type="ProgressBar" parent="HUD" unique_id=1337840804]
+layout_mode = 0
+offset_left = 939.0
+offset_top = 389.0
+offset_right = 943.0
+offset_bottom = 416.0
+
+[node name="InventoryLabel" type="Label" parent="HUD" unique_id=844575355]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 147.0
+offset_right = 79.0
+offset_bottom = 170.0
+
+[node name="Button" type="Button" parent="HUD" unique_id=2064542899]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 11.0
+offset_right = 448.0
+offset_bottom = 19.0
+
+[node name="Label" type="Label" parent="HUD" unique_id=659970000]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 8.0
+offset_right = 74.0
+offset_bottom = 31.0

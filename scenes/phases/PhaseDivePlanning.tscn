@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://d4g7ty34u4fep"]
+
+[ext_resource type="Script" uid="uid://gco5x0vkosge" path="res://scripts/core/phase_dive_planning.gd" id="1_lptrt"]
+
+[node name="DivePlanningPhase" type="Control" unique_id=41730657]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_lptrt")
+
+[node name="Label" type="Label" parent="." unique_id=513244784]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 48.0
+offset_bottom = 32.0
+
+[node name="Button" type="Button" parent="." unique_id=1941658173]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 74.0
+offset_right = 20.0
+offset_bottom = 82.0

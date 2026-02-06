@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cxfcf8ax6es16"]
 
-[ext_resource type="Script" uid="uid://dg3psvy7n1vd0" path="res://scripts/core/phase_shop.gd" id="1_kowbl"]
+[ext_resource type="Script" uid="uid://dg3psvy7n1vd0" path="res://scripts/core/phase_store.gd" id="1_kowbl"]
 
 [node name="PhaseShop" type="Control" unique_id=2065327602]
 layout_mode = 3

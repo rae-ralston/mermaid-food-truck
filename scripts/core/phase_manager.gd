@@ -7,15 +7,16 @@ class_name PhaseManager
 var _current_phase: BasePhase = null
 
 var _phase_paths := {
-	PhaseIds.PhaseId.PLANNING: "res://scenes/phases/PhasePlanning.tscn",
+	PhaseIds.PhaseId.DIVE_PLANNING: "res://scenes/phases/PhaseDivePlanning.tscn",
 	PhaseIds.PhaseId.DIVE: "res://scenes/phases/PhaseDive.tscn",
+	PhaseIds.PhaseId.TRUCK_PLANNING: "res://scenes/phases/PhaseTruckPlanning.tscn",
 	PhaseIds.PhaseId.TRUCK: "res://scenes/phases/PhaseTruck.tscn",
 	PhaseIds.PhaseId.RESULTS: "res://scenes/phases/PhaseResults.tscn",
-	PhaseIds.PhaseId.SHOP: "res://scenes/phases/PhaseShop.tscn",
+	PhaseIds.PhaseId.STORE: "res://scenes/phases/PhaseStore.tscn",
 }
 
 func _ready() -> void:
-	switch_to(PhaseIds.PhaseId.PLANNING, {})
+	switch_to(PhaseIds.PhaseId.DIVE_PLANNING, {})
 
 func switch_to(phase_id: int, payload: Dictionary) -> void:
 	#clean up old phase

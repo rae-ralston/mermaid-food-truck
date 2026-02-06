@@ -2,9 +2,10 @@ extends Node
 class_name PhaseIds
 
 enum PhaseId {
-	PLANNING,
+	DIVE_PLANNING,
 	DIVE,
+	TRUCK_PLANNING,
 	TRUCK,
 	RESULTS,
-	SHOP,
+	STORE,
 }

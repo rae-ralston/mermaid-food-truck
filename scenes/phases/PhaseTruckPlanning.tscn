@@ -1,11 +1,11 @@
-[gd_scene format=3 uid="uid://d4g7ty34u4fep"]
+[gd_scene format=3 uid="uid://bbuyvin7s2ebh"]
 
-[ext_resource type="Script" uid="uid://d00e1vrbdqrok" path="res://scripts/core/phase_planning.gd" id="1_0jicb"]
+[ext_resource type="Script" uid="uid://d00e1vrbdqrok" path="res://scripts/core/phase_truck_planning.gd" id="1_adry6"]
 
-[node name="PlanningPhase" type="Control" unique_id=41730657]
+[node name="TruckPlanningPhase" type="Control" unique_id=41730657]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_0jicb")
+script = ExtResource("1_adry6")
 
 [node name="Label" type="Label" parent="." unique_id=513244784]
 layout_mode = 0

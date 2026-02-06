@@ -1,7 +1,7 @@
 extends BasePhase
 
 func _ready() -> void:
-	$Label.text = "Planning Phase - figure it out"
+	$Label.text = "Dive Planning Phase - select location and equipment"
 	$Button.text = "go to next phase: dive"
 	$Button.pressed.connect(_on_next)
 

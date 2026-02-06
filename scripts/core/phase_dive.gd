@@ -5,7 +5,7 @@ var extracted := false
 
 func _ready() -> void:
 	$HUD/LocationLabel.text = "Diving phase - swim baby, swim."
-	$HUD/Button.text = "go to next phase: truck"
+	$HUD/Button.text = "go to next phase: truck planning"
 	$HUD/Button.pressed.connect(_extract_and_finish)
 	$World/Diver.interaction_performed.connect(_on_interaction)
 	$World/ExtractionZone.body_entered.connect(_on_extraction_body_entered)
@@ -73,4 +73,4 @@ func _extract_and_finish() -> void:
 		"gathered": run_gathered.duplicate(true)
 	}
 	
-	emit_signal("phase_finished", PhaseIds.PhaseId.TRUCK, payload)
+	emit_signal("phase_finished", PhaseIds.PhaseId.TRUCK_PLANNING, payload)

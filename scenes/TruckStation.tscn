@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dwdh1cupd5d5q"]
+
+[ext_resource type="Script" uid="uid://c1lp111kxyk15" path="res://scripts/truck_station.gd" id="1_md0ap"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_md0ap"]
+
+[node name="TruckStation" type="Node2D" unique_id=913382092]
+script = ExtResource("1_md0ap")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1878952820]
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=2034459249]
+
+[node name="PhaseLabel" type="Label" parent="Area2D" unique_id=848152297]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=564988941]
+shape = SubResource("RectangleShape2D_md0ap")

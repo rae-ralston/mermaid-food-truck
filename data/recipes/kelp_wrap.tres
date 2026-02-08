@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3 uid="uid://c4kmf5nm88h45"]
+
+[ext_resource type="Script" uid="uid://b2aqkkqqhuaxo" path="res://resources/recipe_data.gd" id="1_8i3r3"]
+
+[resource]
+script = ExtResource("1_8i3r3")
+id = &"kelp_wrap"
+display_name = "Kelp Wrap"
+steps = Array[int]([0, 2])
+base_price = 1
+time_limit = 5.0
+metadata/_custom_type_script = "uid://b2aqkkqqhuaxo"

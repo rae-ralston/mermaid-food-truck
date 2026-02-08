@@ -2,16 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c3waxgc47thjy" path="res://scripts/core/phase_truck.gd" id="1_572ig"]
 [ext_resource type="PackedScene" uid="uid://cgorwwg8pq6yc" path="res://scenes/Diver.tscn" id="2_44s6t"]
-[ext_resource type="Texture2D" uid="uid://c6dm05c7m0e1g" path="res://assets/prep-station.png" id="3_hjevm"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gsc83"]
-size = Vector2(117, 82)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gl1o"]
-size = Vector2(134, 85)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qf7jy"]
-size = Vector2(135, 95)
+[ext_resource type="PackedScene" uid="uid://dwdh1cupd5d5q" path="res://scenes/TruckStation.tscn" id="3_5p4at"]
 
 [node name="PhaseTruck" type="Control" unique_id=1378708853]
 layout_mode = 3
@@ -25,65 +16,8 @@ position = Vector2(493, 396)
 
 [node name="Stations" type="Node2D" parent="World" unique_id=976916769]
 
-[node name="PrepStation" type="Area2D" parent="World/Stations" unique_id=1764157725]
-position = Vector2(323, 156)
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Stations/PrepStation" unique_id=1459081911]
-modulate = Color(1, 1, 0.23137255, 1)
-position = Vector2(-1, 1)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_hjevm")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stations/PrepStation" unique_id=1731846116]
-position = Vector2(-1.5, -9)
-shape = SubResource("RectangleShape2D_gsc83")
-
-[node name="Label" type="Label" parent="World/Stations/PrepStation" unique_id=457751351]
-offset_left = 1.0
-offset_top = -125.0
-offset_right = 41.0
-offset_bottom = -102.0
-text = "prep"
-
-[node name="CookStation" type="Area2D" parent="World/Stations" unique_id=2002776863]
-position = Vector2(580, 159)
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Stations/CookStation" unique_id=1361753601]
-modulate = Color(1, 0.17254902, 1, 1)
-position = Vector2(1, 2)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_hjevm")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stations/CookStation" unique_id=103672487]
-position = Vector2(0, -10.5)
-shape = SubResource("RectangleShape2D_4gl1o")
-
-[node name="Label" type="Label" parent="World/Stations/CookStation" unique_id=2052079541]
-offset_left = -1.0
-offset_top = -115.0
-offset_right = 39.0
-offset_bottom = -92.0
-text = "cook"
-
-[node name="PlateStation" type="Area2D" parent="World/Stations" unique_id=513262726]
-position = Vector2(844, 158)
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Stations/PlateStation" unique_id=1900639584]
-modulate = Color(0.15686275, 0.7058824, 0.54509807, 1)
-position = Vector2(-1, 4)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_hjevm")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stations/PlateStation" unique_id=1202308884]
-position = Vector2(0.5, -9.5)
-shape = SubResource("RectangleShape2D_qf7jy")
-
-[node name="Label" type="Label" parent="World/Stations/PlateStation" unique_id=1006302574]
-offset_left = 1.0
-offset_top = -116.0
-offset_right = 41.0
-offset_bottom = -93.0
-text = "plate"
+[node name="TruckStation" parent="World/Stations" unique_id=913382092 instance=ExtResource("3_5p4at")]
+position = Vector2(310, 274)
 
 [node name="HUD" type="Control" parent="." unique_id=914636482]
 anchors_preset = 0

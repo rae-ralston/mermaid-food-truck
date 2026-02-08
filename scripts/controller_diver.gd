@@ -31,7 +31,7 @@ func _physics_process(_delta: float) -> void:
 func _on_area_entered(area) -> void:
 	print("entered:", area.name, " script=", area.get_script())
 	print("nearby:", nearby)
-	print("has Interact method: ad", area.has_method("interact"))
+	print("has Interact method: ", area.has_method("interact"))
 	if area.has_method("interact"):
 		nearby.append(area)
 

@@ -36,16 +36,22 @@ See `game-design-doc.md` for full details on recipes, ingredients, and pricing.
 
 Working on `scripts/truck_station.gd` + `scenes/TruckStation.tscn`.
 
-**What exists:**
+**What works:**
+- TruckStation extends Area2D (matches interaction system pattern from Gatherable)
 - Enums: `CookingPhaseIds` (IDLE, WORKING, DONE), `StationType` (PREP, COOK, PLATE)
-- State tracking: `currentCookingPhase`, `currentStation`, `isCooking`
-- Stubbed `interact()`, phase transition, and timer methods
-- Scene has Area2D with Sprite2D, PhaseLabel, CollisionShape2D
+- Timer node (one_shot) drives IDLE → WORKING → DONE cycle
+- Player interacts to start work, timer counts down, interact again to advance
+- Station transitions through PREP → COOK → PLATE → loops back to PREP
+- PhaseLabel and StationLabel update to show current state
+- Tested and working in-game
 
-**What's needed:**
+**Next up:**
+- Hook up StationProgressBar (in PhaseTruck HUD) to the timer for visual countdown
+- Completion logic — signal when PLATE finishes instead of looping back to PREP
+- Wire TruckStation into PhaseTruck scene (currently using standalone TruckStation.tscn for testing)
+
+**Still needed (later):**
 - Recipe data integration (recipes not yet defined as .tres resources)
-- Timer/progress mechanic for each station
-- Station-to-station workflow (Prep → Cook → Plate)
 - Customer system (spawning, ordering, patience timers)
 - Delivery mechanic
 

@@ -43,10 +43,10 @@ Working on `scripts/truck_station.gd` + `scenes/TruckStation.tscn`.
 - Player interacts to start work, timer counts down, interact again to advance
 - Station transitions through PREP → COOK → PLATE → loops back to PREP
 - PhaseLabel and StationLabel update to show current state
+- ProgressBar on each station shows timer countdown (updated in _process)
 - Tested and working in-game
 
 **Next up:**
-- Hook up StationProgressBar (in PhaseTruck HUD) to the timer for visual countdown
 - Completion logic — signal when PLATE finishes instead of looping back to PREP
 - Wire TruckStation into PhaseTruck scene (currently using standalone TruckStation.tscn for testing)
 

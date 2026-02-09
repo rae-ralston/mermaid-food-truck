@@ -11,13 +11,13 @@ script = ExtResource("1_572ig")
 
 [node name="World" type="Node2D" parent="." unique_id=1102149595]
 
-[node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_44s6t")]
-position = Vector2(493, 396)
-
 [node name="Stations" type="Node2D" parent="World" unique_id=976916769]
 
 [node name="TruckStation" parent="World/Stations" unique_id=913382092 instance=ExtResource("3_5p4at")]
 position = Vector2(310, 274)
+
+[node name="Diver" parent="." unique_id=882753087 instance=ExtResource("2_44s6t")]
+position = Vector2(493, 396)
 
 [node name="HUD" type="Control" parent="." unique_id=914636482]
 anchors_preset = 0
@@ -37,13 +37,6 @@ offset_left = 934.0
 offset_top = 442.0
 offset_right = 974.0
 offset_bottom = 465.0
-
-[node name="StationProgressBar" type="ProgressBar" parent="HUD" unique_id=1337840804]
-layout_mode = 0
-offset_left = 939.0
-offset_top = 389.0
-offset_right = 943.0
-offset_bottom = 416.0
 
 [node name="InventoryLabel" type="Label" parent="HUD" unique_id=844575355]
 layout_mode = 0

@@ -30,3 +30,9 @@ offset_bottom = -154.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=564988941]
 position = Vector2(3.5, 6.5)
 shape = SubResource("RectangleShape2D_md0ap")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1610882042]
+offset_left = -82.0
+offset_top = 95.0
+offset_right = 65.0
+offset_bottom = 122.0

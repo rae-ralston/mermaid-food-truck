@@ -1,19 +1,32 @@
 [gd_scene format=3 uid="uid://dwdh1cupd5d5q"]
 
 [ext_resource type="Script" uid="uid://c1lp111kxyk15" path="res://scripts/truck_station.gd" id="1_md0ap"]
+[ext_resource type="Texture2D" uid="uid://c6dm05c7m0e1g" path="res://assets/prep-station.png" id="2_5pjwh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_md0ap"]
+size = Vector2(129, 91)
 
-[node name="TruckStation" type="Node2D" unique_id=913382092]
+[node name="TruckStation" type="Area2D" unique_id=1183657895]
 script = ExtResource("1_md0ap")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1878952820]
+[node name="Timer" type="Timer" parent="." unique_id=83707731]
+one_shot = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=2034459249]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2034459249]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_5pjwh")
 
-[node name="PhaseLabel" type="Label" parent="Area2D" unique_id=848152297]
+[node name="PhaseLabel" type="Label" parent="." unique_id=848152297]
+offset_left = 2.0
+offset_top = -133.0
+offset_right = 42.0
+offset_bottom = -110.0
+
+[node name="StationLabel" type="Label" parent="." unique_id=700095851]
+offset_top = -177.0
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = -154.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=564988941]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=564988941]
+position = Vector2(3.5, 6.5)
 shape = SubResource("RectangleShape2D_md0ap")

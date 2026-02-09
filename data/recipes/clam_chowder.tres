@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3 uid="uid://cmbygsh3fq5ny"]
+
+[ext_resource type="Script" uid="uid://b2aqkkqqhuaxo" path="res://resources/recipe_data.gd" id="1_u8q6o"]
+
+[resource]
+script = ExtResource("1_u8q6o")
+id = &"clamchowder"
+display_name = "Clam Chowder"
+steps = Array[int]([0, 1, 2])
+metadata/_custom_type_script = "uid://b2aqkkqqhuaxo"

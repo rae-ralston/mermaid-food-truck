@@ -34,6 +34,10 @@ func _ready() -> void:
 	$PhaseLabel.text = cookingPhase[currentCookingPhase].name
 	$StationLabel.text = stationPhase[StationType.PREP].name
 
+func _process(delta: float) -> void:
+	if currentCookingPhase == CookingPhaseIds.WORKING:
+		$ProgressBar.value = (1 - $Timer.time_left/$Timer.wait_time) * 100 
+
 func interact(_actor) -> Dictionary:
 	match(currentCookingPhase):
 		CookingPhaseIds.IDLE:
@@ -41,6 +45,7 @@ func interact(_actor) -> Dictionary:
 			var workingPhase = cookingPhase[CookingPhaseIds.WORKING]
 			$PhaseLabel.text = workingPhase.name
 			$Timer.start(workingPhase.prepTime)
+			$ProgressBar.value = 0
 			_set_cooking_phase(CookingPhaseIds.WORKING)
 			return {}
 		CookingPhaseIds.WORKING:
@@ -52,6 +57,7 @@ func interact(_actor) -> Dictionary:
 			# TODO: pick up item into inventory.
 			# TODO: check if item has been cooked
 			$PhaseLabel.text = cookingPhase[CookingPhaseIds.IDLE].name
+			$ProgressBar.value = 0
 			_set_cooking_phase(CookingPhaseIds.IDLE)
 			_set_next_cooking_phase() # TODO: next in recipe
 			return {}

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3 uid="uid://dtlol3f8wmump"]
+
+[ext_resource type="Script" uid="uid://b2aqkkqqhuaxo" path="res://resources/recipe_data.gd" id="1_qslm1"]
+
+[resource]
+script = ExtResource("1_qslm1")
+id = &"glowing_soup"
+display_name = "Grandma's Glowing Soup"
+inputs = {
+"glow_algae": 2
+}
+steps = Array[int]([0, 2])
+base_price = 1
+time_limit = 3.0
+metadata/_custom_type_script = "uid://b2aqkkqqhuaxo"

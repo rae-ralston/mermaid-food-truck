@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3 uid="uid://7sevuyvi45yj"]
+
+[ext_resource type="Script" uid="uid://b2aqkkqqhuaxo" path="res://resources/recipe_data.gd" id="1_3bn3y"]
+
+[resource]
+script = ExtResource("1_3bn3y")
+id = &"slug_sushi"
+display_name = "Sea Slug Sushi"
+inputs = {
+"coral_spice": 1,
+"kelp": 1,
+"sea_slug": 1
+}
+steps = Array[int]([0, 1, 2])
+base_price = 3
+time_limit = 3.0
+metadata/_custom_type_script = "uid://b2aqkkqqhuaxo"

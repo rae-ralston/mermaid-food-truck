@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://bnyo7fgknfdqs"]
+
+[ext_resource type="Script" uid="uid://n1yc0ylmvws4" path="res://resources/ingredient_data.gd" id="1_51f30"]
+
+[resource]
+script = ExtResource("1_51f30")
+id = &"coral_spice"
+display_name = "Coral Spice"
+metadata/_custom_type_script = "uid://n1yc0ylmvws4"

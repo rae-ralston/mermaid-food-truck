@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RecipeData" format=3 uid="uid://dmpslpuede06m"]
+
+[ext_resource type="Script" uid="uid://b2aqkkqqhuaxo" path="res://resources/recipe_data.gd" id="1_2txyb"]
+
+[resource]
+script = ExtResource("1_2txyb")
+id = &"kelp_bowl"
+display_name = "Spiced Kelp Bowl"
+inputs = {
+"coral_spice": 1,
+"kelp": 1
+}
+steps = Array[int]([0, 1, 2])
+base_price = 2
+time_limit = 3.0
+metadata/_custom_type_script = "uid://b2aqkkqqhuaxo"

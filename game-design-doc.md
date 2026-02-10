@@ -208,7 +208,7 @@ unlocked_recipes: Array[StringName]
 | Recipe                 | Ingredients                       | Steps             | Price |
 | ---------------------- | --------------------------------- | ----------------- | ----- |
 | Kelp Wrap              | 2 kelp                            | Prep, Plate       | $     |
-| Grandma's Glowing Soup | 2 glow algae                      | Prep, Plate       | $     |
+| Grandma's Glowing Soup | 2 glow_algae                      | Prep, Plate       | $     |
 | Clam Chowder           | 2 clam, 1 kelp                    | Prep, Cook, Plate | $$    |
 | Spiced Kelp Bowl       | 1 kelp, 1 coral_spice             | Prep, Cook, Plate | $$    |
 | Sea Slug Sushi         | 1 kelp, 1 coral_spice, 1 sea_slug | Prep, Cook, Plate | $$$   |

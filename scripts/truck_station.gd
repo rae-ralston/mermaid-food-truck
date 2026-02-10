@@ -1,7 +1,11 @@
 extends Area2D
 
+signal dish_completed(recipe_id: String, station_type: StationType)
+
 enum CookingPhaseIds { IDLE, WORKING, DONE }
 enum StationType { PREP, COOK, PLATE }
+
+@export var station_type: StationType
 
 var stationPhase: Dictionary = {
 	StationType.PREP: { "name": 'prep phase' },
@@ -26,19 +30,20 @@ var cookingPhase: Dictionary = {
 }
 
 var currentCookingPhase: CookingPhaseIds = CookingPhaseIds.IDLE
-var currentStation: StationType = StationType.PREP
+var currentRecipeId: String = "a recipe id" #TODO make this real not hardcoded
 var isCooking: bool = false
 
 func _ready() -> void:
 	$Timer.timeout.connect(_on_timer_timeout)
 	$PhaseLabel.text = cookingPhase[currentCookingPhase].name
-	$StationLabel.text = stationPhase[StationType.PREP].name
+	$StationLabel.text = stationPhase[station_type].name
 
 func _process(delta: float) -> void:
 	if currentCookingPhase == CookingPhaseIds.WORKING:
 		$ProgressBar.value = (1 - $Timer.time_left/$Timer.wait_time) * 100 
 
 func interact(_actor) -> Dictionary:
+	# how do we recieve the currentRecipeId? Should it just pick the next item in the queue? or should the player determine what we're cooking next?
 	match(currentCookingPhase):
 		CookingPhaseIds.IDLE:
 			# TODO: if there is an order in the queue
@@ -55,12 +60,11 @@ func interact(_actor) -> Dictionary:
 			return {}
 		CookingPhaseIds.DONE:
 			# TODO: pick up item into inventory.
-			# TODO: check if item has been cooked
 			$PhaseLabel.text = cookingPhase[CookingPhaseIds.IDLE].name
 			$ProgressBar.value = 0
+			dish_completed.emit(currentRecipeId, station_type)
 			_set_cooking_phase(CookingPhaseIds.IDLE)
-			_set_next_cooking_phase() # TODO: next in recipe
-			return {}
+			return { "recipeId": currentRecipeId }
 		_:
 			return {}
 
@@ -70,24 +74,6 @@ func _get_cooking_phase_info() -> CookingPhaseIds:
 
 func _set_cooking_phase(newPhase: CookingPhaseIds) -> void:
 	currentCookingPhase = newPhase
-
-func _set_next_cooking_phase() -> void:
-	# TODO set to next as designated in the recipe
-	match currentStation:
-		StationType.PREP:
-			_transition_station_type_to(StationType.COOK)
-		StationType.COOK:
-			_transition_station_type_to(StationType.PLATE)
-		StationType.PLATE:
-			_transition_station_type_to(StationType.PREP)
-		_:
-			pass
-		
-
-
-func _transition_station_type_to(transition_to: StationType) -> void:
-	$StationLabel.text = stationPhase[transition_to].name
-	currentStation = transition_to
 
 func _on_timer_timeout():
 	_set_cooking_phase(CookingPhaseIds.DONE)

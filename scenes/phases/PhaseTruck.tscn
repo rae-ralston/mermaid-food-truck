@@ -13,8 +13,19 @@ script = ExtResource("1_572ig")
 
 [node name="Stations" type="Node2D" parent="World" unique_id=976916769]
 
-[node name="TruckStation" parent="World/Stations" unique_id=913382092 instance=ExtResource("3_5p4at")]
-position = Vector2(310, 274)
+[node name="PrepStation" parent="World/Stations" unique_id=913382092 instance=ExtResource("3_5p4at")]
+position = Vector2(251, 338)
+station_type = 0
+
+[node name="CookStation" parent="World/Stations" unique_id=1183657895 instance=ExtResource("3_5p4at")]
+modulate = Color(0.8509804, 0.4, 0.90588236, 1)
+position = Vector2(670, 247)
+station_type = 1
+
+[node name="PlateStation" parent="World/Stations" unique_id=955957752 instance=ExtResource("3_5p4at")]
+modulate = Color(1, 1, 0.37254903, 1)
+position = Vector2(986, 324)
+station_type = 2
 
 [node name="Diver" parent="." unique_id=882753087 instance=ExtResource("2_44s6t")]
 position = Vector2(493, 396)

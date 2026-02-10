@@ -34,21 +34,29 @@ See `game-design-doc.md` for full details on recipes, ingredients, and pricing.
 
 ## Current Work: Truck Cooking Phase
 
-Working on `scripts/truck_station.gd` + `scenes/TruckStation.tscn`.
+Working on `scripts/truck_station.gd` + `scenes/TruckStation.tscn` + `scenes/phases/PhaseTruck.tscn`.
 
 **What works:**
 - TruckStation extends Area2D (matches interaction system pattern from Gatherable)
 - Enums: `CookingPhaseIds` (IDLE, WORKING, DONE), `StationType` (PREP, COOK, PLATE)
+- Each station is single-purpose — `@export var station_type` set in inspector, no cycling
 - Timer node (one_shot) drives IDLE → WORKING → DONE cycle
-- Player interacts to start work, timer counts down, interact again to advance
-- Station transitions through PREP → COOK → PLATE → loops back to PREP
-- PhaseLabel and StationLabel update to show current state
+- Player interacts to start work, timer counts down, interact again to pick up finished dish
+- `dish_completed` signal emits recipe_id and station_type on pickup, then resets to IDLE
 - ProgressBar on each station shows timer countdown (updated in _process)
-- Tested and working in-game
+- PhaseTruck scene wired up with three station instances (PREP, COOK, PLATE) under World/Stations
+- Diver in scene, can walk between stations and interact
+- HUD stubs: OrdersPanel, CurrentDishLabel, InventoryLabel
+
+**Design decisions:**
+- Stations are single-purpose (one PREP, one COOK, one PLATE) — player carries items between them
+- Station holds finished dish until player picks it up (blocks station until pickup)
+- Stations track recipe_id only, not order_id — order matching happens at delivery
 
 **Next up:**
-- Completion logic — signal when PLATE finishes instead of looping back to PREP
-- Wire TruckStation into PhaseTruck scene (currently using standalone TruckStation.tscn for testing)
+- Connect `dish_completed` signals in `phase_truck.gd` to track order fulfillment
+- Move Diver under World node so it shares coordinate space with stations
+- Player "held item" concept — carrying dishes between stations
 
 **Still needed (later):**
 - Recipe data integration (recipes not yet defined as .tres resources)

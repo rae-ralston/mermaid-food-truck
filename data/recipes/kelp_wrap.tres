@@ -6,7 +6,10 @@
 script = ExtResource("1_8i3r3")
 id = &"kelp_wrap"
 display_name = "Kelp Wrap"
+inputs = {
+"kelp": 2
+}
 steps = Array[int]([0, 2])
 base_price = 1
-time_limit = 5.0
+time_limit = 3.0
 metadata/_custom_type_script = "uid://b2aqkkqqhuaxo"

@@ -7,6 +7,7 @@ signal interaction_performed(result: Dictionary)
 @onready var interaction_zone: Area2D = $InteractionZone
 
 var nearby: Array[Area2D] = []
+var held_item: String = ""
 
 func _ready() -> void:
 	interaction_zone.area_entered.connect(_on_area_entered)
@@ -69,3 +70,5 @@ func _try_interact() -> void:
 		result = {}
 
 	emit_signal("interaction_performed", result)
+
+func is_holding() -> bool: return held_item.length() > 0

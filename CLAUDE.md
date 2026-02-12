@@ -21,8 +21,8 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 - `scenes/` — .tscn files, phases live in `scenes/phases/`
 - `scripts/` — GDScript, core systems in `scripts/core/`
 - `resources/` — Resource class definitions (IngredientData, RecipeData, RecipeStepIds)
-- `data/ingredients/` — .tres ingredient resources (kelp, clam exist; coral_spice, glow_algae, sea_slug not yet created)
-- `data/recipes/` — Empty, no recipe resources created yet
+- `data/ingredients/` — .tres ingredient resources (all 5 exist; coral_spice, glow_algae, sea_slug missing sprites)
+- `data/recipes/` — .tres recipe resources (all 5 exist, inputs/steps/prices match design doc)
 - `assets/` — Sprites and art
 
 ## MVP Content
@@ -46,20 +46,30 @@ Working on `scripts/truck_station.gd` + `scenes/TruckStation.tscn` + `scenes/pha
 - ProgressBar on each station shows timer countdown (updated in _process)
 - PhaseTruck scene wired up with three station instances (PREP, COOK, PLATE) under World/Stations
 - Diver in scene, can walk between stations and interact
-- HUD stubs: OrdersPanel, CurrentDishLabel, InventoryLabel
+- HUD: CurrentDishLabel wired to `held_item_changed` signal (shows recipe display_name), InventoryLabel shows counts, OrdersPanel stub
+- Player held item: DiverController has `held_item: String` with setter that emits `held_item_changed` signal, `is_holding() -> bool`
+- Stations check held item state: PREP rejects if holding, COOK/PLATE require held item
+- Stations take item from player on start (COOK/PLATE), give item on pickup (all)
+- All 5 recipe .tres resources created with correct inputs, steps, prices
+- Stations use RecipeData resources — `time_limit` from recipe drives timer, catalog lookup via `GameState.recipeCatalog`
+- `GameState.recipeCatalog` loads all recipe `.tres` from `data/recipes/` on `_ready()`
+- Diver positioned under World node (shares coordinate space with stations)
 
 **Design decisions:**
 - Stations are single-purpose (one PREP, one COOK, one PLATE) — player carries items between them
 - Station holds finished dish until player picks it up (blocks station until pickup)
 - Stations track recipe_id only, not order_id — order matching happens at delivery
+- `held_item` is a plain String (recipe_id) for now — will upgrade to richer type when needed
 
-**Next up:**
+**Next up (in order):**
+1. Customer/order system — spawning, ordering, patience timers
+
+**Known TODO:**
+- Dishes should track completed stage so they can't go through the same station twice (e.g., prepped item can only go to COOK, not back to PREP)
+- Handle cooking interruptions — player can cancel a station mid-work (WORKING state), recovering or losing the dish, resetting the station
 - Connect `dish_completed` signals in `phase_truck.gd` to track order fulfillment
-- Move Diver under World node so it shares coordinate space with stations
-- Player "held item" concept — carrying dishes between stations
 
 **Still needed (later):**
-- Recipe data integration (recipes not yet defined as .tres resources)
 - Customer system (spawning, ordering, patience timers)
 - Delivery mechanic
 

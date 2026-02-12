@@ -2,12 +2,16 @@ extends CharacterBody2D
 class_name DiverController
 
 signal interaction_performed(result: Dictionary)
+signal held_item_changed(item_id: String)
 
 @export var speed: float = 220.0
 @onready var interaction_zone: Area2D = $InteractionZone
 
 var nearby: Array[Area2D] = []
-var held_item: String = ""
+var held_item: String = "":
+	set(value):
+		held_item = value
+		held_item_changed.emit(value)
 
 func _ready() -> void:
 	interaction_zone.area_entered.connect(_on_area_entered)
@@ -30,9 +34,6 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func _on_area_entered(area) -> void:
-	print("entered:", area.name, " script=", area.get_script())
-	print("nearby:", nearby)
-	print("has Interact method: ", area.has_method("interact"))
 	if area.has_method("interact"):
 		nearby.append(area)
 

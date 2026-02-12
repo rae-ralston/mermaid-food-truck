@@ -15,7 +15,6 @@ script = ExtResource("1_572ig")
 
 [node name="PrepStation" parent="World/Stations" unique_id=913382092 instance=ExtResource("3_5p4at")]
 position = Vector2(251, 338)
-station_type = 0
 
 [node name="CookStation" parent="World/Stations" unique_id=1183657895 instance=ExtResource("3_5p4at")]
 modulate = Color(0.8509804, 0.4, 0.90588236, 1)
@@ -27,7 +26,7 @@ modulate = Color(1, 1, 0.37254903, 1)
 position = Vector2(986, 324)
 station_type = 2
 
-[node name="Diver" parent="." unique_id=882753087 instance=ExtResource("2_44s6t")]
+[node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_44s6t")]
 position = Vector2(493, 396)
 
 [node name="HUD" type="Control" parent="." unique_id=914636482]
@@ -44,10 +43,10 @@ offset_bottom = 453.0
 
 [node name="CurrentDishLabel" type="Label" parent="HUD" unique_id=850805251]
 layout_mode = 0
-offset_left = 934.0
-offset_top = 442.0
-offset_right = 974.0
-offset_bottom = 465.0
+offset_left = 569.0
+offset_top = 602.0
+offset_right = 609.0
+offset_bottom = 625.0
 
 [node name="InventoryLabel" type="Label" parent="HUD" unique_id=844575355]
 layout_mode = 0

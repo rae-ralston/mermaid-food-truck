@@ -21,7 +21,6 @@ var cookingPhase: Dictionary = {
 	CookingPhaseIds.WORKING: {
 		"id": CookingPhaseIds.WORKING,
 		"name": "Working...",
-		"prepTime": 5 #seconds
 	},
 	CookingPhaseIds.DONE: {
 		"id": CookingPhaseIds.DONE,
@@ -30,7 +29,7 @@ var cookingPhase: Dictionary = {
 }
 
 var currentCookingPhase: CookingPhaseIds = CookingPhaseIds.IDLE
-var currentRecipeId: String = "" #TODO make this real not hardcoded
+var current_recipe: RecipeData
 
 func _ready() -> void:
 	$Timer.timeout.connect(_on_timer_timeout)
@@ -43,6 +42,7 @@ func _process(_delta: float) -> void:
 
 func interact(actor) -> Dictionary:
 	# how do we recieve the currentRecipeId? Should it just pick the next item in the queue? or should the player determine what we're cooking next?
+	
 	match(currentCookingPhase):
 		CookingPhaseIds.IDLE:
 			# TODO: if there is an order in the queue
@@ -50,19 +50,19 @@ func interact(actor) -> Dictionary:
 				if actor.is_holding(): 
 					print("you can't use PREP station while holding something")
 					return {}
-				currentRecipeId = "test_recipe"
+				current_recipe = GameState.recipeCatalog[&"clam_chowder"]
 			
 			else:
 				if not actor.is_holding():
 					print("you must be holding something for COOK or PLATE stations to init")
 					return {}
 			
-				currentRecipeId = actor.held_item
+				current_recipe = GameState.recipeCatalog[actor.held_item]
 				actor.held_item = ""
 				
 			var workingPhase = cookingPhase[CookingPhaseIds.WORKING]
 			$PhaseLabel.text = workingPhase.name
-			$Timer.start(workingPhase.prepTime)
+			$Timer.start(current_recipe.time_limit)
 			$ProgressBar.value = 0
 			
 			_set_cooking_phase(CookingPhaseIds.WORKING)
@@ -84,15 +84,15 @@ func interact(actor) -> Dictionary:
 			$PhaseLabel.text = cookingPhase[CookingPhaseIds.IDLE].name
 			$ProgressBar.value = 0
 			
-			dish_completed.emit(currentRecipeId, station_type)
+			dish_completed.emit(current_recipe.id, station_type)
 			
-			var current_recipe = currentRecipeId
-			actor.held_item = currentRecipeId
-			currentRecipeId = ""
+			var current = current_recipe
+			actor.held_item = current_recipe.id
+			current_recipe = null
 			
 			_set_cooking_phase(CookingPhaseIds.IDLE)
 			
-			return { "recipeId": current_recipe }
+			return { "recipeId": current.id }
 		_:
 			return {}
 

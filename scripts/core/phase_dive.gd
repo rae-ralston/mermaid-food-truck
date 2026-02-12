@@ -35,11 +35,6 @@ func _merge_into(target: Dictionary, items: Dictionary) -> void:
 
 func _update_debug_ui(items_gathered) -> void:
 	print("[DIVE PHASE] updating UI with: ", items_gathered)
-	#var lines: Array[String] = []
-	#lines.append("Inventory %d/%d" % [GameState.inventory.total_count(), GameState.inventory.capacity])
-	#lines.append("Kelp: %d" % GameState.inventory.get_count(Ids.ING_KELP))
-	#lines.append("Clam: %d" % GameState.inventory.get_count(Ids.ING_CLAM))
-	#$InventoryLabel.text = "\n".join(lines)
 	pass
 
 func _refresh_loot_ui() -> void:

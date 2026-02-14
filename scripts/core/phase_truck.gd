@@ -3,6 +3,9 @@ extends BasePhase
 signal order_queue_updated(queue: Array[Order])
 
 var order_queue: Array[Order] = []
+var orders_filled: int = 0
+var orders_lost: int = 0
+var money_earned: int = 0
 
 func _ready() -> void:
 	$HUD/Label.text = "Truck Phase - let's eat some tasty food"
@@ -45,7 +48,13 @@ func _refresh_inventory() -> void:
 	$HUD/InventoryLabel.text = "\n".join(lines)
 
 func _on_next() -> void:
-	emit_signal("phase_finished", PhaseIds.PhaseId.RESULTS, {})
+	var payload = {
+		"orders_filled": orders_filled, 
+		"orders_lost": orders_lost, 
+		"money_earned": money_earned
+	}
+	
+	emit_signal("phase_finished", PhaseIds.PhaseId.RESULTS, payload)
 
 func _on_held_item_changed(item: String) -> void:
 	if item == "" :
@@ -63,7 +72,9 @@ func _on_order_fulfilled(recipe_id: StringName) -> void:
 		if (order.recipe_id == recipe_id):
 			var recipe_price = GameState.recipeCatalog[recipe_id].base_price
 			GameState.money += recipe_price
+			money_earned += recipe_price
 			
+			orders_filled += 1
 			order.status = Order.Status.FULFILLED
 			order_queue.erase(order)
 

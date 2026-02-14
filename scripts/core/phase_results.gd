@@ -1,12 +1,17 @@
 extends BasePhase
 
 func _ready() -> void:
-	$Label.text = "Results Phase - how'd we do?"
-	$Button.text = "go to next phase: store"
-	$Button.pressed.connect(_on_next)
+	$PhaseLabel.text = "Results Phase - how'd we do?"
+	$ContinueButton.text = "go to next phase: store"
+	$ContinueButton.pressed.connect(_on_next)
 
-func enter(_payload: Dictionary) -> void:
-	pass
+func enter(payload: Dictionary) -> void:
+	$DayLabel.text = "Summary for Day %s" % [GameState.day]
+	$Stats/OrdersFilledLabel.text = "Orders Filled: %s" % [payload.orders_filled]
+	$Stats/OrdersLostLabel.text = "Orders Lost: %s" % [payload.orders_lost]
+	$Stats/MoneyEarnedLabel.text = "Money Earned: $%s" % [payload.money_earned]
+	$Stats/TotalBalanceLabel.text = "Total Available Balance: $%s" % [GameState.money]
 
 func _on_next() -> void:
+	GameState.day += 1
 	emit_signal("phase_finished", PhaseIds.PhaseId.STORE, {})

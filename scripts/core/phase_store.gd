@@ -9,5 +9,4 @@ func enter(_payload: Dictionary) -> void:
 	pass
 
 func _on_next() -> void:
-	GameState.day += 1
 	emit_signal("phase_finished", PhaseIds.PhaseId.DIVE_PLANNING, {})

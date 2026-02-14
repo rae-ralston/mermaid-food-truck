@@ -7,16 +7,50 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_xhsce")
 
-[node name="Label" type="Label" parent="." unique_id=44329220]
+[node name="PhaseLabel" type="Label" parent="." unique_id=44329220]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 3.0
 offset_right = 44.0
 offset_bottom = 26.0
 
-[node name="Button" type="Button" parent="." unique_id=1674863493]
+[node name="ContinueButton" type="Button" parent="." unique_id=1674863493]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 52.0
 offset_right = 17.0
 offset_bottom = 60.0
+
+[node name="DayLabel" type="Label" parent="." unique_id=1030593141]
+layout_mode = 0
+offset_left = 451.0
+offset_top = 151.0
+offset_right = 491.0
+offset_bottom = 186.0
+theme_override_font_sizes/font_size = 25
+
+[node name="Stats" type="VBoxContainer" parent="." unique_id=1532449559]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 460.0
+offset_top = 230.0
+offset_right = 500.0
+offset_bottom = 334.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OrdersFilledLabel" type="Label" parent="Stats" unique_id=1030549128]
+layout_mode = 2
+
+[node name="OrdersLostLabel" type="Label" parent="Stats" unique_id=1875348136]
+layout_mode = 2
+
+[node name="MoneyEarnedLabel" type="Label" parent="Stats" unique_id=712702835]
+layout_mode = 2
+
+[node name="TotalBalanceLabel" type="Label" parent="Stats" unique_id=821975268]
+layout_mode = 2

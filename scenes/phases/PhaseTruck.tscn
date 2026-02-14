@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c3waxgc47thjy" path="res://scripts/core/phase_truck.gd" id="1_572ig"]
 [ext_resource type="PackedScene" uid="uid://cgorwwg8pq6yc" path="res://scenes/Diver.tscn" id="2_44s6t"]
 [ext_resource type="PackedScene" uid="uid://dwdh1cupd5d5q" path="res://scenes/TruckStation.tscn" id="3_5p4at"]
+[ext_resource type="PackedScene" uid="uid://x6pw2hcbbfh5" path="res://scenes/TruckPickupWindow.tscn" id="3_hjevm"]
 
 [node name="PhaseTruck" type="Control" unique_id=1378708853]
 layout_mode = 3
@@ -26,6 +27,9 @@ modulate = Color(1, 1, 0.37254903, 1)
 position = Vector2(986, 324)
 station_type = 2
 
+[node name="PickupWindow" parent="World" unique_id=1338750309 instance=ExtResource("3_hjevm")]
+position = Vector2(744, 553)
+
 [node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_44s6t")]
 position = Vector2(493, 396)
 
@@ -36,10 +40,10 @@ offset_bottom = 40.0
 
 [node name="OrdersPanel" type="VBoxContainer" parent="HUD" unique_id=8881693]
 layout_mode = 0
-offset_left = 58.0
-offset_top = 413.0
-offset_right = 98.0
-offset_bottom = 453.0
+offset_left = 31.0
+offset_top = 452.0
+offset_right = 71.0
+offset_bottom = 492.0
 
 [node name="CurrentDishLabel" type="Label" parent="HUD" unique_id=850805251]
 layout_mode = 0

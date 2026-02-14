@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://x6pw2hcbbfh5"]
+
+[ext_resource type="Script" uid="uid://55pxfpnotmfy" path="res://scripts/truck_pickup_window.gd" id="1_n7tjw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lcajw"]
+size = Vector2(94, 95)
+
+[sub_resource type="Gradient" id="Gradient_n7tjw"]
+colors = PackedColorArray(0.30980393, 0.50980395, 0.7882353, 1, 0.2901961, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lcajw"]
+gradient = SubResource("Gradient_n7tjw")
+width = 100
+height = 100
+
+[node name="TruckPickupWindow" type="Area2D" unique_id=1338750309]
+script = ExtResource("1_n7tjw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=916428747]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_lcajw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1205668629]
+texture = SubResource("GradientTexture2D_lcajw")

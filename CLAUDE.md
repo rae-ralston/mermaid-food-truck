@@ -64,14 +64,14 @@ Working on `scripts/truck_station.gd` + `scenes/TruckStation.tscn` + `scenes/pha
 
 **Next up — Customer/Order system (4 bites):**
 1. ~~**Order data + HUD**~~ ✓ Done
-2. **Delivery** — In progress on `add-pickup-window` branch. Pickup window script done (`scripts/truck_pickup_window.gd` — thin, just emits `order_fulfilled` with recipe_id and clears held item). PhaseTruck has `_on_order_fulfilled` handler but needs fixes before it works:
-   - **Signal wiring wrong:** Line 14 connects `order_queue_updated` (PhaseTruck's own signal) to `_on_order_fulfilled` — should connect the pickup window's `order_fulfilled` signal instead (e.g., `$World/PickupWindow.order_fulfilled.connect(_on_order_fulfilled)`)
-   - **Signal type mismatch:** `order_fulfilled` emits a `StringName` (recipe_id), but signal is declared as `order: Order`. Update the signal declaration in pickup window to `order_fulfilled(recipe_id: StringName)`
-   - **Order matching:** `_on_order_fulfilled` uses `order_queue.find(recipe_id)` and `order_queue.erase(recipe_id)` — but `order_queue` contains `Order` objects, not strings. Need to loop through queue and match on `order.recipe_id` instead
-   - **Missing:** Payment (`GameState.money += recipe.base_price`), status update (`order.status = Order.Status.FULFILLED`), call `_refresh_orders()` after fulfillment
-   - **Still needs:** PickupWindow scene (`.tscn` with Area2D + CollisionShape2D), placed in PhaseTruck scene under World
-   - **`order_queue_updated` signal on line 3/36:** Currently emitted inside `_refresh_orders()` — may not be needed since we simplified the pickup window to not track orders locally. Can remove unless needed later.
-3. **Customer nodes** — Visual node with sprite, spawns at order window, gets in line (FIFO). Player interacts with front-of-line customer to take order → pushes into order queue. Customer waits. Auto-picks up from pickup window when their order is fulfilled.
+2. ~~**Delivery**~~ ✓ Done — PickupWindow (Area2D interactable) emits `order_fulfilled(recipe_id)`. PhaseTruck's `_on_order_fulfilled` matches order by recipe_id, pays via `GameState.recipeCatalog[recipe_id].base_price`, updates status, removes from queue, refreshes HUD.
+3. **Customer nodes** — Next up. Design doc: `docs/plans/2026-02-14-customer-nodes-design.md`. Approach A: four pieces:
+   - **Customer.tscn** (Node2D) — sprite + data holder (`recipe_id`, `order` ref). `fulfill()` does brief delay + visual feedback then `queue_free()`. Emits `customer_left`. Not interactable.
+   - **CustomerSpawner** (Node) — Timer-driven spawning (~8s interval). Manages `customer_line` array, positions customers near OrderWindow. `get_front_customer()` exposes front of line. Listens for `customer_left` to reposition line.
+   - **OrderWindow.tscn** (Area2D) — interactable like PickupWindow. `interact()` gets front customer from spawner, creates Order with `customer_ref`, emits `order_taken(order)`. Rejects if player is holding something or no customers in line.
+   - **Order updated** — new `customer_ref: Node2D` field for back-reference to customer node.
+   - **PhaseTruck wiring** — connects `order_taken` signal, replaces hardcoded orders. `_on_order_fulfilled` also calls `order.customer_ref.fulfill()`.
+   - **Design decisions:** random recipe from all 5 (active menu later), timed spawns, soft queue limit via spawn rate, auto-collect with brief delay (customer walking deferred).
 4. **Timeout + consequences** — Patience timer on customer. Timeout = customer leaves, food wasted, reputation hit. Reputation will eventually affect tips, pricing, story progression.
 
 **Customer/order design decisions:**
@@ -79,7 +79,7 @@ Working on `scripts/truck_station.gd` + `scenes/TruckStation.tscn` + `scenes/pha
 - Customer line is FIFO — orders taken in sequence
 - Orders can be delivered to pickup window in any order — not tied to line position
 - Payment happens at pickup
-- Order tracks `recipe_id` and `status`, eventually `customer_ref` for back-reference to customer node
+- Order tracks `recipe_id`, `status`, and `customer_ref` for back-reference to customer node
 
 **Known TODO:**
 - Dishes should track completed stage so they can't go through the same station twice (e.g., prepped item can only go to COOK, not back to PREP)
@@ -87,8 +87,6 @@ Working on `scripts/truck_station.gd` + `scenes/TruckStation.tscn` + `scenes/pha
 - Connect `dish_completed` signals in `phase_truck.gd` to track order fulfillment
 
 **Still needed (later):**
-- Delivery mechanic (bite 2 above)
-- Customer visual system (bite 3 above)
 - Patience/timeout system (bite 4 above)
 
 ## Teaching Mode

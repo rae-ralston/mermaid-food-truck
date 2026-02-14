@@ -41,24 +41,14 @@ func _process(_delta: float) -> void:
 		$ProgressBar.value = (1 - $Timer.time_left/$Timer.wait_time) * 100 
 
 func interact(actor) -> Dictionary:
-	# how do we recieve the currentRecipeId? Should it just pick the next item in the queue? or should the player determine what we're cooking next?
-	
 	match(currentCookingPhase):
 		CookingPhaseIds.IDLE:
-			# TODO: if there is an order in the queue
-			if station_type == StationType.PREP:
-				if actor.is_holding(): 
-					print("you can't use PREP station while holding something")
-					return {}
-				current_recipe = GameState.recipeCatalog[&"clam_chowder"]
-			
-			else:
-				if not actor.is_holding():
-					print("you must be holding something for COOK or PLATE stations to init")
-					return {}
-			
-				current_recipe = GameState.recipeCatalog[actor.held_item]
-				actor.held_item = ""
+			if not actor.is_holding():
+				print("you must be holding something for init a station")
+				return {}
+		
+			current_recipe = GameState.recipeCatalog[actor.held_item]
+			actor.held_item = ""
 				
 			var workingPhase = cookingPhase[CookingPhaseIds.WORKING]
 			$PhaseLabel.text = workingPhase.name

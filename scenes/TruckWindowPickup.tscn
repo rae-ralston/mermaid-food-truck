@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://x6pw2hcbbfh5"]
 
-[ext_resource type="Script" uid="uid://55pxfpnotmfy" path="res://scripts/truck_pickup_window.gd" id="1_n7tjw"]
+[ext_resource type="Script" uid="uid://55pxfpnotmfy" path="res://scripts/truck_window_pickup.gd" id="1_n7tjw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lcajw"]
 size = Vector2(94, 95)

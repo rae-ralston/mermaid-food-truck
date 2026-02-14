@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c3waxgc47thjy" path="res://scripts/core/phase_truck.gd" id="1_572ig"]
 [ext_resource type="PackedScene" uid="uid://cgorwwg8pq6yc" path="res://scenes/Diver.tscn" id="2_44s6t"]
+[ext_resource type="Script" uid="uid://5ugvx3wur61s" path="res://scripts/truck_customer_spawner.gd" id="2_gsc83"]
 [ext_resource type="PackedScene" uid="uid://dwdh1cupd5d5q" path="res://scenes/TruckStation.tscn" id="3_5p4at"]
-[ext_resource type="PackedScene" uid="uid://x6pw2hcbbfh5" path="res://scenes/TruckPickupWindow.tscn" id="3_hjevm"]
+[ext_resource type="PackedScene" uid="uid://x6pw2hcbbfh5" path="res://scenes/TruckWindowPickup.tscn" id="3_hjevm"]
+[ext_resource type="PackedScene" uid="uid://4tpx5afmlk5p" path="res://scenes/TruckWindowOrder.tscn" id="4_wnxoj"]
 
 [node name="PhaseTruck" type="Control" unique_id=1378708853]
 layout_mode = 3
@@ -12,23 +14,29 @@ script = ExtResource("1_572ig")
 
 [node name="World" type="Node2D" parent="." unique_id=1102149595]
 
+[node name="CustomerSpawner" type="Node" parent="World" unique_id=956556915]
+script = ExtResource("2_gsc83")
+
 [node name="Stations" type="Node2D" parent="World" unique_id=976916769]
 
 [node name="PrepStation" parent="World/Stations" unique_id=913382092 instance=ExtResource("3_5p4at")]
-position = Vector2(251, 338)
+position = Vector2(199, 196)
 
 [node name="CookStation" parent="World/Stations" unique_id=1183657895 instance=ExtResource("3_5p4at")]
 modulate = Color(0.8509804, 0.4, 0.90588236, 1)
-position = Vector2(670, 247)
+position = Vector2(524, 151)
 station_type = 1
 
 [node name="PlateStation" parent="World/Stations" unique_id=955957752 instance=ExtResource("3_5p4at")]
 modulate = Color(1, 1, 0.37254903, 1)
-position = Vector2(986, 324)
+position = Vector2(868, 156)
 station_type = 2
 
 [node name="PickupWindow" parent="World" unique_id=1338750309 instance=ExtResource("3_hjevm")]
-position = Vector2(744, 553)
+position = Vector2(244, 578)
+
+[node name="OrderWindow" parent="World" unique_id=1317284090 instance=ExtResource("4_wnxoj")]
+position = Vector2(684, 452)
 
 [node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_44s6t")]
 position = Vector2(493, 396)

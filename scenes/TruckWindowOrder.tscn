@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://4tpx5afmlk5p"]
+
+[ext_resource type="Script" uid="uid://cgrqfychlc7bv" path="res://scripts/truck_window_order.gd" id="1_o5lad"]
+
+[sub_resource type="Gradient" id="Gradient_o5lad"]
+colors = PackedColorArray(0.7176471, 0.35686275, 0.21176471, 1, 0.7882353, 0.29803923, 0.78039217, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3rw3d"]
+gradient = SubResource("Gradient_o5lad")
+width = 100
+height = 100
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sk26r"]
+size = Vector2(98, 98)
+
+[node name="TruckWindowOrder" type="Area2D" unique_id=1317284090]
+script = ExtResource("1_o5lad")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=923710403]
+texture = SubResource("GradientTexture2D_3rw3d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1298253749]
+shape = SubResource("RectangleShape2D_sk26r")

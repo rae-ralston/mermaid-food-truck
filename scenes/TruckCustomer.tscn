@@ -3,12 +3,10 @@
 [ext_resource type="Script" uid="uid://cbu1ugsawbjrf" path="res://scripts/truck_customer.gd" id="1_bvt4w"]
 
 [sub_resource type="Gradient" id="Gradient_pj31f"]
-colors = PackedColorArray(0.74509805, 0.39215687, 0.16862746, 1, 0.8, 0.30980393, 0.64705884, 1)
+colors = PackedColorArray(0.74509805, 0.98039216, 0.16862746, 1, 0.8, 1, 0.64705884, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_t0o3d"]
 gradient = SubResource("Gradient_pj31f")
-width = 100
-height = 100
 
 [node name="TruckCustomer" type="Node2D" unique_id=612081474]
 script = ExtResource("1_bvt4w")

@@ -10,8 +10,7 @@ func enter(payload: Dictionary) -> void:
 	$Stats/OrdersFilledLabel.text = "Orders Filled: %s" % [payload.orders_filled]
 	$Stats/OrdersLostLabel.text = "Orders Lost: %s" % [payload.orders_lost]
 	$Stats/MoneyEarnedLabel.text = "Money Earned: $%s" % [payload.money_earned]
-	$Stats/TotalBalanceLabel.text = "Total Avaialbe Balance: $%s" % [payload.orders_lost]
-	
+	$Stats/TotalBalanceLabel.text = "Total Available Balance: $%s" % [GameState.money]
 
 func _on_next() -> void:
 	GameState.day += 1

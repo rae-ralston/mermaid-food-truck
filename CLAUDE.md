@@ -99,6 +99,59 @@ Key files: `scripts/core/phase_store.gd`, `scenes/phases/PhaseStore.tscn`.
 
 Remaining stub phases: **Dive Planning** (pick dive site) and **Truck Planning** (choose menu). Store phase closes the progression loop — next priority TBD.
 
+## Roadmap
+
+### Gameplay systems
+- **Truck Planning phase** — choose which recipes to offer, links diving strategy to cooking
+- **Dive Planning phase** — pick dive site (low priority until multiple sites exist)
+- **Customer patience/timeout** — pressure during truck phase, reputation hit on timeout
+- **Stage tracking** — prevent dishes from going through the same station twice
+- **Cooking interruptions** — cancel station mid-work, recover or lose dish
+- **Reputation system** — affects tips, pricing, unlocks, story progression
+- **Reputation-gated store upgrades** — some upgrades require money + high reputation
+
+### Dive levels
+- Larger hand-designed dive levels
+- Multiple dive sites with different ingredient distributions
+- Procedural dive level generation (layout, ingredient placement, depth zones)
+- Dive hazards / obstacles (currents, creatures)
+
+### Game feel / juice
+- Screen shake on order completion or customer arrival
+- Tween animations on station state changes (bounce, scale pop)
+- Visual feedback on pickup/delivery (flash, scale pop)
+- Particle effects — bubbles (swimming), steam (cook station), sparkle (completed dish)
+- UI transitions — slide/fade between phases instead of hard cut
+- Camera work — gentle sway/follow in dive, framing in truck
+
+### Menus & persistence
+- **Title screen** — start new game, load game, settings, quit
+- **Save/load system** — auto-save at end of each day (between Results and Store), load from title screen
+- **Settings screen** — music volume, SFX volume (accessible from title + pause menu)
+
+### Dev tools (development only — strip from production builds)
+- Debug console / cheat menu — add money, add ingredients, set upgrade levels, set day
+- Phase skipper — jump to any phase directly
+- Order/customer controls — spawn specific customers, set queue
+- Game speed controls — fast forward through timers
+
+### Art assets needed (all current art is placeholder)
+**Characters:** mermaid/diver, customer variants (fish, crab, shark, etc.), customer emotion states (happy, impatient, angry)
+**Ingredients (5):** kelp, clam, coral spice, glow algae, sea slug — world sprites + inventory icons
+**Dishes (5):** kelp wrap, glowing soup, clam chowder, spiced kelp bowl, sea slug sushi — HUD/order icons
+**Truck:** three distinct station sprites (prep, cook, plate), station state indicators, order window, pickup window, truck background/environment
+**Dive:** tileset/environment art for depth zones (shallow, mid, deep), extraction zone marker, gatherable world sprites, hazards/obstacles
+**UI:** custom theme (fonts, panels, buttons), phase transition overlays, inventory icons, money/reputation icons, upgrade icons
+**Effects:** bubble particles (swimming), steam/sizzle (cooking), sparkle/completion (dish done), screen transition effects
+
+### Audio assets needed (likely outsourced)
+**Music (looping tracks):** title/menu theme, dive phase (calm, underwater, exploratory), truck phase (upbeat, busy, cooking energy), results screen (chill, reflective), store phase (cozy, shopping), planning phases (preparation vibe — could share a track)
+**Ambience:** underwater (bubbles, water flow, distant whale sounds), truck (crowd murmur, ocean nearby)
+**SFX — Dive:** swimming/movement, ingredient pickup, extraction zone enter/exit, surfacing
+**SFX — Truck:** station start (chop, sizzle, clink per type), station working loop, station complete ding, order taken, order delivered, customer arrival, customer happy/leaving
+**SFX — UI:** button click, purchase upgrade, phase transition swoosh, money earned (cha-ching), error/can't afford, day complete fanfare
+**SFX — General:** menu open/close, inventory add/remove
+
 ## Teaching Mode
 
 The user is learning game development. Act as a teacher:

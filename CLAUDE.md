@@ -12,7 +12,7 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 ## Architecture
 
 - **Phase system**: Phases loaded dynamically by `PhaseManager`. Each extends `BasePhase` with `enter()`, `exit()`, `phase_finished` signal. Payloads pass data between phases.
-- **GameState**: Autoload. Holds `day`, `money`, `reputation`, `inventory`, `upgrades`. Upgrade system with `UPGRADE_CONFIG` constants, `buy_upgrade()`, `get_upgrade_cost()`, multiplier getters (`get_swim_speed()`, `get_cook_speed_multiplier()`).
+- **GameState**: Autoload. Holds `day`, `money`, `reputation`, `inventory`, `upgrades`. Upgrade system with `UPGRADE_CONFIG` constants, `buy_upgrade()`, `get_upgrade_cost()`, multiplier getters (`get_swim_speed()`, `get_cook_speed_multiplier()`). Recipe helpers: `can_make_recipe(recipe_id)` checks inventory has all ingredients for one serving.
 - **Inventory**: Capacity-based (default 12). Tracks items by ID. Signals `inventory_changed`.
 - **Interaction system**: Diver's `InteractionZone` (Area2D) finds nearby objects. Interactables implement `interact()`, optionally `can_interact()` and `get_interaction_priority()`. Triggered with E key.
 
@@ -60,7 +60,7 @@ Core truck gameplay loop is functional. Key files: `scripts/core/phase_truck.gd`
 - Stations track recipe_id only — order matching at delivery
 - Two windows: order (FIFO customer line) and pickup (any-order delivery)
 - Payment happens at pickup
-- Random recipe from all 5 (active menu system later)
+- Customers order from `active_menu` (set by Truck Planning payload), not all recipes
 - `held_item` is plain String (recipe_id) — upgrade to richer type when needed
 - Cook speed affected by upgrade multiplier: `recipe.time_limit / GameState.get_cook_speed_multiplier()`
 
@@ -95,15 +95,22 @@ Key files: `scripts/core/phase_store.gd`, `scenes/phases/PhaseStore.tscn`.
 - Per-recipe breakdown on results screen
 - Results/store UI polish and animations
 
+## Truck Planning Phase (working)
+
+Player selects which recipes to offer before the truck opens. Shows inventory and recipe list with checkboxes. Recipes greyed out if player lacks all ingredients for one full serving (via `GameState.can_make_recipe()`). Must select at least 1 recipe. Passes `{ "active_menu": Array[StringName] }` payload to Truck phase. CustomerSpawner picks randomly from `active_menu` only.
+
+Key files: `scripts/core/phase_truck_planning.gd`, `scenes/phases/PhaseTruckPlanning.tscn`.
+
 ## Current Work
 
-Remaining stub phases: **Dive Planning** (pick dive site) and **Truck Planning** (choose menu). Store phase closes the progression loop — next priority TBD.
+Remaining stub phase: **Dive Planning** (pick dive site — 2 small test zones with different ingredient distributions). Next up after that: customer patience/timeout, then dev tools.
 
 ## Roadmap
 
 ### Gameplay systems
-- **Truck Planning phase** — choose which recipes to offer, links diving strategy to cooking
-- **Dive Planning phase** — pick dive site (low priority until multiple sites exist)
+- ~~**Truck Planning phase**~~ ✓ Done
+- **Dive Planning phase** — pick from 2 small test zones with different ingredient distributions
+- **Ingredient consumption** — cooking should deduct ingredients from inventory. Currently cooking is infinite.
 - **Customer patience/timeout** — pressure during truck phase, reputation hit on timeout
 - **Stage tracking** — prevent dishes from going through the same station twice
 - **Cooking interruptions** — cancel station mid-work, recover or lose dish

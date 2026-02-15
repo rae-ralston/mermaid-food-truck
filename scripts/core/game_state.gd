@@ -43,6 +43,10 @@ func _ready() -> void:
 			recipeCatalog[recipe.id] = recipe
 		
 		file_name = dir.get_next()
+	
+	#inventory.add(&"kelp", 4)
+	#inventory.add(&"clam", 3)
+	#inventory.add(&"coral_spice", 2)
 
 func reset_for_new_run() -> void:
 	day = 1
@@ -95,3 +99,10 @@ func apply_upgrade(upgrade_id: String) -> void:
 	# cook speed and swim speed are calculated in controller_diver and truck_station, respectively
 	if upgrade_id == "inventory_capacity":
 		inventory.capacity = 12 + (upgrades["inventory_capacity"] * 4)
+
+func can_make_recipe(recipe_id: StringName) -> bool:
+	var recipe: RecipeData = recipeCatalog[recipe_id]
+	for ingredient_id in recipe.inputs:
+		if inventory.get_count(ingredient_id) < recipe.inputs[ingredient_id]:
+			return false
+	return true

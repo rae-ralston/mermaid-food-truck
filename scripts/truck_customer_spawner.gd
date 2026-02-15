@@ -8,6 +8,7 @@ var line_origin: Vector2 = Vector2.ZERO
 var line_spacing := 70.0
 var customer_line: Array[Node2D] = []
 var _parent_node: Node
+var active_menu: Array[StringName] = []
 
 func _ready() -> void:
 	var timer := Timer.new()
@@ -24,9 +25,10 @@ func _on_spawn_timer() -> void:
 	_spawn_customer()
 
 func _spawn_customer() -> void:
-	var recipe_keys := GameState.recipeCatalog.keys()
+	var recipe_keys := active_menu
+	if (active_menu.is_empty()): return
 	var random_id: StringName = recipe_keys[randi() % recipe_keys.size()]
-	
+
 	var customer: Node2D = CustomerScene.instantiate()
 	customer.setup(random_id)
 	customer.customer_left.connect(_on_customer_left)

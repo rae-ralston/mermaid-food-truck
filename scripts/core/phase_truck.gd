@@ -26,6 +26,10 @@ func _ready() -> void:
 	GameState.inventory.inventory_changed.connect(_refresh_inventory)
 	_refresh_inventory()
 
+func enter(payload: Dictionary) -> void:
+	if payload.has("active_menu"):
+		$World/CustomerSpawner.active_menu = payload.active_menu
+
 func _refresh_orders() -> void:
 	for child in $HUD/OrdersPanel.get_children():
 		child.queue_free()

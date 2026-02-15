@@ -2,19 +2,35 @@
 
 [ext_resource type="Script" uid="uid://dg3psvy7n1vd0" path="res://scripts/core/phase_store.gd" id="1_kowbl"]
 
-[node name="PhaseShop" type="Control" unique_id=2065327602]
+[node name="PhaseStore" type="Control" unique_id=2065327602]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_kowbl")
 
-[node name="Label" type="Label" parent="." unique_id=1908148646]
+[node name="PhaseLabel" type="Label" parent="." unique_id=1908148646]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 280.0
+offset_top = 18.0
+offset_right = 320.0
+offset_bottom = 41.0
 
-[node name="Button" type="Button" parent="." unique_id=1145802160]
+[node name="MoneyLabel" type="Label" parent="." unique_id=795247823]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 23.0
-offset_right = 12.0
-offset_bottom = 31.0
+offset_left = 63.0
+offset_top = 271.0
+offset_right = 103.0
+offset_bottom = 294.0
+
+[node name="UpgradesPanel" type="VBoxContainer" parent="." unique_id=593949959]
+layout_mode = 0
+offset_left = 538.0
+offset_top = 358.0
+offset_right = 578.0
+offset_bottom = 398.0
+
+[node name="ContinueButton" type="Button" parent="." unique_id=1145802160]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 577.0
+offset_right = 32.0
+offset_bottom = 585.0

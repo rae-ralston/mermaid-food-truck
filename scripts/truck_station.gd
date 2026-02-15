@@ -52,7 +52,9 @@ func interact(actor) -> Dictionary:
 				
 			var workingPhase = cookingPhase[CookingPhaseIds.WORKING]
 			$PhaseLabel.text = workingPhase.name
-			$Timer.start(current_recipe.time_limit)
+			
+			var time = current_recipe.time_limit / GameState.get_cook_speed_multiplier()
+			$Timer.start(time)
 			$ProgressBar.value = 0
 			
 			_set_cooking_phase(CookingPhaseIds.WORKING)

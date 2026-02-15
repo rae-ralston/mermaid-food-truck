@@ -12,7 +12,7 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 ## Architecture
 
 - **Phase system**: Phases loaded dynamically by `PhaseManager`. Each extends `BasePhase` with `enter()`, `exit()`, `phase_finished` signal. Payloads pass data between phases.
-- **GameState**: Autoload. Holds `day`, `money`, `reputation`, `inventory`.
+- **GameState**: Autoload. Holds `day`, `money`, `reputation`, `inventory`, `upgrades`. Upgrade system with `UPGRADE_CONFIG` constants, `buy_upgrade()`, `get_upgrade_cost()`, multiplier getters (`get_swim_speed()`, `get_cook_speed_multiplier()`).
 - **Inventory**: Capacity-based (default 12). Tracks items by ID. Signals `inventory_changed`.
 - **Interaction system**: Diver's `InteractionZone` (Area2D) finds nearby objects. Interactables implement `interact()`, optionally `can_interact()` and `get_interaction_priority()`. Triggered with E key.
 
@@ -53,7 +53,7 @@ Core truck gameplay loop is functional. Key files: `scripts/core/phase_truck.gd`
 
 **HUD:** CurrentDishLabel (held item name), InventoryLabel (counts), OrdersPanel (order queue with recipe name + status, rebuilt dynamically).
 
-**Player:** DiverController has `held_item: String` with setter emitting `held_item_changed`, `is_holding() -> bool`.
+**Player:** DiverController has `held_item: String` with setter emitting `held_item_changed`, `is_holding() -> bool`. Swim speed from `GameState.get_swim_speed()` (base 220 * multiplier).
 
 **Design decisions:**
 - Station holds finished dish until pickup (blocks station)
@@ -62,6 +62,7 @@ Core truck gameplay loop is functional. Key files: `scripts/core/phase_truck.gd`
 - Payment happens at pickup
 - Random recipe from all 5 (active menu system later)
 - `held_item` is plain String (recipe_id) — upgrade to richer type when needed
+- Cook speed affected by upgrade multiplier: `recipe.time_limit / GameState.get_cook_speed_multiplier()`
 
 **Truck phase TODO (deferred):**
 - Patience/timeout system — patience timer on customer, timeout = leaves + reputation hit
@@ -69,9 +70,34 @@ Core truck gameplay loop is functional. Key files: `scripts/core/phase_truck.gd`
 - Cooking interruptions — cancel mid-work, recover or lose dish
 - Reputation effects on tips, pricing, story progression
 
-## Current Work: Results Phase
+## Results Phase (working)
 
-Next up — building `PhaseResults`. This phase shows at end of each truck day to summarize performance (money earned, orders fulfilled, reputation changes) before transitioning to the store phase.
+Display-only summary at end of each truck day. Truck phase passes `{ orders_filled, orders_lost, money_earned }` payload. Shows day summary, stats, total balance. Increments `GameState.day` on continue. Transitions to Store with empty payload.
+
+Key files: `scripts/core/phase_results.gd`, `scenes/phases/PhaseResults.tscn`.
+
+## Store Phase (working)
+
+Upgrade shop between days. Player spends money on three upgrades (swim speed, cook speed, inventory capacity), each with 3 levels and escalating costs (`base_cost * (level + 1)`). Upgrades apply immediately. Transitions to Dive Planning.
+
+Key files: `scripts/core/phase_store.gd`, `scenes/phases/PhaseStore.tscn`.
+
+**Upgrade system:** Data in `GameState.UPGRADE_CONFIG` + `GameState.upgrades` dict (level per upgrade). Consumers pull multipliers — Diver calls `GameState.get_swim_speed()`, TruckStation divides timer by `GameState.get_cook_speed_multiplier()`, inventory capacity set directly in `apply_upgrade()`.
+
+**Design decisions:**
+- Payload-only for results (no persistent day history yet)
+- Multiplier pattern for speed upgrades — base values stay where they belong, GameState provides modifiers
+- Escalating cost model (base_cost * (level + 1))
+- Immediate application on purchase
+
+**TODO (deferred):**
+- Some upgrades gated by reputation score (not just money)
+- Per-recipe breakdown on results screen
+- Results/store UI polish and animations
+
+## Current Work
+
+Remaining stub phases: **Dive Planning** (pick dive site) and **Truck Planning** (choose menu). Store phase closes the progression loop — next priority TBD.
 
 ## Teaching Mode
 

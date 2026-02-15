@@ -4,7 +4,6 @@ class_name DiverController
 signal interaction_performed(result: Dictionary)
 signal held_item_changed(item_id: String)
 
-@export var speed: float = 220.0
 @onready var interaction_zone: Area2D = $InteractionZone
 
 var nearby: Array[Area2D] = []
@@ -30,7 +29,7 @@ func _physics_process(_delta: float) -> void:
 	if input.length_squared() > 0.0:
 		input = input.normalized()
 	
-	velocity = input * speed
+	velocity = input * GameState.get_swim_speed()
 	move_and_slide()
 
 func _on_area_entered(area) -> void:

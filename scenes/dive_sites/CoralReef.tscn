@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://c0nngv5piurw5"]
+
+[ext_resource type="PackedScene" uid="uid://dk6qw7c5wr6n5" path="res://scenes/Gatherable.tscn" id="1_fvh32"]
+[ext_resource type="PackedScene" uid="uid://dmeklwytvnij2" path="res://scenes/DiveExtractionZone.tscn" id="1_sq6kx"]
+[ext_resource type="Resource" uid="uid://dgfkoyy1lpqx" path="res://data/ingredients/sea_slug.tres" id="3_sfdv6"]
+[ext_resource type="Resource" uid="uid://k86vjq2bv5jl" path="res://data/ingredients/glow_algae.tres" id="4_ciwex"]
+[ext_resource type="Resource" uid="uid://bnyo7fgknfdqs" path="res://data/ingredients/coral_spice.tres" id="5_hfw5p"]
+
+[node name="CoralReef" type="Node2D" unique_id=1735794319]
+
+[node name="PhaseLabel" type="Label" parent="." unique_id=1474207612]
+offset_left = 191.0
+offset_top = 50.0
+offset_right = 231.0
+offset_bottom = 73.0
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1377437941]
+position = Vector2(106, 425)
+
+[node name="ExtractionZone" parent="." unique_id=1450148318 instance=ExtResource("1_sq6kx")]
+position = Vector2(958, 119)
+
+[node name="Gatherables" type="Node2D" parent="." unique_id=2143802834]
+
+[node name="SeaSlug" parent="Gatherables" unique_id=724619957 instance=ExtResource("1_fvh32")]
+position = Vector2(167, 445)
+scale = Vector2(0.2, 0.2)
+ingredient = ExtResource("3_sfdv6")
+
+[node name="GlowAlgae" parent="Gatherables" unique_id=850747296 instance=ExtResource("1_fvh32")]
+position = Vector2(525, 521)
+scale = Vector2(0.2, 0.2)
+ingredient = ExtResource("4_ciwex")
+
+[node name="CoralSpice" parent="Gatherables" unique_id=791317443 instance=ExtResource("1_fvh32")]
+position = Vector2(869, 363)
+scale = Vector2(0.2, 0.2)
+ingredient = ExtResource("5_hfw5p")

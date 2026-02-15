@@ -21,7 +21,8 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 - `scenes/` — .tscn files, phases live in `scenes/phases/`
 - `scripts/` — GDScript, core systems in `scripts/core/`
 - `resources/` — Resource class definitions (IngredientData, RecipeData, RecipeStepIds)
-- `data/ingredients/` — .tres ingredient resources (all 5 exist; coral_spice, glow_algae, sea_slug missing sprites)
+- `data/ingredients/` — .tres ingredient resources (all 5 exist, all have sprites)
+- `scenes/dive_sites/` — standalone dive site scenes (Shallows.tscn, CoralReef.tscn), loaded dynamically by Dive phase
 - `data/recipes/` — .tres recipe resources (all 5 exist, inputs/steps/prices match design doc)
 - `assets/` — Sprites and art
 
@@ -101,15 +102,36 @@ Player selects which recipes to offer before the truck opens. Shows inventory an
 
 Key files: `scripts/core/phase_truck_planning.gd`, `scenes/phases/PhaseTruckPlanning.tscn`.
 
+## Dive Planning Phase (working)
+
+Player picks from 2 dive sites before diving. Each site is a standalone scene with hand-placed Gatherables, ExtractionZone, and SpawnPoint (Marker2D). Dive phase loads the selected site scene as a child of `$World` at runtime, positions Diver at SpawnPoint, and wires up ExtractionZone signals in `enter()`.
+
+Key files: `scripts/core/phase_dive_planning.gd`, `scenes/phases/PhaseDivePlanning.tscn`.
+
+**Sites** (`scenes/dive_sites/`):
+- **Shallows** — sea slug, glow algae, coral spice
+- **Coral Reef** — clam, kelp
+
+**Dive phase** (`scripts/core/phase_dive.gd`): Site-agnostic — loads any scene with the expected node structure (Gatherables, ExtractionZone, SpawnPoint). Designed to swap hand-designed scenes for procedural generation later with zero phase code changes.
+
+**Payload flow:** Dive Planning emits `{ "dive_site": "res://scenes/dive_sites/..." }` → Dive loads site, gathers ingredients, emits `{ "gathered": {...} }` → PhaseManager adds to inventory → Truck Planning receives for display.
+
 ## Current Work
 
-Remaining stub phase: **Dive Planning** (pick dive site — 2 small test zones with different ingredient distributions). Next up after that: customer patience/timeout, then dev tools.
+All 6 phases are functional — full day loop plays end to end.
+
+**Next session priorities (in order):**
+1. **Ingredient consumption** — cooking should deduct ingredients from inventory (quick fix, closes a gameplay hole)
+2. **Stage tracking** — prevent dishes from repeating a station (quick fix, prevents player confusion)
+3. **Dev tools** — debug console to add money/ingredients, skip phases, spawn customers (unblocks faster testing of everything else)
+4. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
+5. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
 
 ## Roadmap
 
 ### Gameplay systems
 - ~~**Truck Planning phase**~~ ✓ Done
-- **Dive Planning phase** — pick from 2 small test zones with different ingredient distributions
+- ~~**Dive Planning phase**~~ ✓ Done — 2 sites (Shallows, Coral Reef) with different ingredient mixes
 - **Ingredient consumption** — cooking should deduct ingredients from inventory. Currently cooking is infinite.
 - **Customer patience/timeout** — pressure during truck phase, reputation hit on timeout
 - **Stage tracking** — prevent dishes from going through the same station twice

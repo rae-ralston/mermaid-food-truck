@@ -7,11 +7,20 @@ func _ready() -> void:
 	$HUD/LocationLabel.text = "Diving phase - swim baby, swim."
 	$HUD/Button.text = "go to next phase: truck planning"
 	$HUD/Button.pressed.connect(_extract_and_finish)
-	$World/Diver.interaction_performed.connect(_on_interaction)
-	$World/ExtractionZone.body_entered.connect(_on_extraction_body_entered)
-	
+	$World/Diver.interaction_performed.connect(_on_interaction)	
 
-func enter(_payload: Dictionary) -> void:
+func enter(payload: Dictionary) -> void:
+	var dive_site = load(payload.dive_site) as PackedScene
+	var site_instance := dive_site.instantiate()
+	$World.add_child(site_instance)
+	
+	var spawn_point: Marker2D = site_instance.find_child("SpawnPoint")
+	var extraction_zone = site_instance.find_child("ExtractionZone")
+
+	$World/Diver.global_position = spawn_point.global_position
+	
+	extraction_zone.body_entered.connect(_on_extraction_body_entered)
+	
 	run_gathered.clear()
 	extracted = false
 	_refresh_loot_ui()
@@ -34,9 +43,10 @@ func _merge_into(target: Dictionary, items: Dictionary) -> void:
 		target[id] = int(target.get(id, 0)) + int(items[id])
 
 func _update_debug_ui(items_gathered) -> void:
+	_refresh_loot_ui()
 	print("[DIVE PHASE] updating UI with: ", items_gathered)
 	pass
-
+	  
 func _refresh_loot_ui() -> void:
 	var lines: Array[String] = []
 	lines.append("run loot: ")

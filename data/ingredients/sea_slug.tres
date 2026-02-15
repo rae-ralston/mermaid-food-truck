@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://dgfkoyy1lpqx"]
 
 [ext_resource type="Script" uid="uid://n1yc0ylmvws4" path="res://resources/ingredient_data.gd" id="1_ag73p"]
+[ext_resource type="Texture2D" uid="uid://bswlecxwtdxfr" path="res://assets/ingredients/sea_slug.png" id="2_1o0jl"]
 
 [resource]
 script = ExtResource("1_ag73p")
 id = &"sea_slug"
 display_name = "Sea Slug"
+sprite = ExtResource("2_1o0jl")
 metadata/_custom_type_script = "uid://n1yc0ylmvws4"

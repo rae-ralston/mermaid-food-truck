@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://djqk8sfcfbcg2"]
+
+[ext_resource type="PackedScene" uid="uid://dmeklwytvnij2" path="res://scenes/DiveExtractionZone.tscn" id="1_75yn0"]
+[ext_resource type="PackedScene" uid="uid://dk6qw7c5wr6n5" path="res://scenes/Gatherable.tscn" id="2_wattj"]
+[ext_resource type="Resource" uid="uid://bkbxxqax43ccc" path="res://data/ingredients/kelp.tres" id="3_6jrwa"]
+[ext_resource type="Resource" uid="uid://llrh0xapr6w8" path="res://data/ingredients/clam.tres" id="4_wattj"]
+
+[node name="Shallows" type="Node2D" unique_id=2100404145]
+
+[node name="PhaseLabel" type="Label" parent="." unique_id=1396643655]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1225464967]
+position = Vector2(87, 134)
+
+[node name="ExtractionZone" parent="." unique_id=1450148318 instance=ExtResource("1_75yn0")]
+position = Vector2(590, 74)
+
+[node name="Gatherables" type="Node2D" parent="." unique_id=531693048]
+
+[node name="Kelp" parent="Gatherables" unique_id=724619957 instance=ExtResource("2_wattj")]
+position = Vector2(961, 233)
+scale = Vector2(0.2, 0.2)
+ingredient = ExtResource("3_6jrwa")
+
+[node name="Clam" parent="Gatherables" unique_id=1988633152 instance=ExtResource("2_wattj")]
+position = Vector2(564, 482)
+scale = Vector2(0.2, 0.2)
+ingredient = ExtResource("4_wattj")

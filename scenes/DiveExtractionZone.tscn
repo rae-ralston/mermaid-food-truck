@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dmeklwytvnij2"]
+
+[ext_resource type="Texture2D" uid="uid://bls7bxslauon" path="res://assets/exit_dive_zone.png" id="1_6ihvh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjqkg"]
+size = Vector2(56, 51)
+
+[node name="ExtractionZone" type="Area2D" unique_id=1450148318]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=255390868]
+position = Vector2(-1.500061, -1.6564331)
+shape = SubResource("RectangleShape2D_hjqkg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1219247748]
+position = Vector2(-5.500061, -3.1564255)
+scale = Vector2(0.038419873, 0.038419876)
+texture = ExtResource("1_6ihvh")

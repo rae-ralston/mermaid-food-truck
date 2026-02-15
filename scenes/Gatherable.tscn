@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c1puexttxekpj" path="res://scripts/gatherable.gd" id="1_sb873"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sb873"]
-radius = 21.023796
+radius = 40.0
 
 [node name="Gatherable" type="Area2D" unique_id=724619957]
 script = ExtResource("1_sb873")

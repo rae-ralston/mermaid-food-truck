@@ -7,16 +7,22 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_lptrt")
 
-[node name="Label" type="Label" parent="." unique_id=513244784]
+[node name="PhaseLabel" type="Label" parent="." unique_id=513244784]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 9.0
-offset_right = 48.0
-offset_bottom = 32.0
+offset_left = 385.0
+offset_top = 173.0
+offset_right = 425.0
+offset_bottom = 196.0
 
-[node name="Button" type="Button" parent="." unique_id=1941658173]
+[node name="DiveSiteSelector" type="VBoxContainer" parent="." unique_id=1679876797]
 layout_mode = 0
-offset_left = 12.0
-offset_top = 74.0
-offset_right = 20.0
-offset_bottom = 82.0
+offset_left = 417.0
+offset_top = 246.0
+offset_right = 457.0
+offset_bottom = 286.0
+
+[node name="ShallowsButton" type="Button" parent="DiveSiteSelector" unique_id=1941658173]
+layout_mode = 2
+
+[node name="CoralReefButton" type="Button" parent="DiveSiteSelector" unique_id=1963943669]
+layout_mode = 2

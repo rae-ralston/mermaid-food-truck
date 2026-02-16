@@ -33,10 +33,10 @@ position = Vector2(868, 156)
 station_type = 2
 
 [node name="PickupWindow" parent="World" unique_id=1338750309 instance=ExtResource("3_hjevm")]
-position = Vector2(244, 578)
+position = Vector2(850, 400)
 
 [node name="OrderWindow" parent="World" unique_id=1317284090 instance=ExtResource("4_wnxoj")]
-position = Vector2(684, 452)
+position = Vector2(218, 606)
 
 [node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_44s6t")]
 position = Vector2(493, 396)

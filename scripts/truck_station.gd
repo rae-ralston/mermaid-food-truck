@@ -48,8 +48,14 @@ func interact(actor) -> Dictionary:
 				return {}
 		
 			current_recipe = GameState.recipeCatalog[actor.held_item]
+
+			if station_type == StationType.PREP:
+				if not _consume_ingredients(current_recipe):
+					print("not enough ingredients for " + current_recipe.display_name)
+					return {}
+
 			actor.held_item = ""
-				
+
 			var workingPhase = cookingPhase[CookingPhaseIds.WORKING]
 			$PhaseLabel.text = workingPhase.name
 			
@@ -88,6 +94,14 @@ func interact(actor) -> Dictionary:
 		_:
 			return {}
 
+func _consume_ingredients(recipe: RecipeData) -> bool:
+	if not GameState.can_make_recipe(recipe.id):
+		return false
+
+	for ingredient_id in recipe.inputs:
+		GameState.inventory.remove(ingredient_id, recipe.inputs[ingredient_id])
+
+	return true
 
 func _get_cooking_phase_info() -> CookingPhaseIds:
 	return cookingPhase[currentCookingPhase]

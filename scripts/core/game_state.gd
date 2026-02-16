@@ -44,9 +44,9 @@ func _ready() -> void:
 		
 		file_name = dir.get_next()
 	
-	#inventory.add(&"kelp", 4)
-	#inventory.add(&"clam", 3)
-	#inventory.add(&"coral_spice", 2)
+	inventory.add(&"kelp", 20)
+	inventory.add(&"clam", 20)
+	inventory.add(&"coral_spice", 20)
 
 func reset_for_new_run() -> void:
 	day = 1

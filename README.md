@@ -8,7 +8,7 @@ Each in-game day cycles through 6 phases:
 
 **Dive Planning** → **Dive** → **Truck Planning** → **Truck** → **Results** → **Store**
 
-- **Dive** — Swim through underwater environments gathering ingredients. Shallow waters are bright and friendly; deeper waters are darker and stranger, but hold rarer ingredients.
+- **Dive** — Swim through alien underwater environments gathering ingredients. Shallow waters are bright and strange; deeper waters are darker and more dangerous, with creatures that will steal from your pack if you're not careful.
 - **Truck** — Run your food truck. Customers order from your menu and you prepare dishes by working through stations (Prep, Cook, Plate).
 - **Store** — Spend earnings on upgrades between days.
 

@@ -7,7 +7,7 @@ dives for ingredients and runs a food truck serving ocean-themed dishes.
 
 **Target:** Steam release (2026)
 **First milestone:** Polished vertical slice demo
-**Art style:** 3D-to-pixel-art pipeline, 2D sprites
+**Art style:** Hand-painted illustrated 2D, skeletal animation (see `docs/plans/2026-02-16-art-direction-design.md`)
 
 ---
 

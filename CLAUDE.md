@@ -26,6 +26,10 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 - `data/recipes/` — .tres recipe resources (all 5 exist, inputs/steps/prices match design doc)
 - `assets/` — Sprites and art
 
+## World Direction
+
+The underwater world is alien, not realistic. Creatures, ingredients, and environments are not bound by real ocean biology — everything can be invented. This is a deliberate differentiator from Dave the Diver. Names, designs, and customer species should feel like they come from somewhere that doesn't exist.
+
 ## MVP Content
 
 **Ingredients (5):** kelp, clam, coral_spice, glow_algae, sea_slug
@@ -138,6 +142,14 @@ All 6 phases are functional — full day loop plays end to end.
 - **Reputation system** — affects tips, pricing, unlocks, story progression
 - **Reputation-gated store upgrades** — some upgrades require money + high reputation
 
+### Dive phase — mechanics (designed, not yet built)
+See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
+- **Stealth system** — proximity-reactive; predators have visible detection radii; slow = undetected, fast = spotted; cover (coral, rocks) breaks line of sight
+- **Health & forced surface** — player has HP pool; predator contact deals damage + steals one ingredient; reach zero HP → forced to surface, losing some gathered ingredients
+- **Escalating danger** — danger level ticks up over time; more predators, larger detection radii the longer you stay
+- **Traps** — carried item (limited per dive); place near creature patrol routes, collect passively while gathering elsewhere
+- **New ingredients** — 2 new creature-based ingredient types: one passive/trappable, one dangerous (harvesting mechanic TBD); plus new carnivore-friendly recipes (designed separately)
+
 ### Dive levels
 - Larger hand-designed dive levels
 - Multiple dive sites with different ingredient distributions
@@ -164,11 +176,15 @@ All 6 phases are functional — full day loop plays end to end.
 - Game speed controls — fast forward through timers
 
 ### Art assets needed (all current art is placeholder)
-**Characters:** mermaid/diver, customer variants (fish, crab, shark, etc.), customer emotion states (happy, impatient, angry)
+Art direction: hand-painted illustrated 2D with skeletal animation. Painted in Procreate, rigged and animated in Moho, exported as `.glb` for Godot. See `docs/plans/2026-02-16-art-direction-design.md` for full pipeline, canvas sizes, and style test plan.
+
+**Characters:** All characters use a naked base rig in Moho with outfit/species layers on top. Rigged and animated in Moho, imported into Godot as `.glb`. Each `.glb` contains all animation clips for that character (idle, walk, carry, emotion states, etc.) and is read-only in Godot.
+
+Mermaid has two versions: `mermaid_diver.glb` (adventure outfit, dive phase) and `mermaid_truck.glb` (casual outfit, truck phase). Customer variants (fish, crab, shark, etc.) each get their own `.glb` with shared animation clip names so code drives them identically.
 **Ingredients (5):** kelp, clam, coral spice, glow algae, sea slug — world sprites + inventory icons
 **Dishes (5):** kelp wrap, glowing soup, clam chowder, spiced kelp bowl, sea slug sushi — HUD/order icons
 **Truck:** three distinct station sprites (prep, cook, plate), station state indicators, order window, pickup window, truck background/environment
-**Dive:** tileset/environment art for depth zones (shallow, mid, deep), extraction zone marker, gatherable world sprites, hazards/obstacles
+**Dive:** parallax background layers per biome (2-axis scrolling, depth gradient baked in), foreground elements as individual pieces, extraction zone marker, gatherable world sprites, hazards/obstacles
 **UI:** custom theme (fonts, panels, buttons), phase transition overlays, inventory icons, money/reputation icons, upgrade icons
 **Effects:** bubble particles (swimming), steam/sizzle (cooking), sparkle/completion (dish done), screen transition effects
 

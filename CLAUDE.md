@@ -125,12 +125,17 @@ Key files: `scripts/core/phase_dive_planning.gd`, `scenes/phases/PhaseDivePlanni
 All 6 phases are functional — full day loop plays end to end.
 
 **Next session priorities (in order):**
-1. **Stage tracking** — prevent dishes from repeating a station (quick fix, prevents player confusion)
-2. **Dev tools** — debug console to add money/ingredients, skip phases, spawn customers (unblocks faster testing of everything else)
-3. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
-4. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
+1. **3D conversion** — convert dive + truck phases from 2D to 3D (orthographic Camera3D, CharacterBody3D, Area3D). Needed before mermaid .glb can be integrated. See `docs/plans/2026-02-18-3d-conversion-design.md`.
+2. **Stage tracking** — prevent dishes from repeating a station (quick fix, prevents player confusion)
+3. **Dev tools** — debug console to add money/ingredients, skip phases, spawn customers (unblocks faster testing of everything else)
+4. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
+5. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
 
 ## Roadmap
+
+### Architecture
+- **3D conversion** — convert dive + truck to 3D (orthographic Camera3D, CharacterBody3D, Area3D). Required before any .glb character can be integrated. See `docs/plans/2026-02-18-3d-conversion-design.md`.
+- **.glb character integration** — drop mermaid_diver.glb and mermaid_truck.glb into the converted scenes. Validate pipeline end to end (Procreate → Moho → .glb → Godot → in-scene animation).
 
 ### Gameplay systems
 - ~~**Truck Planning phase**~~ ✓ Done
@@ -141,6 +146,7 @@ All 6 phases are functional — full day loop plays end to end.
 - **Cooking interruptions** — cancel station mid-work, recover or lose dish
 - **Reputation system** — affects tips, pricing, unlocks, story progression
 - **Reputation-gated store upgrades** — some upgrades require money + high reputation
+- **Predator trap** — store unlock (permanent); enables catching dangerous fish in dive phase; probably reputation-gated. See `docs/plans/2026-02-18-fish-mechanics-design.md`.
 
 ### Dive phase — mechanics (designed, not yet built)
 See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
@@ -148,7 +154,8 @@ See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
 - **Health & forced surface** — player has HP pool; predator contact deals damage + steals one ingredient; reach zero HP → forced to surface, losing some gathered ingredients
 - **Escalating danger** — danger level ticks up over time; more predators, larger detection radii the longer you stay
 - **Traps** — carried item (limited per dive); place near creature patrol routes, collect passively while gathering elsewhere
-- **New ingredients** — 2 new creature-based ingredient types: one passive/trappable, one dangerous (harvesting mechanic TBD); plus new carnivore-friendly recipes (designed separately)
+- **New ingredients** — 2 new passive fish types (different looks/patrol behaviors, both trappable via standard traps); plus 2 new carnivore-friendly recipes
+- **Hazardous creature** — 1 dangerous fish type; aggros on proximity, steals ingredient on contact, deals damage; pure hazard in v1 (not catchable). See `docs/plans/2026-02-18-fish-mechanics-design.md` for full design including post-v1 catching mechanic.
 
 ### Dive levels
 - Larger hand-designed dive levels

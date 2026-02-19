@@ -65,6 +65,8 @@ Fishing is passive. No spears, no active chase mechanics.
 - Collected fish go into inventory as normal ingredients
 - Traps don't occupy inventory slots until you pick up the catch
 
+See `docs/plans/2026-02-18-fish-mechanics-design.md` for full fish mechanics design.
+
 ### Two New Fish Ingredient Types
 
 **Reef Fish** (non-dangerous)

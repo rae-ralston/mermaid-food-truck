@@ -8,8 +8,8 @@ func interact(actor) -> Dictionary:
 		return {}
 	
 	#just emits that the recipe is complete
-	var recipe_id: StringName = actor.held_item
+	var recipe_id: StringName = actor.held_item.recipe_id
 	order_fulfilled.emit(recipe_id)
-	actor.held_item = ""
+	actor.held_item = {}
 	
 	return {}

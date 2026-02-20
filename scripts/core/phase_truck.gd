@@ -60,11 +60,11 @@ func _on_next() -> void:
 	
 	emit_signal("phase_finished", PhaseIds.PhaseId.RESULTS, payload)
 
-func _on_held_item_changed(item: String) -> void:
-	if item == "" :
+func _on_held_item_changed(item: Dictionary) -> void:
+	if item.is_empty():
 		$HUD/CurrentDishLabel.text = "Holding: Nothing"
 	else:
-		var recipe: RecipeData = GameState.recipeCatalog[item]
+		var recipe: RecipeData = GameState.recipeCatalog[item.recipe_id]
 		$HUD/CurrentDishLabel.text = "Holding: " + recipe.display_name
 
 func _on_order_taken(order: Order) -> void:

@@ -16,6 +16,9 @@ func interact(actor) -> Dictionary:
 	customer.order = order
 	
 	order_taken.emit(order)
-	actor.held_item = customer.recipe_id
+	actor.held_item = {
+		"recipe_id": customer.recipe_id,
+		"completed_steps": []
+	}
 	
 	return {}

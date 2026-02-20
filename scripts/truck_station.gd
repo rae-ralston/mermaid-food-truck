@@ -5,7 +5,7 @@ signal dish_completed(recipe_id: String, station_type: StationType)
 enum CookingPhaseIds { IDLE, WORKING, DONE }
 enum StationType { PREP, COOK, PLATE }
 
-@export var station_type: StationType
+@export var station_type: StationType = StationType.PREP
 
 var stationPhase: Dictionary = {
 	StationType.PREP: { "name": 'prep phase' },
@@ -30,6 +30,7 @@ var cookingPhase: Dictionary = {
 
 var currentCookingPhase: CookingPhaseIds = CookingPhaseIds.IDLE
 var current_recipe: RecipeData
+var current_completed_steps: Array[int] = []
 
 func _ready() -> void:
 	$Timer.timeout.connect(_on_timer_timeout)
@@ -45,15 +46,30 @@ func interact(actor) -> Dictionary:
 			if not actor.is_holding():
 				print("you must be holding something for init a station")
 				return {}
-		
-			current_recipe = GameState.recipeCatalog[actor.held_item]
+			
+			var completed: Array[int] = []
+			completed.assign(actor.held_item.get("completed_steps", []))
+			var next_step_index: int = completed.size()
+			current_recipe = GameState.recipeCatalog[actor.held_item.recipe_id]
+			
+			if next_step_index >= current_recipe.steps.size():
+				print("this dish is already completly cooked.")
+				return {}
+			
+			if current_recipe.steps[next_step_index] != station_type:
+				var next_station_type = current_recipe.steps[next_step_index]
+				var next_station_name = stationPhase[next_station_type].name
+				print("this dish needs %s next" % next_station_name)
+				return {}
+			
 
 			if station_type == StationType.PREP:
 				if not _consume_ingredients(current_recipe):
 					print("not enough ingredients for " + current_recipe.display_name)
 					return {}
 
-			actor.held_item = ""
+			current_completed_steps.assign(completed)
+			actor.held_item = {}
 
 			var workingPhase = cookingPhase[CookingPhaseIds.WORKING]
 			$PhaseLabel.text = workingPhase.name
@@ -82,7 +98,13 @@ func interact(actor) -> Dictionary:
 			dish_completed.emit(current_recipe.id, station_type)
 			
 			var current = current_recipe
-			actor.held_item = current_recipe.id
+			var updated_steps = current_completed_steps.duplicate()
+			updated_steps.append(station_type)
+			actor.held_item = {
+				"recipe_id": current_recipe.id,
+				"completed_steps": updated_steps
+			}
+			
 			current_recipe = null
 			
 			_set_cooking_phase(CookingPhaseIds.IDLE)

@@ -2,13 +2,13 @@ extends CharacterBody3D
 class_name DiverController
 
 signal interaction_performed(result: Dictionary)
-signal held_item_changed(item_id: String)
+signal held_item_changed(item: Dictionary)
 
 @onready var interaction_zone: Area3D = $InteractionZone
 
 var nearby: Array[Area3D] = []
 
-var held_item: String = "":
+var held_item: Dictionary = {}:
 	set(value):
 		held_item = value
 		held_item_changed.emit(value)
@@ -73,4 +73,4 @@ func _try_interact() -> void:
 
 	emit_signal("interaction_performed", result)
 
-func is_holding() -> bool: return held_item.length() > 0
+func is_holding() -> bool: return not held_item.is_empty()

@@ -58,7 +58,7 @@ Core truck gameplay loop is functional. Key files: `scripts/core/phase_truck.gd`
 
 **HUD:** CurrentDishLabel (held item name), InventoryLabel (counts), OrdersPanel (order queue with recipe name + status, rebuilt dynamically).
 
-**Player:** DiverController has `held_item: String` with setter emitting `held_item_changed`, `is_holding() -> bool`. Swim speed from `GameState.get_swim_speed()` (base 220 * multiplier).
+**Player:** DiverController has `held_item: Dictionary` (`{ "recipe_id": StringName, "completed_steps": Array[int] }`, empty `{}` when not holding) with setter emitting `held_item_changed`, `is_holding() -> bool`. Swim speed from `GameState.get_swim_speed()` (base 220 * multiplier).
 
 **Design decisions:**
 - Station holds finished dish until pickup (blocks station)
@@ -66,12 +66,12 @@ Core truck gameplay loop is functional. Key files: `scripts/core/phase_truck.gd`
 - Two windows: order (FIFO customer line) and pickup (any-order delivery)
 - Payment happens at pickup
 - Customers order from `active_menu` (set by Truck Planning payload), not all recipes
-- `held_item` is plain String (recipe_id) — upgrade to richer type when needed
+- `held_item` is a Dictionary with `recipe_id` and `completed_steps` — stations check and append their step on pickup
 - Cook speed affected by upgrade multiplier: `recipe.time_limit / GameState.get_cook_speed_multiplier()`
 
 **Truck phase TODO (deferred):**
 - Patience/timeout system — patience timer on customer, timeout = leaves + reputation hit
-- Stage tracking — dishes should track completed stage so they can't repeat a station
+- ~~Stage tracking~~ ✓ Done
 - Cooking interruptions — cancel mid-work, recover or lose dish
 - Customer fade-out animation — `Node3D` has no `modulate` property, so the tween in `truck_customer.gd` `fulfill()` silently fails. Fix by targeting `$Sprite3D` transparency or using a shader.
 - Station progress bar — removed during 3D conversion (no ProgressBar3D). Re-add as scaled Sprite3D bar or SubViewport-based widget.
@@ -127,11 +127,10 @@ Key files: `scripts/core/phase_dive_planning.gd`, `scenes/phases/PhaseDivePlanni
 All 6 phases are functional — full day loop plays end to end.
 
 **Next priorities (in order):**
-1. **Stage tracking** — prevent dishes from repeating a station (quick fix, prevents player confusion)
-2. **Dev tools** — debug console to add money/ingredients, skip phases, spawn customers (unblocks faster testing of everything else)
-3. **Dive backpack** — inventory access during diving. See `docs/plans/2026-02-20-dive-backpack-plan.md`
-4. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
-5. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
+1. **Dev tools** — debug console to add money/ingredients, skip phases, spawn customers (unblocks faster testing of everything else)
+2. **Dive backpack** — inventory access during diving. See `docs/plans/2026-02-20-dive-backpack-plan.md`
+3. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
+4. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
 
 ## Roadmap
 
@@ -146,7 +145,7 @@ All 6 phases are functional — full day loop plays end to end.
 - ~~**Ingredient consumption**~~ ✓ Done — PREP station deducts ingredients via `_consume_ingredients()` in `truck_station.gd`
 - **Dive backpack** — designed, not yet built. See `docs/plans/2026-02-20-dive-backpack-design.md`. Key decision: `inventory_capacity` upgrade applies to the per-dive backpack, not the truck pantry (which is unlimited).
 - **Customer patience/timeout** — pressure during truck phase, reputation hit on timeout
-- **Stage tracking** — prevent dishes from going through the same station twice
+- ~~**Stage tracking**~~ ✓ Done — dishes track `completed_steps` via `held_item` Dictionary; stations reject dishes at the wrong step with a hint message
 - **Cooking interruptions** — cancel station mid-work, recover or lose dish
 - **Reputation system** — affects tips, pricing, unlocks, story progression
 - **Reputation-gated store upgrades** — some upgrades require money + high reputation

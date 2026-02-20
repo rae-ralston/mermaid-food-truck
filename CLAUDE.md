@@ -24,7 +24,7 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 - `data/ingredients/` — .tres ingredient resources (all 5 exist, all have sprites)
 - `scenes/dive_sites/` — standalone dive site scenes (Shallows.tscn, CoralReef.tscn), loaded dynamically by Dive phase
 - `data/recipes/` — .tres recipe resources (all 5 exist, inputs/steps/prices match design doc)
-- `assets/` — Sprites and art
+- `assets/` — Sprites and art. **Do not delete PNGs in `assets/characters/`** — they are extracted textures referenced by `.glb` files. Deleting them breaks character display silently (game runs but model is invisible).
 
 ## World Direction
 

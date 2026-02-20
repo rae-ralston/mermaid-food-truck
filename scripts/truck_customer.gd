@@ -11,7 +11,7 @@ func setup(incoming_recipe_id: StringName) -> void:
 func fulfill() -> void:
 	var tween := create_tween()
 	tween.tween_interval(0.5)
-	tween.tween_property(self, "modulate:a", 0.0, 0.3)
+	#tween.tween_property(self, "modulate:a", 0.0, 0.3)
 	tween.tween_callback(_leave)
 
 func _leave() -> void:

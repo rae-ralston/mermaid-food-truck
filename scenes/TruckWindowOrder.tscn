@@ -10,14 +10,13 @@ gradient = SubResource("Gradient_o5lad")
 width = 100
 height = 100
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sk26r"]
-size = Vector2(98, 98)
+[sub_resource type="BoxShape3D" id="BoxShape3D_o5lad"]
 
-[node name="TruckWindowOrder" type="Area2D" unique_id=1317284090]
+[node name="TruckWindowOrder" type="Area3D" unique_id=728001532]
 script = ExtResource("1_o5lad")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=923710403]
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1462832730]
 texture = SubResource("GradientTexture2D_3rw3d")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1298253749]
-shape = SubResource("RectangleShape2D_sk26r")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1949212507]
+shape = SubResource("BoxShape3D_o5lad")

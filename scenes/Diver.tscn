@@ -1,27 +1,99 @@
 [gd_scene format=3 uid="uid://cgorwwg8pq6yc"]
 
-[ext_resource type="Texture2D" uid="uid://bpx1h8bbgcaud" path="res://assets/characters/demo_mermaid_sm.png" id="1_pqlss"]
 [ext_resource type="Script" uid="uid://cgo6agrf5evda" path="res://scripts/controller_diver.gd" id="1_xgvnv"]
+[ext_resource type="PackedScene" uid="uid://b6uefbvjpqs0g" path="res://assets/characters/test-3d-sprite.glb" id="2_xgvnv"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pqlss"]
-radius = 18.0
-height = 124.01367
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xgvnv"]
+radius = 0.06
+height = 0.5
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pqlss"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_c0clj"]
 
-[node name="Diver" type="CharacterBody2D" unique_id=882753087]
+[node name="Diver" type="CharacterBody3D" unique_id=579896025]
 script = ExtResource("1_xgvnv")
 
-[node name="Mermaid" type="Sprite2D" parent="." unique_id=906892092]
-position = Vector2(-22.624939, 1.9931641)
-scale = Vector2(0.23801601, 0.23801596)
-texture = ExtResource("1_pqlss")
+[node name="TestSprite" parent="." unique_id=325804154 instance=ExtResource("2_xgvnv")]
 
-[node name="MermaidCollision" type="CollisionShape2D" parent="." unique_id=289509064]
-position = Vector2(0, -12)
-shape = SubResource("CapsuleShape2D_pqlss")
+[node name="Skeleton3D" parent="TestSprite/G|Spacewoman__0000" parent_id_path=PackedInt32Array(325804154, 503385278) index="0" unique_id=1786689557]
+bones/0/position = Vector3(-0.0355755, 0.3973555, 0)
+bones/4/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(0, 0, 0.6611523, 0.7502517)
+bones/10/scale = Vector3(1, 1, 1)
+bones/12/scale = Vector3(1, 1, 1)
+bones/15/position = Vector3(0.0620135, 0.056713, 0)
+bones/16/rotation = Quaternion(0, 0, 0.9279392, 0.37273186)
+bones/18/rotation = Quaternion(0, 0, 0.2922393, 0.95634526)
+bones/21/position = Vector3(0.0680695, -0.0420545, 0)
+bones/26/rotation = Quaternion(0, 0, 0.072495855, 0.99736875)
+bones/27/position = Vector3(0.061195, 0.0525865, 0)
+bones/29/position = Vector3(0.0680695, -0.0420545, 0)
+bones/32/rotation = Quaternion(0, 0, 0.99862313, 0.05245979)
+bones/33/position = Vector3(0.0263125, -0.015107, 0)
+bones/35/position = Vector3(-0.01776, 0.0146895, 0)
+bones/36/rotation = Quaternion(0, 0, -0.99893034, 0.04624104)
+bones/38/rotation = Quaternion(0, 0, -0.21824515, 0.975894)
+bones/38/scale = Vector3(0.942685, 1, 1)
+bones/39/scale = Vector3(1.0607997, 1, 1)
+bones/40/rotation = Quaternion(0, 0, 0.7327777, 0.68046814)
+bones/41/position = Vector3(0.0010065, -0.0089475, 0)
+bones/42/rotation = Quaternion(0, 0, 0.9542885, -0.2988872)
+bones/42/scale = Vector3(1.0712, 1, 1)
+bones/43/scale = Vector3(0.9335325, 1, 1)
+bones/44/rotation = Quaternion(0, 0, -0.3122152, 0.95001143)
+bones/46/rotation = Quaternion(0, 0, 0.67559475, 0.7372733)
+bones/47/position = Vector3(-0.0065615, 0.028366, 0)
+bones/49/position = Vector3(-0.1901825, 0.021096498, 0)
+bones/50/position = Vector3(-0.009037003, 0.010310501, 0)
 
-[node name="InteractionZone" type="Area2D" parent="." unique_id=33921067]
+[node name="B|B20" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="0" unique_id=480254029]
+transform = Transform3D(-0.96992177, -0.24341646, 0, 0.24341646, -0.96992177, 0, 0, 0, 1, 0.0027910268, 0.6658784, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone" unique_id=2113280918]
-shape = SubResource("CircleShape2D_pqlss")
+[node name="B|B4" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="1" unique_id=1137921234]
+transform = Transform3D(0.11951131, -0.9928328, 0, 0.9928328, 0.11951131, 0, 0, 0, 1, 0.00025684945, 0.6448259, 0)
+
+[node name="👻 V|blink__0034" parent="TestSprite/G|Spacewoman__0000/Skeleton3D/B|B4/InvBG|blink__0034" parent_id_path=PackedInt32Array(325804154, 636723433) index="0" unique_id=409864638]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="B|B7" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="2" unique_id=1398200791]
+transform = Transform3D(-0.18716335, 0.9823289, 0, -0.9823289, -0.18716335, 0, 0, 0, 1, -0.191032, 0.3648681, 0)
+
+[node name="👻 V|gun__0055" parent="TestSprite/G|Spacewoman__0000/Skeleton3D/B|B7/InvBG|gun__0055" parent_id_path=PackedInt32Array(325804154, 1972507611) index="0" unique_id=96408700]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="B|B6" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="3" unique_id=541140088]
+transform = Transform3D(-0.24249002, 0.970154, 0, -0.970154, -0.24249002, 0, 0, 0, 1, -0.16421273, 0.47216666, 0)
+
+[node name="B|B10" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="4" unique_id=1681374663]
+transform = Transform3D(0.68232656, -0.7310475, 0, 0.7310475, 0.68232656, 0, 0, 0, 1, 0.1519278, 0.5273667, 0)
+
+[node name="👻 V|hand__0013" parent="TestSprite/G|Spacewoman__0000/Skeleton3D/B|B10/InvBG|hand__0013" parent_id_path=PackedInt32Array(325804154, 9894158) index="0" unique_id=143303359]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="B|B9" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="5" unique_id=349233284]
+transform = Transform3D(0.78087133, -0.62469184, 0, 0.62469184, 0.78087133, 0, 0, 0, 1, 0.06067206, 0.45436272, 0)
+
+[node name="B|B8" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="6" unique_id=2144735839]
+transform = Transform3D(0.3214385, 0.9469306, 0, -0.9469306, 0.3214385, 0, 0, 0, 1, 0.026907194, 0.55383116, 0)
+
+[node name="B|B17" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="7" unique_id=30399122]
+transform = Transform3D(-0.92516786, -0.37955803, 0, 0.37955803, -0.92516786, 0, 0, 0, 1, -0.067983024, 0.5539881, 0)
+
+[node name="B|B18" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="8" unique_id=2110435751]
+transform = Transform3D(0.9956348, -0.093334794, 0, 0.093334794, 0.9956348, 0, 0, 0, 1, 0.026907194, 0.55383116, 0)
+
+[node name="B|B21" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="9" unique_id=1156262210]
+transform = Transform3D(-0.1781754, 0.98399866, 0, -0.98399866, -0.1781754, 0, 0, 0, 1, -0.062477995, 0.60846996, 0)
+
+[node name="B|B19" parent="TestSprite/G|Spacewoman__0000/Skeleton3D" index="10" unique_id=499501255]
+transform = Transform3D(-0.05121246, 0.9986878, 0, -0.9986878, -0.05121246, 0, 0, 0, 1, -0.06463831, 0.39561296, 0)
+
+[node name="MermaidCollision" type="CollisionShape3D" parent="." unique_id=1596829990]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.078757286, 0)
+shape = SubResource("CapsuleShape3D_xgvnv")
+
+[node name="InteractionZone" type="Area3D" parent="." unique_id=1788776717]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionZone" unique_id=71522890]
+shape = SubResource("SphereShape3D_c0clj")
+
+[editable path="TestSprite"]

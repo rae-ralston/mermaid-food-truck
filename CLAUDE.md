@@ -73,6 +73,8 @@ Core truck gameplay loop is functional. Key files: `scripts/core/phase_truck.gd`
 - Patience/timeout system — patience timer on customer, timeout = leaves + reputation hit
 - Stage tracking — dishes should track completed stage so they can't repeat a station
 - Cooking interruptions — cancel mid-work, recover or lose dish
+- Customer fade-out animation — `Node3D` has no `modulate` property, so the tween in `truck_customer.gd` `fulfill()` silently fails. Fix by targeting `$Sprite3D` transparency or using a shader.
+- Station progress bar — removed during 3D conversion (no ProgressBar3D). Re-add as scaled Sprite3D bar or SubViewport-based widget.
 - Reputation effects on tips, pricing, story progression
 
 ## Results Phase (working)
@@ -134,8 +136,9 @@ All 6 phases are functional — full day loop plays end to end.
 ## Roadmap
 
 ### Architecture
-- **3D conversion** — convert dive + truck to 3D (orthographic Camera3D, CharacterBody3D, Area3D). Required before any .glb character can be integrated. See `docs/plans/2026-02-18-3d-conversion-design.md`.
+- ~~**3D conversion**~~ ✓ Done — dive + truck converted to 3D (orthographic Camera3D, CharacterBody3D, Area3D). Test .glb sprite integrated for diver. See `docs/plans/2026-02-18-3d-conversion-design.md`.
 - **.glb character integration** — drop mermaid_diver.glb and mermaid_truck.glb into the converted scenes. Validate pipeline end to end (Procreate → Moho → .glb → Godot → in-scene animation).
+- **Moho multi-state animation export** — Moho file has multiple animation states but only idle came through in the .glb export. Investigate how to export multiple animation clips (idle, walk, carry, etc.) from Moho into a single .glb so Godot's AnimationPlayer sees all clips. Naming convention: suffix `-loop` for auto-looping on Godot import.
 
 ### Gameplay systems
 - ~~**Truck Planning phase**~~ ✓ Done
@@ -170,6 +173,7 @@ See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
 - Particle effects — bubbles (swimming), steam (cook station), sparkle (completed dish)
 - UI transitions — slide/fade between phases instead of hard cut
 - Camera work — gentle sway/follow in dive, framing in truck
+- **Dive camera smoothing** — Camera3D currently parented to Diver (follows instantly). Extract to its own node in World and add lerp-based follow for smoother movement.
 
 ### Menus & persistence
 - **Title screen** — start new game, load game, settings, quit

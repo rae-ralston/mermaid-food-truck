@@ -1,16 +1,16 @@
-extends Area2D
+extends Area3D
 class_name Gatherable
 
 @export var ingredient: IngredientData
 @export var amount: int = 1
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: Sprite3D = $Sprite3D
 
 var harvested := false
 
 func _ready() -> void:
 	if sprite == null:
-		push_error("Sprite2D child missing under Gatherable.")
+		push_error("Sprite3D child missing under Gatherable.")
 		return
 	
 	if ingredient != null and ingredient.sprite != null:

@@ -1,4 +1,4 @@
-extends Area2D
+extends Area3D
 class_name PickupWindow
 
 signal order_fulfilled(order: StringName)

@@ -1,6 +1,6 @@
-extends Node2D
+extends Node3D
 
-signal customer_left(customer: Node2D)
+signal customer_left(customer: Node3D)
 
 var recipe_id: StringName
 var order: Order

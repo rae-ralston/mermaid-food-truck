@@ -8,9 +8,14 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_kdymv")
 
-[node name="World" type="Node2D" parent="." unique_id=1150662282]
+[node name="World" type="Node3D" parent="." unique_id=1276094312]
 
 [node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_axc04")]
+
+[node name="Camera3D" type="Camera3D" parent="World/Diver" unique_id=1607274033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+projection = 1
+size = 10.0
 
 [node name="HUD" type="Control" parent="." unique_id=1958385963]
 anchors_preset = 0

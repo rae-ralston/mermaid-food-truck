@@ -16,6 +16,25 @@ Each in-game day cycles through 6 phases:
 
 Open the project in Godot 4.6 and run the main scene.
 
+## Dev Console
+
+Press backtick (`` ` ``) to toggle the debug console. Pauses the game while open.
+
+| Command | Syntax | Description |
+|---|---|---|
+| `money` | `money [amount]` | Add money (default 500) |
+| `add` | `add <ingredient> [amount]` | Add ingredient to inventory (default 1) |
+| `stock` | `stock [amount]` | Add N of every ingredient (default 10) |
+| `skip` | `skip <phase> [bare]` | Jump to phase with smart defaults, or `bare` for empty payload |
+| `day` | `day [number]` | Set current day number |
+| `upgrade` | `upgrade <id> [level]` | Set upgrade level (default 3) |
+| `clear` | `clear` | Clear output log |
+| `help` | `help` | Show commands |
+
+**Phases:** `dive_planning`, `dive`, `truck_planning`, `truck`, `results`, `store`
+**Ingredients:** `kelp`, `clam`, `coral_spice`, `glow_algae`, `sea_slug`
+**Upgrades:** `swim_speed`, `cook_speed`, `inventory_capacity`
+
 ## Status
 
 Early development — working toward a polished vertical slice demo. See `game-design-doc.md` for full MVP scope.

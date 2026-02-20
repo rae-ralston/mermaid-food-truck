@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameState="*uid://dqt8nxif3f6f1"
+DevConsole="*uid://xxidi2abs7oi"
 
 [display]
 

@@ -126,10 +126,10 @@ Key files: `scripts/core/phase_dive_planning.gd`, `scenes/phases/PhaseDivePlanni
 
 All 6 phases are functional — full day loop plays end to end.
 
-**Next session priorities (in order):**
-1. **3D conversion** — convert dive + truck phases from 2D to 3D (orthographic Camera3D, CharacterBody3D, Area3D). Needed before mermaid .glb can be integrated. See `docs/plans/2026-02-18-3d-conversion-design.md`.
-2. **Stage tracking** — prevent dishes from repeating a station (quick fix, prevents player confusion)
-3. **Dev tools** — debug console to add money/ingredients, skip phases, spawn customers (unblocks faster testing of everything else)
+**Next priorities (in order):**
+1. **Stage tracking** — prevent dishes from repeating a station (quick fix, prevents player confusion)
+2. **Dev tools** — debug console to add money/ingredients, skip phases, spawn customers (unblocks faster testing of everything else)
+3. **Dive backpack** — inventory access during diving. See `docs/plans/2026-02-20-dive-backpack-plan.md`
 4. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
 5. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
 
@@ -144,6 +144,7 @@ All 6 phases are functional — full day loop plays end to end.
 - ~~**Truck Planning phase**~~ ✓ Done
 - ~~**Dive Planning phase**~~ ✓ Done — 2 sites (Shallows, Coral Reef) with different ingredient mixes
 - ~~**Ingredient consumption**~~ ✓ Done — PREP station deducts ingredients via `_consume_ingredients()` in `truck_station.gd`
+- **Dive backpack** — designed, not yet built. See `docs/plans/2026-02-20-dive-backpack-design.md`. Key decision: `inventory_capacity` upgrade applies to the per-dive backpack, not the truck pantry (which is unlimited).
 - **Customer patience/timeout** — pressure during truck phase, reputation hit on timeout
 - **Stage tracking** — prevent dishes from going through the same station twice
 - **Cooking interruptions** — cancel station mid-work, recover or lose dish

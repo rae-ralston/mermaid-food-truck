@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bls7bxslauon"
-path.s3tc="res://.godot/imported/exit_dive_zone.png-5af856391e57b9f1759a533ee6ed32c7.s3tc.ctex"
+uid="uid://cbrc7p1tsk5nn"
+path.s3tc="res://.godot/imported/test-3d-sprite_head__0030.png-0bdcf2a455a4d9f72e8d0d0dfd25cbf3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "e526ee74da90b178d54fee62c4edf287"
+}
 
 [deps]
 
-source_file="res://assets/exit_dive_zone.png"
-dest_files=["res://.godot/imported/exit_dive_zone.png-5af856391e57b9f1759a533ee6ed32c7.s3tc.ctex"]
+source_file="res://assets/characters/test-3d-sprite_head__0030.png"
+dest_files=["res://.godot/imported/test-3d-sprite_head__0030.png-0bdcf2a455a4d9f72e8d0d0dfd25cbf3.s3tc.ctex"]
 
 [params]
 

@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bls7bxslauon"
-path.s3tc="res://.godot/imported/exit_dive_zone.png-5af856391e57b9f1759a533ee6ed32c7.s3tc.ctex"
+uid="uid://brxp4m3gpxjca"
+path.s3tc="res://.godot/imported/test-3d-sprite_hand__0013.png-f94c0becc4a1fca5c0ad10e8a0899cc3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "3b32511d8f1f304da11fa8461243cdf9"
+}
 
 [deps]
 
-source_file="res://assets/exit_dive_zone.png"
-dest_files=["res://.godot/imported/exit_dive_zone.png-5af856391e57b9f1759a533ee6ed32c7.s3tc.ctex"]
+source_file="res://assets/characters/test-3d-sprite_hand__0013.png"
+dest_files=["res://.godot/imported/test-3d-sprite_hand__0013.png-f94c0becc4a1fca5c0ad10e8a0899cc3.s3tc.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-extends Area2D
+extends Area3D
 
 signal dish_completed(recipe_id: String, station_type: StationType)
 
@@ -37,8 +37,7 @@ func _ready() -> void:
 	$StationLabel.text = stationPhase[station_type].name
 
 func _process(_delta: float) -> void:
-	if currentCookingPhase == CookingPhaseIds.WORKING:
-		$ProgressBar.value = (1 - $Timer.time_left/$Timer.wait_time) * 100 
+	pass
 
 func interact(actor) -> Dictionary:
 	match(currentCookingPhase):
@@ -61,8 +60,7 @@ func interact(actor) -> Dictionary:
 			
 			var time = current_recipe.time_limit / GameState.get_cook_speed_multiplier()
 			$Timer.start(time)
-			$ProgressBar.value = 0
-			
+						
 			_set_cooking_phase(CookingPhaseIds.WORKING)
 			return {}
 		CookingPhaseIds.WORKING:
@@ -80,8 +78,7 @@ func interact(actor) -> Dictionary:
 				return {}
 			
 			$PhaseLabel.text = cookingPhase[CookingPhaseIds.IDLE].name
-			$ProgressBar.value = 0
-			
+						
 			dish_completed.emit(current_recipe.id, station_type)
 			
 			var current = current_recipe

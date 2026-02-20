@@ -4,9 +4,9 @@ class_name CustomerSpawner
 var CustomerScene = preload("res://scenes/TruckCustomer.tscn")
 
 var spawn_interval := 8.0
-var line_origin: Vector2 = Vector2.ZERO
-var line_spacing := 70.0
-var customer_line: Array[Node2D] = []
+var line_origin: Vector3 = Vector3.ZERO
+var line_spacing := 1.5
+var customer_line: Array[Node3D] = []
 var _parent_node: Node
 var active_menu: Array[StringName] = []
 
@@ -29,22 +29,22 @@ func _spawn_customer() -> void:
 	if (active_menu.is_empty()): return
 	var random_id: StringName = recipe_keys[randi() % recipe_keys.size()]
 
-	var customer: Node2D = CustomerScene.instantiate()
+	var customer: Node3D = CustomerScene.instantiate()
 	customer.setup(random_id)
 	customer.customer_left.connect(_on_customer_left)
 	customer_line.append(customer)
 	_parent_node.add_child(customer)
 	_reposition_line()
 	
-func _on_customer_left(customer: Node2D) -> void:
+func _on_customer_left(customer: Node3D) -> void:
 	customer_line.erase(customer)
 	_reposition_line()
 
 func _reposition_line() -> void:
 	for i in customer_line.size():
-		customer_line[i].position = line_origin + Vector2(i * line_spacing, 0)
+		customer_line[i].position = line_origin + Vector3(i * line_spacing, 0, 0)
 
-func get_front_customer() -> Node2D:
+func get_front_customer() -> Node3D:
 	if (customer_line.is_empty()):
 		return null
 	else:

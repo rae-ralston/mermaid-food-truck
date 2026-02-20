@@ -19,7 +19,7 @@ func _ready() -> void:
 	$World/CustomerSpawner.setup($World)
 	$World/OrderWindow.customer_spawner = $World/CustomerSpawner
 	$World/OrderWindow.order_taken.connect(_on_order_taken)
-	$World/CustomerSpawner.line_origin = $World/OrderWindow.position + Vector2(0, 90)
+	$World/CustomerSpawner.line_origin = $World/OrderWindow.position + Vector3(0, -2, 0)
 
 	_refresh_orders()
 	

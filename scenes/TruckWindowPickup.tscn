@@ -2,8 +2,7 @@
 
 [ext_resource type="Script" uid="uid://55pxfpnotmfy" path="res://scripts/truck_window_pickup.gd" id="1_n7tjw"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lcajw"]
-size = Vector2(94, 95)
+[sub_resource type="BoxShape3D" id="BoxShape3D_kuvh7"]
 
 [sub_resource type="Gradient" id="Gradient_n7tjw"]
 colors = PackedColorArray(0.30980393, 0.50980395, 0.7882353, 1, 0.2901961, 1, 1, 1)
@@ -13,12 +12,11 @@ gradient = SubResource("Gradient_n7tjw")
 width = 100
 height = 100
 
-[node name="TruckPickupWindow" type="Area2D" unique_id=1338750309]
+[node name="TruckPickupWindow" type="Area3D" unique_id=1285530665]
 script = ExtResource("1_n7tjw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=916428747]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_lcajw")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1690342913]
+shape = SubResource("BoxShape3D_kuvh7")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1205668629]
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=489025589]
 texture = SubResource("GradientTexture2D_lcajw")

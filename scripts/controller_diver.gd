@@ -1,12 +1,13 @@
-extends CharacterBody2D
+extends CharacterBody3D
 class_name DiverController
 
 signal interaction_performed(result: Dictionary)
 signal held_item_changed(item_id: String)
 
-@onready var interaction_zone: Area2D = $InteractionZone
+@onready var interaction_zone: Area3D = $InteractionZone
 
-var nearby: Array[Area2D] = []
+var nearby: Array[Area3D] = []
+
 var held_item: String = "":
 	set(value):
 		held_item = value
@@ -21,9 +22,10 @@ func _process(_delta: float) -> void:
 		_try_interact()
 
 func _physics_process(_delta: float) -> void:
-	var input := Vector2(
+	var input := Vector3(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
-		Input.get_action_strength("move_down") - Input.get_action_strength("move_up"),
+		Input.get_action_strength("move_up") - Input.get_action_strength("move_down"),
+		0
 	)
 	
 	if input.length_squared() > 0.0:
@@ -44,7 +46,7 @@ func _try_interact() -> void:
 	if nearby.is_empty():
 		return
 
-	var best: Area2D = null
+	var best: Area3D = null
 	var best_score: float = -INF  # <-- FIX 1
 
 	for candidate in nearby:

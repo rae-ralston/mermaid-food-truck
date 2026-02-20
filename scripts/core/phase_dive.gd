@@ -14,7 +14,7 @@ func enter(payload: Dictionary) -> void:
 	var site_instance := dive_site.instantiate()
 	$World.add_child(site_instance)
 	
-	var spawn_point: Marker2D = site_instance.find_child("SpawnPoint")
+	var spawn_point: Marker3D = site_instance.find_child("SpawnPoint")
 	var extraction_zone = site_instance.find_child("ExtractionZone")
 
 	$World/Diver.global_position = spawn_point.global_position

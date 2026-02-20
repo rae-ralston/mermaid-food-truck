@@ -2,14 +2,13 @@
 
 [ext_resource type="Script" uid="uid://c1puexttxekpj" path="res://scripts/gatherable.gd" id="1_sb873"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_sb873"]
-radius = 40.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_sb873"]
 
-[node name="Gatherable" type="Area2D" unique_id=724619957]
+[node name="Gatherable" type="Area3D" unique_id=883164315]
 script = ExtResource("1_sb873")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2057746232]
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1211770410]
 unique_name_in_owner = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1999078992]
-shape = SubResource("CircleShape2D_sb873")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1172927474]
+shape = SubResource("SphereShape3D_sb873")

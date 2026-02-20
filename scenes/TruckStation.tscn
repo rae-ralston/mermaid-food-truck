@@ -3,36 +3,25 @@
 [ext_resource type="Script" uid="uid://c1lp111kxyk15" path="res://scripts/truck_station.gd" id="1_md0ap"]
 [ext_resource type="Texture2D" uid="uid://c6dm05c7m0e1g" path="res://assets/prep-station.png" id="2_5pjwh"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_md0ap"]
-size = Vector2(129, 91)
+[sub_resource type="BoxShape3D" id="BoxShape3D_5pjwh"]
 
-[node name="TruckStation" type="Area2D" unique_id=1183657895]
+[node name="TruckStation" type="Area3D" unique_id=1678493088]
 script = ExtResource("1_md0ap")
 
 [node name="Timer" type="Timer" parent="." unique_id=83707731]
 one_shot = true
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2034459249]
-scale = Vector2(0.25, 0.25)
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=95299618]
+pixel_size = 0.0025
 texture = ExtResource("2_5pjwh")
 
-[node name="PhaseLabel" type="Label" parent="." unique_id=848152297]
-offset_left = 2.0
-offset_top = -133.0
-offset_right = 42.0
-offset_bottom = -110.0
+[node name="PhaseLabel" type="Label3D" parent="." unique_id=1173644179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2625, 0)
+billboard = 1
 
-[node name="StationLabel" type="Label" parent="." unique_id=700095851]
-offset_top = -177.0
-offset_right = 40.0
-offset_bottom = -154.0
+[node name="StationLabel" type="Label3D" parent="." unique_id=700617429]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7436132, 0)
+billboard = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=564988941]
-position = Vector2(3.5, 6.5)
-shape = SubResource("RectangleShape2D_md0ap")
-
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1610882042]
-offset_left = -82.0
-offset_top = 95.0
-offset_right = 65.0
-offset_bottom = 122.0
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1080299329]
+shape = SubResource("BoxShape3D_5pjwh")

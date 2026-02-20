@@ -3,7 +3,7 @@ extends Node
 var day: int = 1
 var money: int = 0
 var reputation: int = 0
-var swim_speed: float = 220.0
+var swim_speed: float = 5.0
 
 var inventory: Inventory = Inventory.new()
 

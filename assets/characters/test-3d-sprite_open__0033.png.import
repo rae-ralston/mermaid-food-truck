@@ -2,20 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0yb2taluw5is"
-path="res://.godot/imported/demo_client_fish.png-e1b9f5d70be22b7ad1579ddc98999eb5.ctex"
+uid="uid://b0b4wiuu0c3wy"
+path.s3tc="res://.godot/imported/test-3d-sprite_open__0033.png-6a3b3a8db1bcdb61a47ce5cbc6c09371.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "7d4a0e7930d43d752e6e1af72befc10f"
 }
 
 [deps]
 
-source_file="res://assets/characters/demo_client_fish.png"
-dest_files=["res://.godot/imported/demo_client_fish.png-e1b9f5d70be22b7ad1579ddc98999eb5.ctex"]
+source_file="res://assets/characters/test-3d-sprite_open__0033.png"
+dest_files=["res://.godot/imported/test-3d-sprite_open__0033.png-6a3b3a8db1bcdb61a47ce5cbc6c09371.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +27,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

@@ -2,20 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pq6llfvotkp8"
-path="res://.godot/imported/demo_client_shark.png-235d5a7038fe159e371cb03c0c2b8609.ctex"
+uid="uid://p5q6fggnktpd"
+path.s3tc="res://.godot/imported/test-3d-sprite_glove__0005.png-fdb2e46e8d416307a340f4c9bbd4b8b9.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "92468a405ea2d7f0a257e95ff02ab8ef"
 }
 
 [deps]
 
-source_file="res://assets/characters/demo_client_shark.png"
-dest_files=["res://.godot/imported/demo_client_shark.png-235d5a7038fe159e371cb03c0c2b8609.ctex"]
+source_file="res://assets/characters/test-3d-sprite_glove__0005.png"
+dest_files=["res://.godot/imported/test-3d-sprite_glove__0005.png-fdb2e46e8d416307a340f4c9bbd4b8b9.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +27,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

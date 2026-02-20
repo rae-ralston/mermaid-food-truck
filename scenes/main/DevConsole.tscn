@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://xxidi2abs7oi"]
+
+[ext_resource type="Script" uid="uid://cfvsv75ladqhj" path="res://scripts/core/dev_console.gd" id="1_wbf6k"]
+
+[node name="DevConsole" type="CanvasLayer" unique_id=960834515]
+visible = false
+script = ExtResource("1_wbf6k")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=221332511]
+anchors_preset = 12
+anchor_top = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1419313407]
+layout_mode = 2
+
+[node name="OutputLog" type="RichTextLabel" parent="PanelContainer/VBoxContainer" unique_id=1242060134]
+layout_mode = 2
+size_flags_vertical = 3
+scroll_following = true
+
+[node name="CommandLine" type="LineEdit" parent="PanelContainer/VBoxContainer" unique_id=938699611]
+layout_mode = 2
+size_flags_vertical = 8

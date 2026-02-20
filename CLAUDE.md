@@ -122,12 +122,30 @@ Key files: `scripts/core/phase_dive_planning.gd`, `scenes/phases/PhaseDivePlanni
 
 **Payload flow:** Dive Planning emits `{ "dive_site": "res://scenes/dive_sites/..." }` → Dive loads site, gathers ingredients, emits `{ "gathered": {...} }` → PhaseManager adds to inventory → Truck Planning receives for display.
 
+## Dev Console (working)
+
+Text-based debug console toggled with backtick (`` ` ``). Autoload singleton with its own CanvasLayer (renders above everything). Pauses the game tree while open. Commands: `money`, `add`, `stock`, `skip`, `day`, `upgrade`, `help`, `clear`. Command history with up/down arrows.
+
+Key files: `scripts/core/dev_console.gd`, `scenes/main/DevConsole.tscn`.
+
+**Architecture:** CanvasLayer autoload with `process_mode = ALWAYS`. PanelContainer > VBoxContainer > RichTextLabel (output) + LineEdit (input). Commands parsed via `split()` + `match` statement — adding a new command means adding one match branch and one `_cmd_*` function.
+
+**Phase skipping:** `skip <phase>` uses smart default payloads (e.g. truck gets all recipes + stocked ingredients). `skip <phase> bare` passes empty payload. Phases dict maps name strings to `PhaseIds.PhaseId` enums + default payloads.
+
+**Known issue:** LineEdit loses focus after submitting a command — requires clicking back into the input field. Likely a Godot focus quirk with paused trees.
+
+**TODO (deferred):**
+- Customer/order spawning commands
+- Game speed controls
+- Fix LineEdit focus persistence
+- Strip from production builds
+
 ## Current Work
 
 All 6 phases are functional — full day loop plays end to end.
 
 **Next priorities (in order):**
-1. **Dev tools** — debug console to add money/ingredients, skip phases, spawn customers (unblocks faster testing of everything else)
+1. ~~**Dev tools**~~ ✓ Done — debug console with backtick toggle
 2. **Dive backpack** — inventory access during diving. See `docs/plans/2026-02-20-dive-backpack-plan.md`
 3. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
 4. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
@@ -181,8 +199,8 @@ See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
 - **Settings screen** — music volume, SFX volume (accessible from title + pause menu)
 
 ### Dev tools (development only — strip from production builds)
-- Debug console / cheat menu — add money, add ingredients, set upgrade levels, set day
-- Phase skipper — jump to any phase directly
+- ~~Debug console / cheat menu~~ ✓ Done — add money, add ingredients, set upgrade levels, set day
+- ~~Phase skipper~~ ✓ Done — jump to any phase with smart default payloads or bare
 - Order/customer controls — spawn specific customers, set queue
 - Game speed controls — fast forward through timers
 

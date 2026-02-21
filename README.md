@@ -1,4 +1,4 @@
-# Mermaid Food Truck
+# Mermaid Food Truck 🧜‍♀️
 
 A cozy underwater cooking management game built in Godot 4.6. Dive for ingredients in waters that shift from cute to spooky, then run your food truck serving ocean-themed dishes.
 

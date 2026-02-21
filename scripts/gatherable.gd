@@ -27,9 +27,30 @@ func interact(_actor) -> Dictionary:
 		return {}
 
 	harvested = true
-	queue_free()
 
 	return {
+		"source": self,
 		"type": "harvest",
 		"items": { ingredient.id: amount }
 	}
+
+func consume() -> void:
+	queue_free()
+
+func cancel_harvest() -> void:
+	harvested = false
+
+static func create_dropped(ingredient_data: IngredientData, pos: Vector3) -> Gatherable:
+	var gatherable = load("res://scenes/Gatherable.tscn").instantiate()
+	gatherable.amount = 1
+	gatherable.ingredient = ingredient_data
+	gatherable.scale = Vector3(0.2, 0.2, 0.2)
+	return gatherable
+
+func start_despawn_timer() -> void:
+	var timer = Timer.new()
+	timer.wait_time = 10.0
+	timer.one_shot = true
+	timer.autostart = true
+	timer.timeout.connect(queue_free)
+	add_child(timer)

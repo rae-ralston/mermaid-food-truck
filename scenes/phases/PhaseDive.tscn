@@ -2,10 +2,15 @@
 
 [ext_resource type="Script" uid="uid://rtcpo4mqd8ep" path="res://scripts/core/phase_dive.gd" id="1_kdymv"]
 [ext_resource type="PackedScene" uid="uid://cgorwwg8pq6yc" path="res://scenes/Diver.tscn" id="2_axc04"]
+[ext_resource type="PackedScene" uid="uid://bna4w6h847xav" path="res://scenes/DiveBackpack.tscn" id="3_bpack"]
 
 [node name="PhaseDive" type="Control" unique_id=1390649418]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_kdymv")
 
 [node name="World" type="Node3D" parent="." unique_id=1276094312]
@@ -18,9 +23,11 @@ projection = 1
 size = 10.0
 
 [node name="HUD" type="Control" parent="." unique_id=1958385963]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="LocationLabel" type="Label" parent="HUD" unique_id=1510692009]
 layout_mode = 0
@@ -42,3 +49,17 @@ offset_left = 166.0
 offset_top = 216.0
 offset_right = 206.0
 offset_bottom = 239.0
+
+[node name="BackpackGrid" parent="HUD" instance=ExtResource("3_bpack")]
+custom_minimum_size = Vector2(300, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -200.0
+offset_right = 150.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2

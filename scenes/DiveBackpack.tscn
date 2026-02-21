@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bna4w6h847xav"]
+
+[ext_resource type="Script" uid="uid://d4l8c2pidu2ll" path="res://scripts/dive_backpack.gd" id="1_4e4v8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.12, 0.15, 0.2, 0.95)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="BackpackGrid" type="PanelContainer" unique_id=1096227839]
+process_mode = 2
+visible = false
+custom_minimum_size = Vector2(320, 0)
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+script = ExtResource("1_4e4v8")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=778693916]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1490033722]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HeaderLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=458255069]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=160139466]
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="DropButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=261318146]
+layout_mode = 2
+disabled = true
+text = "Drop"

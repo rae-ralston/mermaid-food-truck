@@ -3,7 +3,7 @@ class_name Inventory
 
 signal inventory_changed
 
-@export var capacity: int = 12
+@export var capacity: int = 0 # set by caller
 var _items: Dictionary = {}
 
 func to_dict() -> Dictionary:
@@ -44,8 +44,16 @@ func add(id: StringName, amount: int = 1) -> bool:
 	if amount <= 0:
 		return true
 	
-	#if not has_space(amount):
-		#return false
+	_items[id] = get_count(id) + amount
+	emit_signal("inventory_changed")
+	return true
+
+func add_checked(id: StringName, amount: int = 1) -> bool:
+	if amount <= 0:
+		return true
+	
+	if not has_space(amount):
+		return false
 	
 	_items[id] = get_count(id) + amount
 	emit_signal("inventory_changed")

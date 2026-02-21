@@ -5,6 +5,8 @@ var money: int = 0
 var reputation: int = 0
 var swim_speed: float = 5.0
 
+const BASE_BACKPACK_CAPACITY := 12
+
 var inventory: Inventory = Inventory.new()
 
 var recipeCatalog: Dictionary = {}
@@ -47,12 +49,14 @@ func _ready() -> void:
 	inventory.add(&"kelp", 20)
 	inventory.add(&"clam", 20)
 	inventory.add(&"coral_spice", 20)
+	inventory.capacity = 999999
 
-func reset_for_new_run() -> void:
+func reset_for_new_game() -> void:
 	day = 1
 	money = 0
 	reputation = 0
 	inventory = Inventory.new()
+	inventory.capacity = 999999
 
 func start_new_day() -> void:
 	pass
@@ -97,8 +101,7 @@ func buy_upgrade(upgrade_id: String) -> bool:
 
 func apply_upgrade(upgrade_id: String) -> void:
 	# cook speed and swim speed are calculated in controller_diver and truck_station, respectively
-	if upgrade_id == "inventory_capacity":
-		inventory.capacity = 12 + (upgrades["inventory_capacity"] * 4)
+	pass
 
 func can_make_recipe(recipe_id: StringName) -> bool:
 	var recipe: RecipeData = recipeCatalog[recipe_id]
@@ -106,3 +109,6 @@ func can_make_recipe(recipe_id: StringName) -> bool:
 		if inventory.get_count(ingredient_id) < recipe.inputs[ingredient_id]:
 			return false
 	return true
+
+func get_backpack_capacity() -> int:
+	return BASE_BACKPACK_CAPACITY + (upgrades["inventory_capacity"] * 4)

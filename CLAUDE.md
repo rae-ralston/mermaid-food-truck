@@ -122,6 +122,26 @@ Key files: `scripts/core/phase_dive_planning.gd`, `scenes/phases/PhaseDivePlanni
 
 **Payload flow:** Dive Planning emits `{ "dive_site": "res://scenes/dive_sites/..." }` → Dive loads site, gathers ingredients, emits `{ "gathered": {...} }` → PhaseManager adds to inventory → Truck Planning receives for display.
 
+## Dive Backpack (working)
+
+Capacity-limited inventory for the dive phase. Player presses Tab (or Escape to close) to open a grid overlay showing gathered items. Items can be dropped to make room — spawns a re-gatherable Gatherable at the diver's position with a 10s despawn timer. Backpack merges into truck inventory on extraction.
+
+Key files: `scripts/core/phase_dive.gd`, `scripts/dive_backpack.gd`, `scenes/DiveBackpack.tscn`.
+
+**Data model:**
+- `GameState.inventory` — unlimited truck pantry (`capacity = 999999`), accumulates across dives
+- Dive backpack — fresh `Inventory` instance per dive, capacity from `GameState.get_backpack_capacity()` (base 12 + 4 per upgrade level)
+- `Gatherable.interact()` returns data without self-destructing. Caller decides: `consume()` to remove, `cancel_harvest()` to reject.
+- `Gatherable.create_dropped()` — static factory for spawning dropped items at scale 0.2 with despawn timer.
+
+**UI:** `BackpackGrid` (PanelContainer) with GridContainer (4 columns). Slots have three visual states via StyleBoxFlat: filled, empty (dimmed), selected (yellow border). `process_mode = ALWAYS` so Tab/Escape input works while paused. HUD also set to `PROCESS_MODE_ALWAYS`.
+
+**Deferred:**
+- Recipe preview in backpack
+- Truck inventory preview
+- Drag-and-drop grid reordering
+- Dropped item animation (float downward, shrink over 10s before despawn)
+
 ## Dev Console (working)
 
 Text-based debug console toggled with backtick (`` ` ``). Autoload singleton with its own CanvasLayer (renders above everything). Pauses the game tree while open. Commands: `money`, `add`, `stock`, `skip`, `day`, `upgrade`, `help`, `clear`. Command history with up/down arrows.
@@ -146,9 +166,11 @@ All 6 phases are functional — full day loop plays end to end.
 
 **Next priorities (in order):**
 1. ~~**Dev tools**~~ ✓ Done — debug console with backtick toggle
-2. **Dive backpack** — inventory access during diving. See `docs/plans/2026-02-20-dive-backpack-plan.md`
-3. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
-4. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
+2. ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI, drop-to-world
+3. **Fix truck phase regressions** — station progress bar (lost in 3D conversion) + customer fade-out animation (Node3D has no modulate)
+4. **Dive camera smoothing** — extract Camera3D from Diver, add lerp-based follow (quick win)
+5. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
+6. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
 
 ## Roadmap
 
@@ -161,7 +183,7 @@ All 6 phases are functional — full day loop plays end to end.
 - ~~**Truck Planning phase**~~ ✓ Done
 - ~~**Dive Planning phase**~~ ✓ Done — 2 sites (Shallows, Coral Reef) with different ingredient mixes
 - ~~**Ingredient consumption**~~ ✓ Done — PREP station deducts ingredients via `_consume_ingredients()` in `truck_station.gd`
-- **Dive backpack** — designed, not yet built. See `docs/plans/2026-02-20-dive-backpack-design.md`. Key decision: `inventory_capacity` upgrade applies to the per-dive backpack, not the truck pantry (which is unlimited).
+- ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI. Tab to open/close (Escape also closes). Drop items to make room (spawns re-gatherable with 10s despawn). `inventory_capacity` upgrade applies to per-dive backpack, truck pantry is unlimited.
 - **Customer patience/timeout** — pressure during truck phase, reputation hit on timeout
 - ~~**Stage tracking**~~ ✓ Done — dishes track `completed_steps` via `held_item` Dictionary; stations reject dishes at the wrong step with a hint message
 - **Cooking interruptions** — cancel station mid-work, recover or lose dish
@@ -192,6 +214,7 @@ See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
 - UI transitions — slide/fade between phases instead of hard cut
 - Camera work — gentle sway/follow in dive, framing in truck
 - **Dive camera smoothing** — Camera3D currently parented to Diver (follows instantly). Extract to its own node in World and add lerp-based follow for smoother movement.
+- **Dropped item animation** — items dropped from backpack should float downward and gradually shrink over the 10s despawn timer, rather than popping in/out.
 
 ### Menus & persistence
 - **Title screen** — start new game, load game, settings, quit

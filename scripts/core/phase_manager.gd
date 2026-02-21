@@ -41,6 +41,4 @@ func switch_to(phase_id: int, payload: Dictionary) -> void:
 	_current_phase.enter(payload)
 
 func _on_phase_finished(next_phase: int, payload: Dictionary) -> void:
-	if payload.has("gathered"):
-		GameState.inventory.add_many(payload["gathered"])
 	switch_to(next_phase, payload)

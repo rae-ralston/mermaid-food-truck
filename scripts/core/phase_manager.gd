@@ -19,13 +19,14 @@ func _ready() -> void:
 	switch_to(PhaseIds.PhaseId.DIVE_PLANNING, {})
 
 func switch_to(phase_id: int, payload: Dictionary) -> void:
-	#clean up old phase
+	TransitionOverlay.play()
+	await TransitionOverlay.transition_midpoint
+	
 	if _current_phase != null:
 		_current_phase.exit()
 		_current_phase.queue_free()
 		_current_phase = null
 	
-	# instance new phase (load at runtime to avoid cyclic resource inclusion)
 	var scene: PackedScene = load(_phase_paths[phase_id]) as PackedScene
 	var phase_instance := scene.instantiate()
 	current_phase_root.add_child(phase_instance)

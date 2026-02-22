@@ -167,10 +167,11 @@ All 6 phases are functional — full day loop plays end to end.
 **Next priorities (in order):**
 1. ~~**Dev tools**~~ ✓ Done — debug console with backtick toggle
 2. ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI, drop-to-world
-3. **Fix truck phase regressions** — station progress bar (lost in 3D conversion) + customer fade-out animation (Node3D has no modulate)
-4. **Dive camera smoothing** — extract Camera3D from Diver, add lerp-based follow (quick win)
-5. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
-6. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
+3. **UI foundation** — phase transitions (fade-to-black overlay), persistent HUD shell with zone system, pause menu. See `docs/plans/2026-02-22-ui-foundation-design.md`.
+4. **Fix truck phase regressions** — station progress bar (lost in 3D conversion) + customer fade-out animation (Node3D has no modulate)
+5. **Dive camera smoothing** — extract Camera3D from Diver, add lerp-based follow (quick win)
+6. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
+7. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
 
 ## Roadmap
 
@@ -211,12 +212,13 @@ See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
 - Tween animations on station state changes (bounce, scale pop)
 - Visual feedback on pickup/delivery (flash, scale pop)
 - Particle effects — bubbles (swimming), steam (cook station), sparkle (completed dish)
-- UI transitions — slide/fade between phases instead of hard cut
+- ~~**UI transitions**~~ Designed — fade-to-black overlay with future-proofed effect system. See `docs/plans/2026-02-22-ui-foundation-design.md`. Themed wipe/dissolve effects deferred.
 - Camera work — gentle sway/follow in dive, framing in truck
 - **Dive camera smoothing** — Camera3D currently parented to Diver (follows instantly). Extract to its own node in World and add lerp-based follow for smoother movement.
 - **Dropped item animation** — items dropped from backpack should float downward and gradually shrink over the 10s despawn timer, rather than popping in/out.
 
 ### Menus & persistence
+- **Pause menu** — ESC to pause, resume/settings/quit options. CanvasLayer overlay like dev console.
 - **Title screen** — start new game, load game, settings, quit
 - **Save/load system** — auto-save at end of each day (between Results and Store), load from title screen
 - **Settings screen** — music volume, SFX volume (accessible from title + pause menu)

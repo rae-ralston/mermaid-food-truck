@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bhew61f8saxhh"]
+
+[ext_resource type="Script" uid="uid://b1n1fi07477ng" path="res://scripts/ui_transition_overlay.gd" id="1_tervv"]
+
+[node name="TransitionOverlay" type="CanvasLayer" unique_id=1763339901]
+script = ExtResource("1_tervv")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=849901310]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)

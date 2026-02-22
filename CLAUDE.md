@@ -168,10 +168,11 @@ All 6 phases are functional — full day loop plays end to end.
 1. ~~**Dev tools**~~ ✓ Done — debug console with backtick toggle
 2. ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI, drop-to-world
 3. **UI foundation** — phase transitions (fade-to-black overlay), persistent HUD shell with zone system, pause menu. See `docs/plans/2026-02-22-ui-foundation-design.md`.
-4. **Fix truck phase regressions** — station progress bar (lost in 3D conversion) + customer fade-out animation (Node3D has no modulate)
-5. **Dive camera smoothing** — extract Camera3D from Diver, add lerp-based follow (quick win)
-6. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
-7. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
+4. **Wire up mermaid .glb animations** — example .glb has rigged animations (idle, walk, etc.). Integrate AnimationPlayer/AnimationTree with DiverController states (idle, moving, carrying). Validates the animation pipeline before final mermaid art lands.
+5. **Fix truck phase regressions** — station progress bar (lost in 3D conversion) + customer fade-out animation (Node3D has no modulate)
+6. **Dive camera smoothing** — extract Camera3D from Diver, add lerp-based follow (quick win)
+7. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
+8. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
 
 ## Roadmap
 

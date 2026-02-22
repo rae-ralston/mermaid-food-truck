@@ -2,9 +2,27 @@
 
 [ext_resource type="Script" uid="uid://bey5peoidf2u2" path="res://scripts/core/phase_manager.gd" id="1_hyk8p"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hyk8p"]
+sky_top_color = Color(0.56769747, 0.6665558, 0.82194054, 1)
+sky_horizon_color = Color(0.21568628, 0.36078432, 0.43137255, 1)
+sky_curve = 0.64306384
+ground_bottom_color = Color(0.18249905, 0.17433271, 0.23970488, 1)
+ground_horizon_color = Color(0.21452, 0.3603177, 0.4330528, 1)
+ground_curve = 0.24251454
+
+[sub_resource type="Sky" id="Sky_iuonh"]
+sky_material = SubResource("ProceduralSkyMaterial_hyk8p")
+
+[sub_resource type="Environment" id="Environment_k2fmo"]
+background_mode = 2
+sky = SubResource("Sky_iuonh")
+
 [node name="Main" type="Node" unique_id=637429763]
 
 [node name="PhaseManager" type="Node" parent="." unique_id=1531165915]
 script = ExtResource("1_hyk8p")
 
 [node name="CurrentPhaseRoot" type="Node" parent="." unique_id=1264855058]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1005056842]
+environment = SubResource("Environment_k2fmo")

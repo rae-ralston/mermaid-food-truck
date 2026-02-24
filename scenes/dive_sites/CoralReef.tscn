@@ -1,12 +1,30 @@
 [gd_scene format=3 uid="uid://c0nngv5piurw5"]
 
 [ext_resource type="PackedScene" uid="uid://dk6qw7c5wr6n5" path="res://scenes/Gatherable.tscn" id="1_fvh32"]
+[ext_resource type="Texture2D" uid="uid://btiynjmkq7umf" path="res://assets/environments/coral_reefs/bg_far.png" id="1_hfw5p"]
 [ext_resource type="PackedScene" uid="uid://dmeklwytvnij2" path="res://scenes/DiveExtractionZone.tscn" id="1_sq6kx"]
+[ext_resource type="Script" uid="uid://o0ed2dd5gxmm" path="res://scripts/core/parallax_background.gd" id="2_bamq0"]
+[ext_resource type="Texture2D" uid="uid://4s5qpuq5ku3r" path="res://assets/environments/coral_reefs/bd_mid.png" id="3_bamq0"]
 [ext_resource type="Resource" uid="uid://dgfkoyy1lpqx" path="res://data/ingredients/sea_slug.tres" id="3_sfdv6"]
 [ext_resource type="Resource" uid="uid://k86vjq2bv5jl" path="res://data/ingredients/glow_algae.tres" id="4_ciwex"]
 [ext_resource type="Resource" uid="uid://bnyo7fgknfdqs" path="res://data/ingredients/coral_spice.tres" id="5_hfw5p"]
 
 [node name="CoralReef" type="Node3D" unique_id=417551586]
+
+[node name="Background" type="Node3D" parent="." unique_id=1111500366]
+
+[node name="BackgroundFar" type="Sprite3D" parent="Background" unique_id=1722770341]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+texture = ExtResource("1_hfw5p")
+script = ExtResource("2_bamq0")
+scroll_factor = Vector2(0.01, 0.01)
+
+[node name="BackgroundMid" type="Sprite3D" parent="Background" unique_id=1371448689]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+pixel_size = 0.004
+texture = ExtResource("3_bamq0")
+script = ExtResource("2_bamq0")
+scroll_factor = Vector2(0.1, 0.1)
 
 [node name="PhaseLabel" type="Label" parent="." unique_id=1474207612]
 offset_left = 191.0

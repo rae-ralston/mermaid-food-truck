@@ -40,7 +40,7 @@ func consume() -> void:
 func cancel_harvest() -> void:
 	harvested = false
 
-static func create_dropped(ingredient_data: IngredientData, pos: Vector3) -> Gatherable:
+static func create_dropped(ingredient_data: IngredientData, _pos: Vector3) -> Gatherable:
 	var gatherable = load("res://scenes/Gatherable.tscn").instantiate()
 	gatherable.amount = 1
 	gatherable.ingredient = ingredient_data

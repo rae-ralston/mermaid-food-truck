@@ -204,6 +204,15 @@ See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
 - **Hazardous creature** — 1 dangerous fish type; aggros on proximity, steals ingredient on contact, deals damage; pure hazard in v1 (not catchable). See `docs/plans/2026-02-18-fish-mechanics-design.md` for full design including post-v1 catching mechanic.
 
 ### Dive levels
+
+**GridMap tileset setup (next step):**
+- `basic_rocks_tileset.png` in `assets/environments/` — shared rock tileset, tile size TBD (likely 16x16)
+- Approach: build a MeshLibrary manually with 4-6 starter tiles (solid fill, top edge, side edge, corner, accent). Start small, add more later.
+- Setup flow: create scene with MeshInstance3D per tile (QuadMesh + StandardMaterial3D with UV offset/scale into atlas) → Scene > Export As > MeshLibrary → save as .tres → add GridMap node to dive site, assign library, paint
+- UV math: `uv1_scale` = `Vector3(1/cols, 1/rows, 1)`, `uv1_offset` = `Vector3(col * scale.x, row * scale.y, 0)`. Use Alpha Scissor transparency.
+- World scale: 1 tile = 1 world unit as starting point. Diver currently operates in single-digit unit range. May need adjustment after seeing diver next to tiles.
+- Deferred: `@tool` script to auto-generate MeshLibrary from tileset atlas (run once, regenerate when tiles change)
+
 - **Block out dive levels** — build larger, playtestable dive sites using placeholder geo and rock sprites. Define walls, open areas, cover spots, and ingredient placement. Critical path for playtesting.
 - Larger hand-designed dive levels (evolve from blockouts above)
 - Multiple dive sites with different ingredient distributions

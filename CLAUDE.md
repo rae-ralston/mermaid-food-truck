@@ -25,6 +25,7 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 - `scenes/dive_sites/` — standalone dive site scenes (Shallows.tscn, CoralReef.tscn), loaded dynamically by Dive phase
 - `data/recipes/` — .tres recipe resources (all 5 exist, inputs/steps/prices match design doc)
 - `assets/` — Sprites and art. **Do not delete PNGs in `assets/characters/`** — they are extracted textures referenced by `.glb` files. Deleting them breaks character display silently (game runs but model is invisible).
+- `assets/environments/` — Placeholder environment art (all temporary). `basic_rocks_tileset.png` (shared rock tileset), `shallows/` and `coral_reefs/` (parallax layers). TODO: rename coral reef layers from `1.png`–`6.png` to descriptive names.
 
 ## World Direction
 
@@ -203,7 +204,8 @@ See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
 - **Hazardous creature** — 1 dangerous fish type; aggros on proximity, steals ingredient on contact, deals damage; pure hazard in v1 (not catchable). See `docs/plans/2026-02-18-fish-mechanics-design.md` for full design including post-v1 catching mechanic.
 
 ### Dive levels
-- Larger hand-designed dive levels
+- **Block out dive levels** — build larger, playtestable dive sites using placeholder geo and rock sprites. Define walls, open areas, cover spots, and ingredient placement. Critical path for playtesting.
+- Larger hand-designed dive levels (evolve from blockouts above)
 - Multiple dive sites with different ingredient distributions
 - Procedural dive level generation (layout, ingredient placement, depth zones)
 - Dive hazards / obstacles (currents, creatures)

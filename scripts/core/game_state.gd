@@ -99,7 +99,7 @@ func buy_upgrade(upgrade_id: String) -> bool:
 	apply_upgrade(upgrade_id)
 	return true
 
-func apply_upgrade(upgrade_id: String) -> void:
+func apply_upgrade(_upgrade_id: String) -> void:
 	# cook speed and swim speed are calculated in controller_diver and truck_station, respectively
 	pass
 

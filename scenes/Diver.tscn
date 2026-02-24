@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cgorwwg8pq6yc"]
 
-[ext_resource type="Script" uid="uid://cgo6agrf5evda" path="res://scripts/controller_diver.gd" id="1_xgvnv"]
+[ext_resource type="Script" uid="uid://cgo6agrf5evda" path="res://scripts/diver_controller.gd" id="1_xgvnv"]
 [ext_resource type="PackedScene" uid="uid://b6uefbvjpqs0g" path="res://assets/characters/test-3d-sprite.glb" id="2_xgvnv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xgvnv"]

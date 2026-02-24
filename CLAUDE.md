@@ -170,7 +170,7 @@ All 6 phases are functional — full day loop plays end to end.
 3. **UI foundation** — phase transitions (fade-to-black overlay), persistent HUD shell with zone system, pause menu. See `docs/plans/2026-02-22-ui-foundation-design.md`.
 4. **Wire up mermaid .glb animations** — example .glb has rigged animations (idle, walk, etc.). Integrate AnimationPlayer/AnimationTree with DiverController states (idle, moving, carrying). Validates the animation pipeline before final mermaid art lands.
 5. **Fix truck phase regressions** — station progress bar (lost in 3D conversion) + customer fade-out animation (Node3D has no modulate)
-6. **Dive camera smoothing** — extract Camera3D from Diver, add lerp-based follow (quick win)
+6. ~~**Dive camera smoothing**~~ ✓ Done — lerp follow + velocity-based look-ahead
 7. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
 8. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
 
@@ -214,8 +214,8 @@ See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
 - Visual feedback on pickup/delivery (flash, scale pop)
 - Particle effects — bubbles (swimming), steam (cook station), sparkle (completed dish)
 - ~~**UI transitions**~~ Designed — fade-to-black overlay with future-proofed effect system. See `docs/plans/2026-02-22-ui-foundation-design.md`. Themed wipe/dissolve effects deferred.
-- Camera work — gentle sway/follow in dive, framing in truck
-- **Dive camera smoothing** — Camera3D currently parented to Diver (follows instantly). Extract to its own node in World and add lerp-based follow for smoother movement.
+- ~~**Dive camera**~~ ✓ Done — lerp follow with smoothed velocity-based look-ahead (`follow_camera.gd`)
+- Camera work — gentle sway in dive (deferred), framing in truck
 - **Dropped item animation** — items dropped from backpack should float downward and gradually shrink over the 10s despawn timer, rather than popping in/out.
 
 ### Menus & persistence

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://rtcpo4mqd8ep" path="res://scripts/core/phase_dive.gd" id="1_kdymv"]
 [ext_resource type="PackedScene" uid="uid://cgorwwg8pq6yc" path="res://scenes/Diver.tscn" id="2_axc04"]
+[ext_resource type="Script" uid="uid://bqehxjw6sg1ff" path="res://scripts/diver_camera_follow.gd" id="3_15aut"]
 [ext_resource type="PackedScene" uid="uid://bna4w6h847xav" path="res://scenes/DiveBackpack.tscn" id="3_bpack"]
 
 [node name="PhaseDive" type="Control" unique_id=1390649418]
@@ -17,13 +18,15 @@ script = ExtResource("1_kdymv")
 
 [node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_axc04")]
 
-[node name="Camera3D" type="Camera3D" parent="World/Diver" unique_id=1607274033]
+[node name="Camera3D" type="Camera3D" parent="World" unique_id=1607274033 node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 projection = 1
 size = 10.0
+script = ExtResource("3_15aut")
+target = NodePath("../Diver")
 
 [node name="HUD" type="Control" parent="." unique_id=1958385963]
-anchors_preset = 15
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -50,9 +53,9 @@ offset_top = 216.0
 offset_right = 206.0
 offset_bottom = 239.0
 
-[node name="BackpackGrid" parent="HUD" instance=ExtResource("3_bpack")]
+[node name="BackpackGrid" parent="HUD" unique_id=1625121236 instance=ExtResource("3_bpack")]
 custom_minimum_size = Vector2(300, 400)
-anchors_preset = 8
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

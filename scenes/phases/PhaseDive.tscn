@@ -21,7 +21,7 @@ script = ExtResource("1_kdymv")
 [node name="Camera3D" type="Camera3D" parent="World" unique_id=1607274033 node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 projection = 1
-size = 10.0
+size = 4.0
 script = ExtResource("3_15aut")
 target = NodePath("../Diver")
 

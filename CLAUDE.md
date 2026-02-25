@@ -25,7 +25,7 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 - `scenes/dive_sites/` — standalone dive site scenes (Shallows.tscn, CoralReef.tscn), loaded dynamically by Dive phase
 - `data/recipes/` — .tres recipe resources (all 5 exist, inputs/steps/prices match design doc)
 - `assets/` — Sprites and art. **Do not delete PNGs in `assets/characters/`** — they are extracted textures referenced by `.glb` files. Deleting them breaks character display silently (game runs but model is invisible).
-- `assets/environments/` — Placeholder environment art (all temporary). `basic_rocks_tileset.png` (shared rock tileset), `shallows/` and `coral_reefs/` (parallax layers). TODO: rename coral reef layers from `1.png`–`6.png` to descriptive names.
+- `assets/environments/` — Placeholder environment art (all temporary). `basic_rocks_tileset.png` (shared rock tileset), `shallows/` (parallax layers), `coral_reefs/` (parallax layers: `bg_far.png`, `bd_mid.png`, `fg_seaweed_01-03.png`)
 
 ## World Direction
 
@@ -123,6 +123,12 @@ Key files: `scripts/core/phase_dive_planning.gd`, `scenes/phases/PhaseDivePlanni
 
 **Payload flow:** Dive Planning emits `{ "dive_site": "res://scenes/dive_sites/..." }` → Dive loads site, gathers ingredients, emits `{ "gathered": {...} }` → PhaseManager adds to inventory → Truck Planning receives for display.
 
+**Parallax backgrounds** (`scripts/core/parallax_background.gd`): Sprite3D-based. Script reads camera XY each frame, offsets layer position by `camera_xy * (1.0 - scroll_factor)`. `@export scroll_factor: Vector2` — lower = moves less (background), higher = moves more. Coral Reef has 2 background layers (far at Z=-2, mid at Z=-1). Foreground parallax doesn't work well for free-roaming movement — foreground elements (seaweed etc.) should be placed as static world objects instead.
+
+**Dive camera**: Orthographic, size 4 (was 10, zoomed in for better character readability). Sits at Z=8, follows diver on XY plane with lerp smoothing + velocity-based look-ahead (`diver_camera_follow.gd`).
+
+**Parallax art sizing**: At ortho size 4, viewport shows ~4 units tall. Target ~1300px tall for full-screen layers at 1080p. `pixel_size = desired_world_height / texture_pixel_height`. Procreate DPI doesn't matter (72 is fine) — only canvas pixel dimensions affect the game.
+
 ## Dive Backpack (working)
 
 Capacity-limited inventory for the dive phase. Player presses Tab (or Escape to close) to open a grid overlay showing gathered items. Items can be dropped to make room — spawns a re-gatherable Gatherable at the diver's position with a 10s despawn timer. Backpack merges into truck inventory on extraction.
@@ -168,12 +174,14 @@ All 6 phases are functional — full day loop plays end to end.
 **Next priorities (in order):**
 1. ~~**Dev tools**~~ ✓ Done — debug console with backtick toggle
 2. ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI, drop-to-world
-3. **UI foundation** — phase transitions (fade-to-black overlay), persistent HUD shell with zone system, pause menu. See `docs/plans/2026-02-22-ui-foundation-design.md`.
-4. **Wire up mermaid .glb animations** — example .glb has rigged animations (idle, walk, etc.). Integrate AnimationPlayer/AnimationTree with DiverController states (idle, moving, carrying). Validates the animation pipeline before final mermaid art lands.
-5. **Fix truck phase regressions** — station progress bar (lost in 3D conversion) + customer fade-out animation (Node3D has no modulate)
-6. ~~**Dive camera smoothing**~~ ✓ Done — lerp follow + velocity-based look-ahead
-7. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
-8. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
+3. ~~**Dive camera smoothing**~~ ✓ Done — lerp follow + velocity-based look-ahead
+4. ~~**Dive parallax backgrounds**~~ ✓ Done — Coral Reef has 2 background layers, camera ortho size tuned to 4
+5. **Dive level blockout** — set up GridMap with `basic_rocks_tileset.png` (see notes under Dive levels in Roadmap), build playable Coral Reef layout with walls/floors. Place foreground seaweed as static world Sprite3Ds after layout is done.
+6. **UI foundation** — phase transitions (fade-to-black overlay), persistent HUD shell with zone system, pause menu. See `docs/plans/2026-02-22-ui-foundation-design.md`.
+7. **Wire up mermaid .glb animations** — example .glb has rigged animations (idle, walk, etc.). Integrate AnimationPlayer/AnimationTree with DiverController states (idle, moving, carrying). Validates the animation pipeline before final mermaid art lands.
+8. **Fix truck phase regressions** — station progress bar (lost in 3D conversion) + customer fade-out animation (Node3D has no modulate)
+9. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
+10. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
 
 ## Roadmap
 

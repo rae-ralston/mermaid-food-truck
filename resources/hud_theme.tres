@@ -1,0 +1,55 @@
+[gd_resource type="Theme" format=3 uid="uid://bcaxi1ur68285"]
+
+[ext_resource type="FontFile" uid="uid://cht1nohakvips" path="res://assets/fonts/DanhDa-Bold.otf" id="1_o5cxf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7amdl"]
+bg_color = Color(0.05490196, 0.2901961, 0.41960785, 0.4627451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4e07a"]
+bg_color = Color(0.024312863, 0.2412762, 0.37476644, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hyew6"]
+bg_color = Color(0.056168072, 0.29049265, 0.41933122, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 6.0
+expand_margin_top = 3.0
+expand_margin_right = 6.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8lbb"]
+bg_color = Color(0.036044084, 0.27561265, 0.3645857, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yak4"]
+bg_color = Color(0.007843138, 0.23921569, 0.36078432, 0.89411765)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[resource]
+default_font = ExtResource("1_o5cxf")
+default_font_size = 24
+Button/colors/font_color = Color(0.59607846, 0.75686276, 0.75686276, 1)
+Button/fonts/font = ExtResource("1_o5cxf")
+Button/styles/disabled = SubResource("StyleBoxFlat_7amdl")
+Button/styles/hover = SubResource("StyleBoxFlat_4e07a")
+Button/styles/normal = SubResource("StyleBoxFlat_hyew6")
+Button/styles/pressed = SubResource("StyleBoxFlat_t8lbb")
+Label/colors/font_color = Color(0.59607846, 0.75686276, 0.75686276, 1)
+Label/font_sizes/font_size = 20
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_6yak4")

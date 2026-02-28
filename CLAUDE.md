@@ -4,9 +4,9 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 
 ## Game Loop
 
-6-phase day cycle: Dive Planning → Dive → Truck Planning → Truck → Results → Store
+5-phase day cycle: Dive → Truck Planning → Truck → Results → Store
 
-- **Dive**: Swim as a mermaid, gather ingredients from depth zones (shallow/mid/deep)
+- **Dive**: Swim as a mermaid, gather ingredients (single map, no site selection)
 - **Truck**: Run food truck — customers order, player processes food through stations, delivers
 
 ## Architecture
@@ -38,45 +38,60 @@ The underwater world is alien, not realistic. Creatures, ingredients, and enviro
 
 See `docs/game-design-doc.md` for full details on recipes, ingredients, and pricing.
 
-## Truck Phase (working)
+## Truck Phase (redesigning)
 
-Core truck gameplay loop is functional. Key files: `scripts/core/phase_truck.gd`, `scenes/phases/PhaseTruck.tscn`.
+Core truck gameplay loop is functional but undergoing major layout/camera redesign. See `docs/plans/2026-02-27-scope-simplification-and-truck-redesign.md` for full design notes.
+
+Key files: `scripts/core/phase_truck.gd`, `scenes/phases/PhaseTruck.tscn`.
+
+**Redesign summary:**
+- **Layout:** Tight, compact food truck interior (1-2 steps between anything). Core fun is optimization/routing — juggling multiple orders through the pipeline.
+```
+        [Driving Cab / Front]
+              |
+     [PREP] [COOK] [PLATE]
+              |
+[Order Window] [gap] [Pickup Window]
+           (customer side)
+```
+- **Camera:** Side view for now (current sprites are drawn for side view). Will switch to 3/4 top-down when art is redrawn for that perspective. Ortho size tightened from 10 for more compact feel.
+- **Customer system:** Single portrait in order window + number badge for queue depth. No visible queue of character sprites.
+- **Controls:** Keyboard (WASD + E) in both phases. Visible mermaid character.
+- **Gap between windows:** Empty counter now, drink station later (backlog).
 
 **Stations** (`scripts/truck_station.gd`, `scenes/TruckStation.tscn`):
 - Three single-purpose stations (PREP, COOK, PLATE) — player carries items between them
 - Each is Area2D with `@export station_type`. Three-phase state machine: IDLE → WORKING → DONE
 - Timer node (one_shot) drives work phase, duration from `RecipeData.time_limit`
-- ProgressBar shows countdown. `dish_completed` signal on pickup, then resets to IDLE
+- `dish_completed` signal on pickup, then resets to IDLE
 - Stations check held item state: PREP rejects if holding, COOK/PLATE require held item
 
 **Customer/Order system** (`scripts/truck_customer.gd`, `scripts/truck_customer_spawner.gd`, `scripts/truck_window_order.gd`, `scripts/truck_window_pickup.gd`, `scripts/order.gd`):
-- `Order` (RefCounted): `recipe_id`, `status` (PENDING/COOKING/READY/FULFILLED), `customer_ref: Node2D`
-- `TruckCustomer` (Node2D): sprite + data (`recipe_id`, `order` ref). `fulfill()` tweens fade-out then `queue_free()`. Emits `customer_left`.
-- `CustomerSpawner` (Node): Timer-driven (~8s), manages FIFO `customer_line` array, positions customers with linear spacing. `get_front_customer()` for order taking.
+- `Order` (RefCounted): `recipe_id`, `status` (PENDING/COOKING/READY/FULFILLED), `customer_ref`
+- `CustomerSpawner` (Node): Timer-driven (~8s), manages FIFO `customer_line` array. `get_front_customer()` for order taking.
 - `OrderWindow` (Area2D interactable): `interact()` gets front customer, creates Order, emits `order_taken(order)`. Rejects if player holding or no customers.
 - `PickupWindow` (Area2D interactable): `interact()` emits `order_fulfilled(recipe_id)`, clears held item.
-- `PhaseTruck` orchestrates: connects signals, manages order queue, handles fulfillment (payment via `GameState.recipeCatalog[recipe_id].base_price`), calls `customer_ref.fulfill()`, refreshes HUD.
-
-**HUD:** CurrentDishLabel (held item name), InventoryLabel (counts), OrdersPanel (order queue with recipe name + status, rebuilt dynamically).
+- `PhaseTruck` orchestrates: connects signals, manages order queue, handles fulfillment (payment via `GameState.recipeCatalog[recipe_id].base_price`), refreshes HUD.
 
 **Player:** DiverController has `held_item: Dictionary` (`{ "recipe_id": StringName, "completed_steps": Array[int] }`, empty `{}` when not holding) with setter emitting `held_item_changed`, `is_holding() -> bool`. Swim speed from `GameState.get_swim_speed()` (base 220 * multiplier).
 
 **Design decisions:**
 - Station holds finished dish until pickup (blocks station)
 - Stations track recipe_id only — order matching at delivery
-- Two windows: order (FIFO customer line) and pickup (any-order delivery)
+- Two windows on same side: order window and pickup window with gap between
 - Payment happens at pickup
 - Customers order from `active_menu` (set by Truck Planning payload), not all recipes
 - `held_item` is a Dictionary with `recipe_id` and `completed_steps` — stations check and append their step on pickup
 - Cook speed affected by upgrade multiplier: `recipe.time_limit / GameState.get_cook_speed_multiplier()`
 
-**Truck phase TODO (deferred):**
-- Patience/timeout system — patience timer on customer, timeout = leaves + reputation hit
+**Truck phase TODO:**
+- **Must have:** Patience/timeout system — patience timer on orders, timeout = customer leaves. Creates the time pressure that makes routing optimization matter.
+- **Must have:** Station progress bar — lost in 3D conversion. Re-add.
+- **Must have:** Implement customer portrait + badge UI (via GameHUD zones)
 - ~~Stage tracking~~ ✓ Done
-- Cooking interruptions — cancel mid-work, recover or lose dish
-- Customer fade-out animation — `Node3D` has no `modulate` property, so the tween in `truck_customer.gd` `fulfill()` silently fails. Fix by targeting `$Sprite3D` transparency or using a shader.
-- Station progress bar — removed during 3D conversion (no ProgressBar3D). Re-add as scaled Sprite3D bar or SubViewport-based widget.
-- Reputation effects on tips, pricing, story progression
+- **Nice to have:** Cooking interruptions — cancel mid-work, recover or lose dish
+- **Nice to have:** Reputation effects on tips, pricing, story progression
+- **Backlog:** Drink station (in gap between order/pickup windows)
 
 ## Results Phase (working)
 
@@ -86,7 +101,7 @@ Key files: `scripts/core/phase_results.gd`, `scenes/phases/PhaseResults.tscn`.
 
 ## Store Phase (working)
 
-Upgrade shop between days. Player spends money on three upgrades (swim speed, cook speed, inventory capacity), each with 3 levels and escalating costs (`base_cost * (level + 1)`). Upgrades apply immediately. Transitions to Dive Planning.
+Upgrade shop between days. Player spends money on three upgrades (swim speed, cook speed, inventory capacity), each with 3 levels and escalating costs (`base_cost * (level + 1)`). Upgrades apply immediately. Transitions to Dive (skipping Dive Planning).
 
 Key files: `scripts/core/phase_store.gd`, `scenes/phases/PhaseStore.tscn`.
 
@@ -109,19 +124,19 @@ Player selects which recipes to offer before the truck opens. Shows inventory an
 
 Key files: `scripts/core/phase_truck_planning.gd`, `scenes/phases/PhaseTruckPlanning.tscn`.
 
-## Dive Planning Phase (working)
+## Dive Planning Phase (cut)
 
-Player picks from 2 dive sites before diving. Each site is a standalone scene with hand-placed Gatherables, ExtractionZone, and SpawnPoint (Marker2D). Dive phase loads the selected site scene as a child of `$World` at runtime, positions Diver at SpawnPoint, and wires up ExtractionZone signals in `enter()`.
+Removed to simplify scope. Single dive map loads automatically — no site selection. Can add site choice back later as a progression reward. Store phase transitions directly to Dive.
 
-Key files: `scripts/core/phase_dive_planning.gd`, `scenes/phases/PhaseDivePlanning.tscn`.
+Previous files still exist (`scripts/core/phase_dive_planning.gd`, `scenes/phases/PhaseDivePlanning.tscn`) but phase is skipped in the day cycle.
 
 **Sites** (`scenes/dive_sites/`):
 - **Shallows** — sea slug, glow algae, coral spice
 - **Coral Reef** — clam, kelp
 
-**Dive phase** (`scripts/core/phase_dive.gd`): Site-agnostic — loads any scene with the expected node structure (Gatherables, ExtractionZone, SpawnPoint). Designed to swap hand-designed scenes for procedural generation later with zero phase code changes.
+**Dive phase** (`scripts/core/phase_dive.gd`): Site-agnostic — loads any scene with the expected node structure (Gatherables, ExtractionZone, SpawnPoint). Currently loads a single hardcoded site. Designed to swap hand-designed scenes for procedural generation later with zero phase code changes.
 
-**Payload flow:** Dive Planning emits `{ "dive_site": "res://scenes/dive_sites/..." }` → Dive loads site, gathers ingredients, emits `{ "gathered": {...} }` → PhaseManager adds to inventory → Truck Planning receives for display.
+**Payload flow:** Store emits empty payload → Dive loads single site, gathers ingredients, emits `{ "gathered": {...} }` → PhaseManager adds to inventory → Truck Planning receives for display.
 
 **Parallax backgrounds** (`scripts/core/parallax_background.gd`): Sprite3D-based. Script reads camera XY each frame, offsets layer position by `camera_xy * (1.0 - scroll_factor)`. `@export scroll_factor: Vector2` — lower = moves less (background), higher = moves more. Coral Reef has 2 background layers (far at Z=-2, mid at Z=-1). Foreground parallax doesn't work well for free-roaming movement — foreground elements (seaweed etc.) should be placed as static world objects instead.
 
@@ -167,21 +182,60 @@ Key files: `scripts/core/dev_console.gd`, `scenes/main/DevConsole.tscn`.
 - Fix LineEdit focus persistence
 - Strip from production builds
 
+## Scope Simplification (2026-02-27)
+
+Simplified scope to focus on vertical slice. See `docs/plans/2026-02-27-scope-simplification-and-truck-redesign.md`.
+
+**Key cuts:** Dive Planning phase removed (single map). Cooking interruptions, reputation effects, tips moved to nice-to-have. Dive complexity (stealth, HP, traps) is medium priority — playtest simple gathering first.
+
+**Priority buckets:**
+- **Must have:** Truck redesign (layout + camera + customer UI), GameHUD, patience/timeout, station progress bar
+- **Should have:** Dive complexity (stealth/HP — if gathering feels flat)
+- **Nice to have:** Cooking interruptions, reputation effects, tips, drink station
+
+## GameHUD (in progress)
+
+Persistent HUD shell — CanvasLayer autoload (layer 50) with zone system. See `docs/plans/2026-02-22-ui-foundation-design.md` for full design.
+
+Key files: `scripts/core/game_hud.gd`, `scenes/main/game_hud.tscn`, `resources/hud_theme.tres`.
+
+**Scene structure (done):**
+```
+GameHUD (CanvasLayer, layer=50, process_mode=ALWAYS)
+└── Root (Control, full_rect, Theme=hud_theme.tres)
+    ├── PersistentBar (HBoxContainer, anchored top-center)
+    │   ├── DayLabel
+    │   └── MoneyLabel
+    ├── TopLeft (MarginContainer)
+    ├── TopRight (MarginContainer)
+    ├── BottomLeft (MarginContainer)
+    ├── BottomCenter (MarginContainer)
+    └── BottomRight (MarginContainer)
+```
+
+**Theme (done):** `resources/hud_theme.tres` — DanhDa-Bold font, deep blue/teal PanelContainer with rounded corners, styled Button states (normal/hover/pressed/disabled), teal-white Label color, font size 20/24.
+
+**Script (next):** Stub exists. Needs: `get_zone(zone_name) -> MarginContainer`, `clear_zone(zone_name)`, `clear_all_zones()`, persistent bar updates from GameState signals. Then register as autoload.
+
+**After script:** Build customer portrait + queue badge panel as first consumer of the zone system (truck phase adds it to a zone during `enter()`).
+
 ## Current Work
 
-All 6 phases are functional — full day loop plays end to end.
+All phases functional — full day loop plays end to end. Currently building GameHUD and redesigning truck phase.
 
 **Next priorities (in order):**
 1. ~~**Dev tools**~~ ✓ Done — debug console with backtick toggle
 2. ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI, drop-to-world
 3. ~~**Dive camera smoothing**~~ ✓ Done — lerp follow + velocity-based look-ahead
 4. ~~**Dive parallax backgrounds**~~ ✓ Done — Coral Reef has 2 background layers, camera ortho size tuned to 4
-5. **Dive level blockout** — set up GridMap with `basic_rocks_tileset.png` (see notes under Dive levels in Roadmap), build playable Coral Reef layout with walls/floors. Place foreground seaweed as static world Sprite3Ds after layout is done.
-6. **UI foundation** — phase transitions (fade-to-black overlay), persistent HUD shell with zone system, pause menu. See `docs/plans/2026-02-22-ui-foundation-design.md`.
-7. **Wire up mermaid .glb animations** — example .glb has rigged animations (idle, walk, etc.). Integrate AnimationPlayer/AnimationTree with DiverController states (idle, moving, carrying). Validates the animation pipeline before final mermaid art lands.
-8. **Fix truck phase regressions** — station progress bar (lost in 3D conversion) + customer fade-out animation (Node3D has no modulate)
-9. **Customer patience/timeout** — adds pressure to truck phase, makes it an actual game
-10. **Game feel / juice** — tweens, particles, basic SFX to make it fun to play
+5. **GameHUD script** — implement get_zone/clear_zone/clear_all_zones, persistent bar, register as autoload
+6. **Customer portrait + queue badge** — build panel scene, truck phase adds to GameHUD zone
+7. **Truck layout tightening** — compact spacing, both windows on customer side, reduce ortho size
+8. **Customer patience/timeout** — time pressure that makes routing matter
+9. **Dive level blockout** — set up GridMap, build playable layout
+10. **UI foundation (remaining)** — TransitionOverlay, PauseMenu (see design doc)
+11. **Wire up mermaid .glb animations** — integrate with DiverController states
+12. **Game feel / juice** — tweens, particles, basic SFX
 
 ## Roadmap
 
@@ -192,18 +246,19 @@ All 6 phases are functional — full day loop plays end to end.
 
 ### Gameplay systems
 - ~~**Truck Planning phase**~~ ✓ Done
-- ~~**Dive Planning phase**~~ ✓ Done — 2 sites (Shallows, Coral Reef) with different ingredient mixes
+- ~~**Dive Planning phase**~~ Cut — single map, no site selection (see Scope Simplification)
 - ~~**Ingredient consumption**~~ ✓ Done — PREP station deducts ingredients via `_consume_ingredients()` in `truck_station.gd`
 - ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI. Tab to open/close (Escape also closes). Drop items to make room (spawns re-gatherable with 10s despawn). `inventory_capacity` upgrade applies to per-dive backpack, truck pantry is unlimited.
-- **Customer patience/timeout** — pressure during truck phase, reputation hit on timeout
 - ~~**Stage tracking**~~ ✓ Done — dishes track `completed_steps` via `held_item` Dictionary; stations reject dishes at the wrong step with a hint message
-- **Cooking interruptions** — cancel station mid-work, recover or lose dish
-- **Reputation system** — affects tips, pricing, unlocks, story progression
-- **Reputation-gated store upgrades** — some upgrades require money + high reputation
-- **Predator trap** — store unlock (permanent); enables catching dangerous fish in dive phase; probably reputation-gated. See `docs/plans/2026-02-18-fish-mechanics-design.md`.
+- **Truck phase redesign** (must have) — tight layout, customer portrait + queue badge. Side view for now, 3/4 when art supports it.
+- **Customer patience/timeout** (must have) — pressure during truck phase, timeout = customer leaves
+- **Cooking interruptions** (nice to have) — cancel station mid-work, recover or lose dish
+- **Reputation system** (nice to have) — affects tips, pricing, unlocks, story progression
+- **Reputation-gated store upgrades** (nice to have) — some upgrades require money + high reputation
+- **Predator trap** (nice to have) — store unlock; enables catching dangerous fish. See `docs/plans/2026-02-18-fish-mechanics-design.md`.
 
-### Dive phase — mechanics (designed, not yet built)
-See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design.
+### Dive phase — mechanics (designed, not yet built — medium priority)
+See `docs/plans/2026-02-18-dive-phase-redesign.md` for full design. Medium priority — playtest simple gathering first (backpack capacity already creates meaningful choices). Add complexity only if dive feels flat.
 - **Stealth system** — proximity-reactive; predators have visible detection radii; slow = undetected, fast = spotted; cover (coral, rocks) breaks line of sight
 - **Health & forced surface** — player has HP pool; predator contact deals damage + steals one ingredient; reach zero HP → forced to surface, losing some gathered ingredients
 - **Escalating danger** — danger level ticks up over time; more predators, larger detection radii the longer you stay

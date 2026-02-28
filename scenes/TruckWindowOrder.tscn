@@ -16,7 +16,9 @@ height = 100
 script = ExtResource("1_o5lad")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1462832730]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 texture = SubResource("GradientTexture2D_3rw3d")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1949212507]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 shape = SubResource("BoxShape3D_o5lad")

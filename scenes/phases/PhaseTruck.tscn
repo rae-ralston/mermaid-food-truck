@@ -15,7 +15,7 @@ script = ExtResource("1_572ig")
 [node name="World" type="Node3D" parent="." unique_id=630530580]
 
 [node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_44s6t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.67173505, 0)
 
 [node name="CustomerSpawner" type="Node" parent="World" unique_id=956556915]
 script = ExtResource("2_gsc83")
@@ -23,25 +23,25 @@ script = ExtResource("2_gsc83")
 [node name="Stations" type="Node3D" parent="World" unique_id=795895599]
 
 [node name="PrepStation" parent="World/Stations" unique_id=913382092 instance=ExtResource("3_5p4at")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6703558, 0, 0)
 
 [node name="CookStation" parent="World/Stations" unique_id=1183657895 instance=ExtResource("3_5p4at")]
 station_type = 1
 
 [node name="PlateStation" parent="World/Stations" unique_id=955957752 instance=ExtResource("3_5p4at")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57580376, 0, 0)
 station_type = 2
 
 [node name="PickupWindow" parent="World" unique_id=1338750309 instance=ExtResource("3_hjevm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.50811964, -1.0414625, -0.12831736)
 
 [node name="OrderWindow" parent="World" unique_id=1317284090 instance=ExtResource("4_wnxoj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5099137, -1.0446228, -0.18481636)
 
 [node name="Camera3D" type="Camera3D" parent="World" unique_id=637128014]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 projection = 1
-size = 10.0
+size = 2.0
 
 [node name="HUD" type="Control" parent="." unique_id=914636482]
 anchors_preset = 0

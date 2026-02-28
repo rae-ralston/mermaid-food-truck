@@ -12,6 +12,7 @@ script = ExtResource("1_md0ap")
 one_shot = true
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=95299618]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 pixel_size = 0.0025
 texture = ExtResource("2_5pjwh")
 
@@ -24,4 +25,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7436132, 0)
 billboard = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1080299329]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 shape = SubResource("BoxShape3D_5pjwh")

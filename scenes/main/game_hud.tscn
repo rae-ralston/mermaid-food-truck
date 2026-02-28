@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://bg62k5bonxim1"]
+
+[ext_resource type="Script" uid="uid://dmts2ym8t5j2w" path="res://scripts/core/game_hud.gd" id="1_uecwh"]
+[ext_resource type="Theme" uid="uid://bcaxi1ur68285" path="res://resources/hud_theme.tres" id="2_cn1ic"]
+
+[node name="GameHUD" type="CanvasLayer" unique_id=459333689]
+process_mode = 3
+layer = 50
+script = ExtResource("1_uecwh")
+
+[node name="Root" type="Control" parent="." unique_id=1381122187]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_cn1ic")
+
+[node name="PersistentBar" type="HBoxContainer" parent="Root" unique_id=837772913]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -3.0
+offset_right = 3.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="DayLabel" type="Label" parent="Root/PersistentBar" unique_id=141693917]
+layout_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="Root/PersistentBar" unique_id=1903287981]
+layout_mode = 2
+
+[node name="TopLeft" type="MarginContainer" parent="Root" unique_id=726459538]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TopRight" type="MarginContainer" parent="Root" unique_id=2005143051]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="BottomLeft" type="MarginContainer" parent="Root" unique_id=636083877]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="BottomCenter" type="MarginContainer" parent="Root" unique_id=816633604]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BottomRight" type="MarginContainer" parent="Root" unique_id=2061731187]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0

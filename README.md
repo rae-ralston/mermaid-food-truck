@@ -38,3 +38,6 @@ Press backtick (`` ` ``) to toggle the debug console. Pauses the game while open
 ## Status
 
 Early development — working toward a polished vertical slice demo. See `game-design-doc.md` for full MVP scope.
+
+## Assets
+font [republi.sh](https://republi.sh/#home)

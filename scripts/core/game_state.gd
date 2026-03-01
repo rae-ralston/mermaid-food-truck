@@ -1,7 +1,18 @@
 extends Node
 
-var day: int = 1
-var money: int = 0
+signal money_changed
+signal day_changed
+
+var day: int = 1:
+	set(value):
+		day = value
+		day_changed.emit(day)
+
+var money: int = 0:
+	set(value):
+		money = value
+		money_changed.emit(money)
+
 var reputation: int = 0
 var swim_speed: float = 5.0
 

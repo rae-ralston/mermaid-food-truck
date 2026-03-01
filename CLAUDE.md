@@ -12,7 +12,7 @@ Cozy underwater cooking management game built in Godot 4.6. Target: Steam releas
 ## Architecture
 
 - **Phase system**: Phases loaded dynamically by `PhaseManager`. Each extends `BasePhase` with `enter()`, `exit()`, `phase_finished` signal. Payloads pass data between phases.
-- **GameState**: Autoload. Holds `day`, `money`, `reputation`, `inventory`, `upgrades`. Upgrade system with `UPGRADE_CONFIG` constants, `buy_upgrade()`, `get_upgrade_cost()`, multiplier getters (`get_swim_speed()`, `get_cook_speed_multiplier()`). Recipe helpers: `can_make_recipe(recipe_id)` checks inventory has all ingredients for one serving.
+- **GameState**: Autoload. Holds `day`, `money`, `reputation`, `inventory`, `upgrades`. Property setters on `day` and `money` emit `day_changed` and `money_changed` signals. Upgrade system with `UPGRADE_CONFIG` constants, `buy_upgrade()`, `get_upgrade_cost()`, multiplier getters (`get_swim_speed()`, `get_cook_speed_multiplier()`). Recipe helpers: `can_make_recipe(recipe_id)` checks inventory has all ingredients for one serving.
 - **Inventory**: Capacity-based (default 12). Tracks items by ID. Signals `inventory_changed`.
 - **Interaction system**: Diver's `InteractionZone` (Area2D) finds nearby objects. Interactables implement `interact()`, optionally `can_interact()` and `get_interaction_priority()`. Triggered with E key.
 
@@ -54,7 +54,7 @@ Key files: `scripts/core/phase_truck.gd`, `scenes/phases/PhaseTruck.tscn`.
 [Order Window] [gap] [Pickup Window]
            (customer side)
 ```
-- **Camera:** Side view for now (current sprites are drawn for side view). Will switch to 3/4 top-down when art is redrawn for that perspective. Ortho size tightened from 10 for more compact feel.
+- **Camera:** Isometric perspective (easier to reason about truck layout, better visibility of all stations). Dive phase stays side view — different perspectives per phase is intentional.
 - **Customer system:** Single portrait in order window + number badge for queue depth. No visible queue of character sprites.
 - **Controls:** Keyboard (WASD + E) in both phases. Visible mermaid character.
 - **Gap between windows:** Empty counter now, drink station later (backlog).
@@ -68,7 +68,7 @@ Key files: `scripts/core/phase_truck.gd`, `scenes/phases/PhaseTruck.tscn`.
 
 **Customer/Order system** (`scripts/truck_customer.gd`, `scripts/truck_customer_spawner.gd`, `scripts/truck_window_order.gd`, `scripts/truck_window_pickup.gd`, `scripts/order.gd`):
 - `Order` (RefCounted): `recipe_id`, `status` (PENDING/COOKING/READY/FULFILLED), `customer_ref`
-- `CustomerSpawner` (Node): Timer-driven (~8s), manages FIFO `customer_line` array. `get_front_customer()` for order taking.
+- `CustomerSpawner` (Node): Timer-driven (~8s), manages FIFO `customer_line` array. `get_front_customer()` for order taking. Emits `customer_line_changed(front_customer, count)` on any line change.
 - `OrderWindow` (Area2D interactable): `interact()` gets front customer, creates Order, emits `order_taken(order)`. Rejects if player holding or no customers.
 - `PickupWindow` (Area2D interactable): `interact()` emits `order_fulfilled(recipe_id)`, clears held item.
 - `PhaseTruck` orchestrates: connects signals, manages order queue, handles fulfillment (payment via `GameState.recipeCatalog[recipe_id].base_price`), refreshes HUD.
@@ -87,8 +87,9 @@ Key files: `scripts/core/phase_truck.gd`, `scenes/phases/PhaseTruck.tscn`.
 **Truck phase TODO:**
 - **Must have:** Patience/timeout system — patience timer on orders, timeout = customer leaves. Creates the time pressure that makes routing optimization matter.
 - **Must have:** Station progress bar — lost in 3D conversion. Re-add.
-- **Must have:** Implement customer portrait + badge UI (via GameHUD zones)
+- ~~**Customer portrait + badge UI**~~ ✓ Done — `CustomerQueuePanel` in bottom_left GameHUD zone, shows generic portrait + queue count via `customer_line_changed` signal
 - ~~Stage tracking~~ ✓ Done
+- **Backlog:** Per-customer portraits (needs portrait data on TruckCustomer, placeholder generic sprite for now)
 - **Nice to have:** Cooking interruptions — cancel mid-work, recover or lose dish
 - **Nice to have:** Reputation effects on tips, pricing, story progression
 - **Backlog:** Drink station (in gap between order/pickup windows)
@@ -193,31 +194,33 @@ Simplified scope to focus on vertical slice. See `docs/plans/2026-02-27-scope-si
 - **Should have:** Dive complexity (stealth/HP — if gathering feels flat)
 - **Nice to have:** Cooking interruptions, reputation effects, tips, drink station
 
-## GameHUD (in progress)
+## GameHUD (working)
 
 Persistent HUD shell — CanvasLayer autoload (layer 50) with zone system. See `docs/plans/2026-02-22-ui-foundation-design.md` for full design.
 
-Key files: `scripts/core/game_hud.gd`, `scenes/main/game_hud.tscn`, `resources/hud_theme.tres`.
+Key files: `scripts/core/game_hud.gd`, `scenes/HUD/GameHUD.tscn`, `resources/hud_theme.tres`.
 
-**Scene structure (done):**
+**Scene structure:**
 ```
 GameHUD (CanvasLayer, layer=50, process_mode=ALWAYS)
-└── Root (Control, full_rect, Theme=hud_theme.tres)
+└── Root (Control, full_rect, Theme=hud_theme.tres, mouse_filter=IGNORE)
     ├── PersistentBar (HBoxContainer, anchored top-center)
     │   ├── DayLabel
     │   └── MoneyLabel
-    ├── TopLeft (MarginContainer)
-    ├── TopRight (MarginContainer)
-    ├── BottomLeft (MarginContainer)
-    ├── BottomCenter (MarginContainer)
-    └── BottomRight (MarginContainer)
+    ├── TopLeft (MarginContainer, mouse_filter=IGNORE)
+    ├── TopRight (MarginContainer, mouse_filter=IGNORE)
+    ├── BottomLeft (MarginContainer, mouse_filter=IGNORE)
+    ├── BottomCenter (MarginContainer, mouse_filter=IGNORE)
+    └── BottomRight (MarginContainer, mouse_filter=IGNORE)
 ```
 
-**Theme (done):** `resources/hud_theme.tres` — DanhDa-Bold font, deep blue/teal PanelContainer with rounded corners, styled Button states (normal/hover/pressed/disabled), teal-white Label color, font size 20/24.
+**Important:** All non-interactive GameHUD nodes must have `mouse_filter = IGNORE` (2), otherwise the CanvasLayer (layer 50) blocks mouse input from reaching game UI on lower layers.
 
-**Script (next):** Stub exists. Needs: `get_zone(zone_name) -> MarginContainer`, `clear_zone(zone_name)`, `clear_all_zones()`, persistent bar updates from GameState signals. Then register as autoload.
+**Theme:** `resources/hud_theme.tres` — DanhDa-Bold font, deep blue/teal PanelContainer with rounded corners, styled Button states (normal/hover/pressed/disabled), teal-white Label color, font size 20/24.
 
-**After script:** Build customer portrait + queue badge panel as first consumer of the zone system (truck phase adds it to a zone during `enter()`).
+**Script:** Registered as autoload. Zone dictionary maps `StringName` → `MarginContainer`. API: `get_zone(zone_name) -> MarginContainer` (returns null + warning if invalid), `clear_zone(zone_name)`, `clear_all_zones()`. Persistent bar updates via GameState `day_changed`/`money_changed` signals.
+
+**Customer Queue Panel** (`scenes/HUD/CustomerQueuePanel.tscn`, `scripts/ui_hud_customer_queue.gd`): PanelContainer with portrait (TextureRect, generic placeholder) + count label. `setup(spawner)` connects to `customer_line_changed` signal. PhaseTruck instantiates and adds to `bottom_left` zone in `enter()`, `clear_all_zones()` in `exit()`.
 
 ## Current Work
 
@@ -228,9 +231,9 @@ All phases functional — full day loop plays end to end. Currently building Gam
 2. ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI, drop-to-world
 3. ~~**Dive camera smoothing**~~ ✓ Done — lerp follow + velocity-based look-ahead
 4. ~~**Dive parallax backgrounds**~~ ✓ Done — Coral Reef has 2 background layers, camera ortho size tuned to 4
-5. **GameHUD script** — implement get_zone/clear_zone/clear_all_zones, persistent bar, register as autoload
-6. **Customer portrait + queue badge** — build panel scene, truck phase adds to GameHUD zone
-7. **Truck layout tightening** — compact spacing, both windows on customer side, reduce ortho size
+5. ~~**GameHUD script**~~ ✓ Done — zone system, persistent bar with signals, registered as autoload
+6. ~~**Customer portrait + queue badge**~~ ✓ Done — CustomerQueuePanel in bottom_left zone, generic portrait + count
+7. **Truck layout tightening** — compact spacing, both windows on customer side, isometric camera
 8. **Customer patience/timeout** — time pressure that makes routing matter
 9. **Dive level blockout** — set up GridMap, build playable layout
 10. **UI foundation (remaining)** — TransitionOverlay, PauseMenu (see design doc)
@@ -250,7 +253,7 @@ All phases functional — full day loop plays end to end. Currently building Gam
 - ~~**Ingredient consumption**~~ ✓ Done — PREP station deducts ingredients via `_consume_ingredients()` in `truck_station.gd`
 - ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI. Tab to open/close (Escape also closes). Drop items to make room (spawns re-gatherable with 10s despawn). `inventory_capacity` upgrade applies to per-dive backpack, truck pantry is unlimited.
 - ~~**Stage tracking**~~ ✓ Done — dishes track `completed_steps` via `held_item` Dictionary; stations reject dishes at the wrong step with a hint message
-- **Truck phase redesign** (must have) — tight layout, customer portrait + queue badge. Side view for now, 3/4 when art supports it.
+- **Truck phase redesign** (must have) — tight layout, isometric camera. Customer portrait + queue badge done.
 - **Customer patience/timeout** (must have) — pressure during truck phase, timeout = customer leaves
 - **Cooking interruptions** (nice to have) — cancel station mid-work, recover or lose dish
 - **Reputation system** (nice to have) — affects tips, pricing, unlocks, story progression

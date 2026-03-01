@@ -7,6 +7,8 @@ var orders_filled: int = 0
 var orders_lost: int = 0
 var money_earned: int = 0
 
+var CustomerQueuePanel = preload("res://scenes/HUD/CustomerQueuePanel.tscn")
+
 func _ready() -> void:
 	$HUD/Label.text = "Truck Phase - let's eat some tasty food"
 	$HUD/Button.text = "go to next phase: results"
@@ -29,6 +31,12 @@ func _ready() -> void:
 func enter(payload: Dictionary) -> void:
 	if payload.has("active_menu"):
 		$World/CustomerSpawner.active_menu = payload.active_menu
+	var panel = CustomerQueuePanel.instantiate()
+	GameHUD.get_zone(&"bottom_left").add_child(panel)
+	panel.setup($World/CustomerSpawner)
+
+func exit() -> void:
+	GameHUD.clear_all_zones()
 
 func _refresh_orders() -> void:
 	for child in $HUD/OrdersPanel.get_children():

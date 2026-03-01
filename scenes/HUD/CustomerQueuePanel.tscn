@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dl6i3kheceub4"]
+
+[ext_resource type="Script" uid="uid://bfj7nrs3uxari" path="res://scripts/ui_hud_customer_queue.gd" id="1_i0pm5"]
+[ext_resource type="Texture2D" uid="uid://bbi31oe7gc41a" path="res://assets/characters/customers/steven.png" id="2_wrr20"]
+
+[node name="CustomerQueuePanel" type="PanelContainer" unique_id=872473353]
+script = ExtResource("1_i0pm5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=941763149]
+layout_mode = 2
+
+[node name="CustomerImg" type="TextureRect" parent="HBoxContainer" unique_id=1912509034]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("2_wrr20")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="LineCountLabel" type="Label" parent="HBoxContainer" unique_id=1605885076]
+layout_mode = 2

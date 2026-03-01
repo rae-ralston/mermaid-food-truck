@@ -1,6 +1,8 @@
 extends Node
 class_name CustomerSpawner
 
+signal customer_line_changed(front_customer: Node3D, count: int)
+
 var CustomerScene = preload("res://scenes/TruckCustomer.tscn")
 
 var spawn_interval := 8.0
@@ -35,10 +37,12 @@ func _spawn_customer() -> void:
 	customer_line.append(customer)
 	_parent_node.add_child(customer)
 	_reposition_line()
+	customer_line_changed.emit(get_front_customer(), customer_line.size())
 	
 func _on_customer_left(customer: Node3D) -> void:
 	customer_line.erase(customer)
 	_reposition_line()
+	customer_line_changed.emit(get_front_customer(), customer_line.size())
 
 func _reposition_line() -> void:
 	for i in customer_line.size():

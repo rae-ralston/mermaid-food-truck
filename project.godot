@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 GameState="*uid://dqt8nxif3f6f1"
 DevConsole="*uid://xxidi2abs7oi"
 TransitionOverlay="*uid://bhew61f8saxhh"
+GameHUD="*uid://bg62k5bonxim1"
 
 [display]
 

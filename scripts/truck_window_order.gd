@@ -16,6 +16,7 @@ func interact(actor) -> Dictionary:
 	customer.order = order
 	
 	order_taken.emit(order)
+	customer_spawner.remove_from_line(customer)
 	actor.held_item = {
 		"recipe_id": customer.recipe_id,
 		"completed_steps": []

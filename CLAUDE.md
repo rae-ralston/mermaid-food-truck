@@ -85,11 +85,12 @@ Key files: `scripts/core/phase_truck.gd`, `scenes/phases/PhaseTruck.tscn`.
 - Cook speed affected by upgrade multiplier: `recipe.time_limit / GameState.get_cook_speed_multiplier()`
 
 **Truck phase TODO:**
-- **Must have:** Patience/timeout system — patience timer on orders, timeout = customer leaves. Creates the time pressure that makes routing optimization matter.
+- ~~**Patience/timeout system**~~ ✓ Done — 30s timer starts on order taken, customer leaves on timeout, progress bar with color (green/yellow/red). See `docs/plans/2026-02-28-customer-patience-design.md`.
 - **Must have:** Station progress bar — lost in 3D conversion. Re-add.
 - ~~**Customer portrait + badge UI**~~ ✓ Done — `CustomerQueuePanel` in bottom_left GameHUD zone, shows generic portrait + queue count via `customer_line_changed` signal
 - ~~Stage tracking~~ ✓ Done
 - **Backlog:** Per-customer portraits (needs portrait data on TruckCustomer, placeholder generic sprite for now)
+- **Backlog:** Per-recipe patience duration, variable patience per customer, patience starting on line join
 - **Nice to have:** Cooking interruptions — cancel mid-work, recover or lose dish
 - **Nice to have:** Reputation effects on tips, pricing, story progression
 - **Backlog:** Drink station (in gap between order/pickup windows)
@@ -234,7 +235,7 @@ All phases functional — full day loop plays end to end. Currently building Gam
 5. ~~**GameHUD script**~~ ✓ Done — zone system, persistent bar with signals, registered as autoload
 6. ~~**Customer portrait + queue badge**~~ ✓ Done — CustomerQueuePanel in bottom_left zone, generic portrait + count
 7. **Truck layout tightening** — compact spacing, both windows on customer side, isometric camera
-8. **Customer patience/timeout** — time pressure that makes routing matter
+8. ~~**Customer patience/timeout**~~ ✓ Done — 30s timer, progress bar with patience color, order removal on timeout
 9. **Dive level blockout** — set up GridMap, build playable layout
 10. **UI foundation (remaining)** — TransitionOverlay, PauseMenu (see design doc)
 11. **Wire up mermaid .glb animations** — integrate with DiverController states
@@ -254,7 +255,7 @@ All phases functional — full day loop plays end to end. Currently building Gam
 - ~~**Dive backpack**~~ ✓ Done — capacity-limited backpack with grid UI. Tab to open/close (Escape also closes). Drop items to make room (spawns re-gatherable with 10s despawn). `inventory_capacity` upgrade applies to per-dive backpack, truck pantry is unlimited.
 - ~~**Stage tracking**~~ ✓ Done — dishes track `completed_steps` via `held_item` Dictionary; stations reject dishes at the wrong step with a hint message
 - **Truck phase redesign** (must have) — tight layout, isometric camera. Customer portrait + queue badge done.
-- **Customer patience/timeout** (must have) — pressure during truck phase, timeout = customer leaves
+- ~~**Customer patience/timeout**~~ ✓ Done — 30s fixed timer on order taken, progress bar with color, customer leaves on timeout. Design: `docs/plans/2026-02-28-customer-patience-design.md`.
 - **Cooking interruptions** (nice to have) — cancel station mid-work, recover or lose dish
 - **Reputation system** (nice to have) — affects tips, pricing, unlocks, story progression
 - **Reputation-gated store upgrades** (nice to have) — some upgrades require money + high reputation

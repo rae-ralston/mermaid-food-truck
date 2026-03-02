@@ -17,12 +17,16 @@ func _ready() -> void:
 
 	$World/Diver.held_item_changed.connect(_on_held_item_changed)
 	$World/PickupWindow.order_fulfilled.connect(_on_order_fulfilled)
-
+	
+	$World/Stations/PrepStation.dish_completed.connect(_on_cooking_phase_completed)
+	$World/Stations/CookStation.dish_completed.connect(_on_cooking_phase_completed)
+	$World/Stations/PlateStation.dish_completed.connect(_on_cooking_phase_completed)
+	
 	$World/CustomerSpawner.setup($World)
 	$World/OrderWindow.customer_spawner = $World/CustomerSpawner
 	$World/OrderWindow.order_taken.connect(_on_order_taken)
 	$World/CustomerSpawner.line_origin = $World/OrderWindow.position + Vector3(0, -2, 0)
-
+	
 	_refresh_orders()
 	
 	GameState.inventory.inventory_changed.connect(_refresh_inventory)
@@ -39,18 +43,38 @@ func exit() -> void:
 	GameHUD.clear_all_zones()
 
 func _refresh_orders() -> void:
+	
 	for child in $HUD/OrdersPanel.get_children():
 		child.queue_free()
 
-	for item in order_queue:
-		var item_label = Label.new()
-		var order_status: String= " (" + Order.Status.keys()[item.status] + ")"
-		var recipe_name = GameState.recipeCatalog[item.recipe_id].display_name
+	for order in order_queue:
+		if not is_instance_valid(order.customer_ref): return
 		
+		var item_container = VBoxContainer.new()
+		var item_label = Label.new()
+		var order_status: String= " (" + Order.Status.keys()[order.status] + ")"
+		var recipe = GameState.recipeCatalog[order.recipe_id]
+		var recipe_name = recipe.display_name
 		item_label.text = recipe_name + order_status
-		$HUD/OrdersPanel.add_child(item_label)
+		
+		var cooking_progress = ProgressBar.new()
+		order.progress_bar = cooking_progress
+		item_container.add_child(item_label)
+		item_container.add_child(cooking_progress)
+
+		$HUD/OrdersPanel.add_child(item_container)
 	
 	order_queue_updated.emit(order_queue)
+
+func _on_patience_changed(ratio: float, order) -> void:
+	if not is_instance_valid(order.progress_bar): return
+	
+	if ratio > 0.5:
+		order.progress_bar.modulate = Color.GREEN
+	elif ratio > 0.2:
+		order.progress_bar.modulate = Color.YELLOW
+	else:
+		order.progress_bar.modulate = Color.RED
 
 func _refresh_inventory() -> void:
 	var lines: Array[String] = []
@@ -77,6 +101,10 @@ func _on_held_item_changed(item: Dictionary) -> void:
 
 func _on_order_taken(order: Order) -> void:
 	order_queue.append(order)
+	if order.customer_ref != null:
+		order.customer_ref.start_patience(30.0)
+		order.customer_ref.customer_timed_out.connect(_on_customer_timeout)
+		order.customer_ref.patience_changed.connect(_on_patience_changed.bind(order))
 	_refresh_orders()
 
 func _on_order_fulfilled(recipe_id: StringName) -> void:
@@ -89,9 +117,26 @@ func _on_order_fulfilled(recipe_id: StringName) -> void:
 			orders_filled += 1
 			order.status = Order.Status.FULFILLED
 			order_queue.erase(order)
-
+			
 			if order.customer_ref != null:
 				order.customer_ref.fulfill()
-	  
+	 		 
 			_refresh_orders()
+			break
+
+func _on_customer_timeout(customer: Node3D) -> void:
+	for order in order_queue:
+		if order.customer_ref == customer:
+			order_queue.erase(order)
+			orders_lost += 1
+			_refresh_orders()
+			break
+
+func _on_cooking_phase_completed(recipe_id, _station_type) -> void:
+	for order in order_queue:
+		if recipe_id == order.recipe_id:
+			order.steps_completed += 1
+
+			var recipe_steps = GameState.recipeCatalog[order.recipe_id].steps.size()
+			order.progress_bar.value = float(order.steps_completed) / recipe_steps * 100.0
 			break

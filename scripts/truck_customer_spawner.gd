@@ -53,3 +53,6 @@ func get_front_customer() -> Node3D:
 		return null
 	else:
 		return customer_line[0]
+
+func remove_from_line(customer: Node3D) -> void:
+	_on_customer_left(customer)

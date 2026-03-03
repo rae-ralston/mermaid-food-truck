@@ -5,7 +5,16 @@
 [ext_resource type="Script" uid="uid://5ugvx3wur61s" path="res://scripts/truck_customer_spawner.gd" id="2_gsc83"]
 [ext_resource type="PackedScene" uid="uid://dwdh1cupd5d5q" path="res://scenes/TruckStation.tscn" id="3_5p4at"]
 [ext_resource type="PackedScene" uid="uid://x6pw2hcbbfh5" path="res://scenes/TruckWindowPickup.tscn" id="3_hjevm"]
+[ext_resource type="Texture2D" uid="uid://uiwg1youygof" path="res://assets/environments/truck/truck_bg_base-layer.png" id="3_wopuj"]
+[ext_resource type="Texture2D" uid="uid://6bkc73jl5e7o" path="res://assets/environments/truck/truck_bg_back-floor-wall.png" id="4_2in21"]
 [ext_resource type="PackedScene" uid="uid://4tpx5afmlk5p" path="res://scenes/TruckWindowOrder.tscn" id="4_wnxoj"]
+[ext_resource type="Texture2D" uid="uid://b8wub1d8sg6js" path="res://assets/environments/truck/truck_bg_front-truck-wall.png" id="5_iy05l"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hwall"]
+size = Vector3(6, 0.1, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vwall"]
+size = Vector3(0.1, 8, 2)
 
 [node name="PhaseTruck" type="Control" unique_id=1378708853]
 layout_mode = 3
@@ -14,9 +23,6 @@ script = ExtResource("1_572ig")
 
 [node name="World" type="Node3D" parent="." unique_id=630530580]
 
-[node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_44s6t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.67173505, 0)
-
 [node name="CustomerSpawner" type="Node" parent="World" unique_id=956556915]
 script = ExtResource("2_gsc83")
 
@@ -24,12 +30,15 @@ script = ExtResource("2_gsc83")
 
 [node name="PrepStation" parent="World/Stations" unique_id=913382092 instance=ExtResource("3_5p4at")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6703558, 0, 0)
+visible = false
 
 [node name="CookStation" parent="World/Stations" unique_id=1183657895 instance=ExtResource("3_5p4at")]
+visible = false
 station_type = 1
 
 [node name="PlateStation" parent="World/Stations" unique_id=955957752 instance=ExtResource("3_5p4at")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57580376, 0, 0)
+visible = false
 station_type = 2
 
 [node name="PickupWindow" parent="World" unique_id=1338750309 instance=ExtResource("3_hjevm")]
@@ -38,10 +47,70 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.50811964, -1.0414625, -0.12
 [node name="OrderWindow" parent="World" unique_id=1317284090 instance=ExtResource("4_wnxoj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5099137, -1.0446228, -0.18481636)
 
+[node name="Diver" parent="World" unique_id=882753087 instance=ExtResource("2_44s6t")]
+transform = Transform3D(2.8, 0, 0, 0, 2.8, 0, 0, 0, 2.8, 0, 0, 0.25)
+
 [node name="Camera3D" type="Camera3D" parent="World" unique_id=637128014]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 projection = 1
-size = 2.0
+size = 4.0
+
+[node name="Background" type="Node3D" parent="World" unique_id=439001324]
+
+[node name="BaseLayer" type="Sprite3D" parent="World/Background" unique_id=75482301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
+pixel_size = 0.0015
+texture = ExtResource("3_wopuj")
+
+[node name="BackWallFloor" type="Sprite3D" parent="World/Background" unique_id=809514557]
+pixel_size = 0.0015
+texture = ExtResource("4_2in21")
+
+[node name="FrontHalfWall" type="Sprite3D" parent="World/Background" unique_id=510739639]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+pixel_size = 0.0015
+texture = ExtResource("5_iy05l")
+
+[node name="Bounds" type="Node3D" parent="World" unique_id=1762748416]
+
+[node name="TopWall" type="StaticBody3D" parent="World/Bounds" unique_id=1310064749]
+transform = Transform3D(0.99939084, -0.034899496, 0, 0.034899496, 0.99939084, 0, 0, 0, 1, 0, 1.5, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Bounds/TopWall" unique_id=1187086865]
+transform = Transform3D(0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_hwall")
+
+[node name="BottomWall" type="StaticBody3D" parent="World/Bounds" unique_id=402536398]
+transform = Transform3D(0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 0, 0, 1, 0, -1.4, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Bounds/BottomWall" unique_id=932996253]
+shape = SubResource("BoxShape3D_hwall")
+
+[node name="LeftWall" type="StaticBody3D" parent="World/Bounds" unique_id=1950481320]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 0, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Bounds/LeftWall" unique_id=231663499]
+shape = SubResource("BoxShape3D_vwall")
+
+[node name="RightWall" type="StaticBody3D" parent="World/Bounds" unique_id=1003387146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7, 0, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Bounds/RightWall" unique_id=1855700445]
+shape = SubResource("BoxShape3D_vwall")
+
+[node name="TruckTail" type="StaticBody3D" parent="World/Bounds" unique_id=1850623423]
+transform = Transform3D(0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0, 1, 1, -1.7, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Bounds/TruckTail" unique_id=1896414380]
+shape = SubResource("BoxShape3D_vwall")
+
+[node name="TruckNose" type="StaticBody3D" parent="World/Bounds" unique_id=1285920343]
+transform = Transform3D(0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0, 1, -0.5, 1, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Bounds/TruckNose" unique_id=579763554]
+shape = SubResource("BoxShape3D_vwall")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World" unique_id=516995928]
 
 [node name="HUD" type="Control" parent="." unique_id=914636482]
 anchors_preset = 0

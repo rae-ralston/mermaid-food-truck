@@ -54,10 +54,19 @@ Key files: `scripts/core/phase_truck.gd`, `scenes/phases/PhaseTruck.tscn`.
 [Order Window] [gap] [Pickup Window]
            (customer side)
 ```
-- **Camera:** Isometric perspective (easier to reason about truck layout, better visibility of all stations). Dive phase stays side view — different perspectives per phase is intentional.
+- **Camera:** Straight-on (looking down -Z), orthographic, size 4.0. Isometric feel comes from the art, not camera angle — avoids distorting 2D illustrated backgrounds. Dive phase stays side view — different perspectives per phase is intentional.
 - **Customer system:** Single portrait in order window + number badge for queue depth. No visible queue of character sprites.
 - **Controls:** Keyboard (WASD + E) in both phases. Visible mermaid character.
 - **Gap between windows:** Empty counter now, drink station later (backlog).
+- **Movement:** Free WASD in screen space. No isometric coordinate mapping.
+
+**Background art** (`assets/environments/truck/`):
+- 3 Sprite3D layers viewed straight-on: BaseLayer (outside ground, Z=-0.25), BackWallFloor (truck interior, Z=0), FrontHalfWall (front counter, Z=0.5). All pixel_size=0.0015.
+- Character renders between back and front layers (Z=0.25).
+- Station furniture baked into background — dynamic elements (progress bars, cooking animations, audio) layered on top.
+- Static assets from Procreate as images, animated items as .glb files.
+- Confinement: 6 StaticBody3D walls forming parallelogram shape matching isometric truck edges.
+- Future: camera zoom out to reveal seating area (needs larger background art).
 
 **Stations** (`scripts/truck_station.gd`, `scenes/TruckStation.tscn`):
 - Three single-purpose stations (PREP, COOK, PLATE) — player carries items between them
@@ -234,7 +243,7 @@ All phases functional — full day loop plays end to end. Currently building Gam
 4. ~~**Dive parallax backgrounds**~~ ✓ Done — Coral Reef has 2 background layers, camera ortho size tuned to 4
 5. ~~**GameHUD script**~~ ✓ Done — zone system, persistent bar with signals, registered as autoload
 6. ~~**Customer portrait + queue badge**~~ ✓ Done — CustomerQueuePanel in bottom_left zone, generic portrait + count
-7. **Truck layout tightening** — compact spacing, both windows on customer side, isometric camera
+7. **Truck layout tightening** — in progress. Background art in (3 layers), character confinement done (collision bounds). Next: HUD adjustments → rework stations → station progress bars → assess
 8. ~~**Customer patience/timeout**~~ ✓ Done — 30s timer, progress bar with patience color, order removal on timeout
 9. **Dive level blockout** — set up GridMap, build playable layout
 10. **UI foundation (remaining)** — TransitionOverlay, PauseMenu (see design doc)
